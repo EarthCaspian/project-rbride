@@ -5,6 +5,7 @@ import Navbar from "./layouts/Navbar/Navbar";
 import { Route, Routes} from "react-router-dom";
 import Dashboard from "./layouts/Dashboard/Dashboard";
 import FourOhFour from "./layouts/404/FourOhFour";
+import Cars from "./pages/Cars/Cars";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />}/>
+        <Route path="/cars" element={<Cars/>}/>
         <Route path="*" element={<FourOhFour/>}/>
       </Routes>
     </>
