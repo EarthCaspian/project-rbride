@@ -82,8 +82,8 @@ const Navbar = (props: Props) => {
             
           </ul>
          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li><button className="btn btn-outline-primary me-2" type="button">Login</button></li>
-            <li><button className="btn btn-outline-secondary me-2" type="button">Register</button></li>
+            <li><Link className="btn btn-outline-primary me-2" to={"/login"} type="button">Login</Link></li>
+            <li><Link className="btn btn-outline-secondary me-2" to={"/register"} type="button">Register</Link></li>
          </ul>
           <form className="d-flex" role="search">
             <input
