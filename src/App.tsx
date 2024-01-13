@@ -8,11 +8,14 @@ import FourOhFour from "./layouts/404/FourOhFour";
 import Cars from "./pages/Cars/Cars";
 import Login from "./layouts/Login/Login";
 import Register from "./layouts/Login/Register";
+import { Provider } from "react-redux";
+import store from "./store/configureStore";
 
 
 function App() {
   return (
     <>
+    <Provider store={store()}>
     <Routes>
       <Route
         path="/"
@@ -28,6 +31,7 @@ function App() {
       <Route path="/cars" element={<Cars />} />
       <Route path="*" element={<FourOhFour />} />
     </Routes>
+    </Provider>
     </>
   );
 }
