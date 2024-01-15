@@ -19,7 +19,7 @@ const CarList = () => {
   };
 
   return (
-    <div className="row">
+    <div className="row" style={{marginTop:100}}>
       {cars && cars.length > 0 ? (
         cars.map((car) => <CarCard key={car.plate} car={car} />)
       ) : (

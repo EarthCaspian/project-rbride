@@ -10,7 +10,7 @@ class CarService {
     }
 
     getById(id: number) {
-        return axios.get<CarModel>(`${API_URL}/${id}`);
+        return axios.get<CarModel>(`${API_URL}/getById/${id}`);
     }
 
     delete(id: number) {
