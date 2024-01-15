@@ -42,10 +42,10 @@ const CarCard = (car: Props) => {
 
         {/* Buttons */}
         <div className="card-body">
-          <Link to={"/"} className="btn btn-primary me-3">
+          <Link to={"/car-details/" + car.car.id} className="btn btn-primary me-3">
             See More
           </Link>
-          <Link to={"/"} className="btn btn-success">
+          <Link to={"/"}  className="btn btn-success">
             Book Now
           </Link>
         </div>
