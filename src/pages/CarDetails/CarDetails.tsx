@@ -38,14 +38,18 @@ export const CarDetails = (props: Props) => {
     
   return (
     <div>
-        <div id='car-details' className='row d-flex justify-content-center'>
-            <div className='col-lg-8 col-md-12  d-flex align-items-center' >
+        {/* BODY */}
+        <div className='row d-flex justify-content-center'>
+            {/* CAR DETAILS */}
+            <div id='car-details'className='col-lg-8 col-md-12  d-flex align-items-center' >
                 <CarDetailsCard car={car} />
             </div>
+            {/* PAYMENT DETAILS */}
             <div id='payment-details' className='col-lg-4 col-md-12 d-flex align-items-center'>
                 <PaymentDetailsCard car={car} screenWidth={screenWidth} />
             </div>
         </div >
+        {/* FOOTER */}
         <FooterCard />
     </div>
     )
