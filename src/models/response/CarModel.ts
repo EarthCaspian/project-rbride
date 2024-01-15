@@ -2,6 +2,7 @@ import { ColorModel } from "./ColorModel";
 import { ModelModel } from "./ModelModel";
 
 export interface CarModel {
+	id: number;
 	modelYear: number;
 	plate: string;
 	minFindeksRate: number;
