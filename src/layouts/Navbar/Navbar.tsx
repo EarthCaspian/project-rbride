@@ -1,9 +1,20 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { clearCart } from "../../store/cartSlice";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
+
+  const cartState = useSelector((state:any) => state.cart)
+
+  const dispatch = useDispatch()
+
+  const handleClear = () => {
+    dispatch(clearCart())
+  }
+
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary fixed-top"
@@ -56,28 +67,19 @@ const Navbar = (props: Props) => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Services
+                Rentals
               </Link>
               <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item" to={"/"}>
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to={"/"}>
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link className="dropdown-item" to={"/"}>
-                    Something else here
-                  </Link>
-                </li>
-              </ul>
+                {cartState.cartItems.map((item: any, index: number) => (
+                  <li key={index}>
+                    <Link className="dropdown-item" to={`/car-details/${item.car.id}`}>
+                    {item.car.model.brand.name} {item.car.model.name} <button className="btn btn-info text-white">{item.quantity}</button>
+                    </Link>
+                  </li>
+                ))}
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><button className="btn btn-success ms-2" onClick={handleClear}>Clear Selections</button></li>
+            </ul>
             </li>
             
           </ul>

@@ -3,6 +3,8 @@ import { CarModel } from '../../models/response/CarModel';
 import CarService from '../../services/CarService';
 import { Link, useParams } from 'react-router-dom';
 import './CarDetails.css'
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/cartSlice';
 
 type Props = {}
 
@@ -43,6 +45,15 @@ export const CarDetails = (props: Props) => {
     const increaseDays = () => {
         setDays(days + 1);
     }
+
+
+
+    const dispatch = useDispatch();
+    const addCarToCart = () => {
+        if (car) {
+            dispatch(addToCart(car));
+        }
+    }
     
   return (
     <div>
@@ -50,7 +61,7 @@ export const CarDetails = (props: Props) => {
         <div className='col-lg-8 col-md-12  d-flex align-items-center' >
             <div className="container-fluid" style={{padding:20, marginTop:75}}>
                 <div className='row d-flex align-items-center justify-content-center' >
-                    <img src='/assets/car.png' className="card-img-top img-fluid rounded-start mb-5" style={{maxWidth: 600}}/>
+                    <img src={car?.imagePath} className="card-img-top img-fluid rounded-start mb-5" alt='...' style={{maxWidth: 600}}/>
                     <div className='row d-flex align-items-center mt-4 w-75'>
                         <h3 className='mb-5'>{car?.model.brand.name + "   " + car?.model.name}</h3>
                         <p className='card-rating' style={{fontSize:15}}>{car?.modelYear + " Model"}</p>
@@ -142,7 +153,8 @@ export const CarDetails = (props: Props) => {
                         </tbody>
                     </table>
                     <div className='row d-flex justify-content-center'>
-                        <Link to="/" className='custom-btn w-75 shadow p-3 mb-5 rounded'><b>Book Now</b></Link>
+                        {/* <Link to="/" className='custom-btn w-75 shadow p-3 mb-5 rounded'><b>Book Now</b></Link> */}
+                        <button className='custom-btn w-75 shadow p-3 mb-5 rounded' onClick={addCarToCart}><b>Book Now</b></button>
                     </div>
                 </div>
             </div>

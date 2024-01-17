@@ -1,15 +1,24 @@
 import { Link } from "react-router-dom";
 import "./style.css";
 import { CarModel } from "../../models/response/CarModel";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/cartSlice";
 
 type Props = {
   car: CarModel;
 };
 
 const CarCard = (car: Props) => {
+
+  const dispatch = useDispatch();
+  const addCarToCart = () => {
+    dispatch(addToCart(car.car))
+}
+
+
   return (
-    <div className="col-12 col-md-10 col-xl-5 col-xxl-3 mb-3">
-      <div className="card">
+    <div className="col-12 col-md-10 col-xl-5 col-xxl-3 mb-3 ">
+      <div className="card h-100">
         {/* Card Title */}
         <div className="container border-bottom">
           <div className="row">
@@ -32,8 +41,11 @@ const CarCard = (car: Props) => {
         </div>
 
         {/* Car Image */}
-        <img src={car.car.imagePath} className="card-img-top" alt="car image" />
-
+        {/* <img src={car.car.imagePath} className="card-img-top" style={{objectFit:"cover", width:"100%",  height:"200px"}} alt="car image" /> */}
+        <div className="card-wrapper" style={{position: "relative", paddingBottom: "50%", height: "0"}}>
+        <img src={car.car.imagePath} className="card-img-top" style={{position: "absolute", objectFit: "cover", width: "100%", height: "100%"}} alt="car image" />
+        </div>
+        
         {/* Car Summary */}
         <div className="card-body bg-light">
           <p className="card-text fs-6 fw-light">{car.car.modelYear} Model</p>
@@ -45,9 +57,12 @@ const CarCard = (car: Props) => {
           <Link to={"/car-details/" + car.car.id} className="btn btn-primary me-3">
             See More
           </Link>
-          <Link to={"/"}  className="btn btn-success">
+          {/* <Link to={"/"}  className="btn btn-success">
             Book Now
-          </Link>
+          </Link> */}
+          <button onClick={addCarToCart} className="btn btn-success">
+            Book Now
+          </button>
         </div>
       </div>
     </div>
