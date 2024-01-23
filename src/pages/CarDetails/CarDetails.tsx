@@ -6,6 +6,7 @@ import '../../components/CarDetailsCards/CarDetails.css'
 import { CarDetailsCard } from '../../components/CarDetailsCards/CarDetailsCard';
 import { PaymentDetailsCard } from '../../components/CarDetailsCards/PaymentDetailsCard';
 import { FooterCard } from '../../components/CarDetailsCards/FooterCard';
+import BookingStepsCard from '../../components/BookingStepsCard/BookingStepsCard';
 
 type Props = {}
 
@@ -40,6 +41,7 @@ export const CarDetails = (props: Props) => {
     <div>
         {/* BODY */}
         <div className='row d-flex justify-content-center'>
+            <BookingStepsCard stepPage='ChooseCar'></BookingStepsCard>
             {/* CAR DETAILS */}
             <div id='car-details'className='col-lg-8 col-md-12  d-flex align-items-center' >
                 <CarDetailsCard car={car} />

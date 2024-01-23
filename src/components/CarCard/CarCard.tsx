@@ -43,7 +43,7 @@ const CarCard = (car: Props) => {
         {/* Car Image */}
         {/* <img src={car.car.imagePath} className="card-img-top" style={{objectFit:"cover", width:"100%",  height:"200px"}} alt="car image" /> */}
         <div className="card-wrapper" style={{position: "relative", paddingBottom: "50%", height: "0"}}>
-        <img src={car.car.imagePath} className="card-img-top" style={{position: "absolute", objectFit: "cover", width: "100%", height: "100%"}} alt="car image" />
+        <img src={car.car.imagePath} className="card-img-top"  alt="car image" />
         </div>
         
         {/* Car Summary */}
@@ -60,9 +60,9 @@ const CarCard = (car: Props) => {
           {/* <Link to={"/"}  className="btn btn-success">
             Book Now
           </Link> */}
-          <button onClick={addCarToCart} className="btn btn-success">
+          <Link to={"/booknow"} onClick={addCarToCart} className="btn btn-success">
             Book Now
-          </button>
+          </Link>
         </div>
       </div>
     </div>
