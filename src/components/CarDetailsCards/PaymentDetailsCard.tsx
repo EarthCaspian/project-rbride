@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { CarModel } from "../../models/response/CarModel";
-import { addToCart } from "../../store/cartSlice";
 import DateChooser from "../DateChooser/DateChooser";
 import {
+  addCarToRent,
   handleRentalEndDate,
   handleRentalStartDate,
   handleRentalTotalPrice,
 } from "../../store/rentalSlice";
+import { addToCart } from "../../store/cartSlice";
 
 type Props = {
   car?: CarModel;
@@ -16,40 +17,38 @@ type Props = {
 };
 
 export const PaymentDetailsCard = (props: Props) => {
+  
   const car = props.car;
   const screenWidth = props.screenWidth;
 
+  const currentDate = new Date();
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(currentDate);
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(currentDate);
+  const [days, setDays] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [dateSelection, setDateSelection] = useState<boolean>(true);
+  
   const dispatch = useDispatch();
-  const addCarToCart = () => {
-    if (car) {
-      dispatch(addToCart(car));
-    }
-  };
+  
+  //Total Price
+  useEffect(() => {
+    calculateTotalPrice(days);
+  }, [days]);
 
   // DATE CHOOSING
-  const currentDate = new Date();
-
   //    Start date
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(currentDate);
-
   const handleStartDateChange = (date: Date) => {
-    setSelectedStartDate(date);
-    dispatch(handleRentalStartDate(date));
-    calculateDaysDifference(date, selectedEndDate);
+      setSelectedStartDate(date);
+      if (calculateDaysDifference(date, selectedEndDate) < 0)
+        setSelectedEndDate(date);
   };
-
   //    End date
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(currentDate);
-
   const handleEndDateChange = (date: Date) => {
     setSelectedEndDate(date);
-    dispatch(handleRentalEndDate(date));
     calculateDaysDifference(selectedStartDate, date);
   };
 
   // DAYS CALCULATING
-  const [days, setDays] = useState<number>(0);
-
   // Function to calculate the number of days between two dates
   const calculateDaysDifference = (startDate: Date, endDate: Date): number => {
     // Convert both dates to UTC to ensure consistency
@@ -63,37 +62,43 @@ export const PaymentDetailsCard = (props: Props) => {
       endDate.getMonth(),
       endDate.getDate()
     );
-
     // Calculate the difference in milliseconds
     const timeDifference = utcEndDate - utcStartDate;
-
     // Convert the difference from milliseconds to days
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    if (daysDifference < 0)
+      return -1;
     setDays(daysDifference);
     return days;
   };
 
-  //Total Price
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-
-  useEffect(() => {
-    calculateTotalPrice(days);
-  }, [days]);
-
   const calculateTotalPrice = async (days: number): Promise<number> => {
+    
     const dailyPrice = car?.dailyPrice;
-
     if (dailyPrice != null) {
       const daysDifference = calculateDaysDifference(
         selectedStartDate,
         selectedEndDate
       );
       const total = dailyPrice * daysDifference;
-      dispatch(handleRentalTotalPrice(total));
       setTotalPrice(total);
     }
-
     return totalPrice;
+  };
+
+  //Rental State is changed only on the button click event.
+  const addTheCarToRent = () => {
+    if (car && totalPrice) {
+      //Both dates have been serialized to string format to comply with JSON standards.
+      dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
+      dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+      dispatch(addCarToRent(car));
+      dispatch(handleRentalTotalPrice(totalPrice));
+      //dispatch(addToCart(car));
+    }
+    else {
+      setDateSelection(false);
+    }
   };
 
   return (
@@ -117,6 +122,7 @@ export const PaymentDetailsCard = (props: Props) => {
               </td>
             </tr>
           </thead>
+          
           {/* BODY */}
           <tbody>
             {/* Delivery row */}
@@ -142,8 +148,6 @@ export const PaymentDetailsCard = (props: Props) => {
               </td>
             </tr>
 
-
-
             {/* Start Date row */}
             <tr id="days" className="table-group-divider">
               <td className="col-4 text-start align-middle">
@@ -155,6 +159,8 @@ export const PaymentDetailsCard = (props: Props) => {
                   <DateChooser
                     selectedDate={selectedStartDate}
                     onDateChange={handleStartDateChange}
+                    minDate={currentDate}
+                    closeWin={true}
                   />
                 </div>
               </td>
@@ -165,11 +171,13 @@ export const PaymentDetailsCard = (props: Props) => {
                 <h6 style={{ color: "rgb(38, 214, 117)" }}> End Date:</h6>
               </td>
               <td className="col-8 text-center">
-                {/* Choose - Start Date row */}
+                {/* Choose - End Date row */}
                 <div className="d-flex justify-content-center">
                   <DateChooser
                     selectedDate={selectedEndDate}
                     onDateChange={handleEndDateChange}
+                    minDate={selectedStartDate}
+                    closeWin={true}
                   />
                 </div>
               </td>
@@ -187,6 +195,7 @@ export const PaymentDetailsCard = (props: Props) => {
                 </div>
               </td>
             </tr>
+
             {/* Daily price row */}
             <tr id="daily-price" className="table-group-divider">
               <td className="col-4">
@@ -213,13 +222,18 @@ export const PaymentDetailsCard = (props: Props) => {
           id="book-now-button"
           className="buton row d-flex justify-content-center"
         >
-          <Link
-            to="/additionalservices"
-            className="custom-btn w-75 shadow p-3 mb-5 rounded"
-            onClick={addCarToCart}
+          <Link 
+            to={`${totalPrice ? "/additionalservices" : "" }`}
+            className="custom-btn w-75 shadow p-3 mb-2 rounded"
+            onClick={addTheCarToRent}
           >
             <b>Book Now</b>
           </Link>
+            <p 
+              className="row d-flex justify-content-center"
+              style={{color: "red"}}>
+                {!dateSelection ? "Please choose a date and time." : ""}
+            </p>
         </div>
       </div>
     </div>
