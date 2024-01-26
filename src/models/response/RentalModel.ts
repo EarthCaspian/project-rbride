@@ -1,10 +1,12 @@
+import { CarModel } from "./CarModel";
+
 export interface RentalModel {
     //id:number;
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
 	returnDate?: any;
 	startKilometer: number;
 	totalPrice: number;
-	carPlate: string;
+	car: CarModel;
 	userEmail: string;
 }

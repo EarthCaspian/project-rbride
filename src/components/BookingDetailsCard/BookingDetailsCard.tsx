@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RentalState } from "../../store/rentalSlice";
+import { selectRental } from "../../store/rentalSlice";
+import { RootState } from "../../store/configureStore";
 
 type Props = {};
 
 const BookingDetailsCard = (props: Props) => {
 
-  //const rentalState = useSelector((state: RentalState) => state.rental)
-
-  const totalPrice = JSON.parse(localStorage.getItem("rentalTotalPrice") || " ");
-  const selectedStartDate = JSON.parse(localStorage.getItem("startDate") || " ");
-  const selectedEndDate = JSON.parse(localStorage.getItem("endDate") || " ");
-  const additionalServiceTotalPrice = 1500
+  
+  // const totalPrice = JSON.parse(localStorage.getItem("rentalTotalPrice") || " ");
+  // const selectedStartDate = JSON.parse(localStorage.getItem("startDate") || " ");
+  // const selectedEndDate = JSON.parse(localStorage.getItem("endDate") || " ");
   /*
   const utcStartDate = Date.UTC(
     selectedStartDate.getFullYear(), // There is a problem
@@ -22,20 +21,28 @@ const BookingDetailsCard = (props: Props) => {
     selectedEndDate.getFullYear(),
     selectedEndDate.getMonth(),
     selectedEndDate.getDate()
-  );
+    );
+    
+    
+    const formattedStartDate = new Date(utcStartDate).toLocaleDateString();
+    const formattedEndDate = new Date(utcEndDate).toLocaleDateString();*/
+    
+    
+    const rentalAllState = useSelector((state: RootState)=> state.rental);
+    const rentalState = rentalAllState.rental;
+    const rentalInsuranceState = rentalAllState.insurance;
+    const rentalExtraServicesState = rentalAllState.extraServices;
+    
+    let additionalServiceTotalPrice :number = rentalInsuranceState.price;
+    rentalExtraServicesState.forEach((extra) => additionalServiceTotalPrice += extra.price);
 
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [tax, setTax] = useState(0);
+    useEffect(() => {
+      setTax((rentalState.totalPrice + additionalServiceTotalPrice)*0.18);
+      setTotalAmount((rentalState.totalPrice + additionalServiceTotalPrice)*1.18);
+    }, [])
 
-  const formattedStartDate = new Date(utcStartDate).toLocaleDateString();
-  const formattedEndDate = new Date(utcEndDate).toLocaleDateString();*/
-
-
-  const [totalAmount, setTotalAmount] = useState(0);
-
-  useEffect(() => {
-    setTotalAmount((totalPrice + additionalServiceTotalPrice)*1.18);
-  }, [])
-  
- 
 
   return (
     <div>
@@ -50,8 +57,8 @@ const BookingDetailsCard = (props: Props) => {
           <h6 className="card-subtitle mb-2 text-body-secondary">
             DATES & HOURS
           </h6>
-          <p className="card-text">{selectedStartDate}</p>
-          <p className="card-text">{selectedEndDate}</p>
+          <p className="card-text">{rentalState.startDate}</p>
+          <p className="card-text">{rentalState.endDate}</p>
         </div>
 
         {/* PICKUP AND RETURN LOCATION */}
@@ -77,7 +84,9 @@ const BookingDetailsCard = (props: Props) => {
       <div className="card bg-light border-light mb-4">
         {/* Car */}
         <div className="card-body">
-          <h4 className="card-title">Renault Clio Joy </h4>
+          <h4 className="card-title">
+            {rentalState.car.model.brand.name + " " + 
+              rentalState.car.model.name}</h4>
           <div className="d-flex">
             <div>
               <div className="d-flex my-2">
@@ -121,7 +130,7 @@ const BookingDetailsCard = (props: Props) => {
 
             <div>
               <img
-                src="/assets/car.png"
+                src={rentalState.car.imagePath}
                 style={{
                   position: "relative",
                   objectFit: "contain",
@@ -140,13 +149,13 @@ const BookingDetailsCard = (props: Props) => {
           </h6>
           <div className="d-flex border-bottom">
             <div className="col-6">
-              <p className="card-text text-start">2 days rental ₺931,00/day</p>
+              <p className="card-text text-start">2 days rental ₺{rentalState.car.dailyPrice}/day</p>
               <p className="card-text">Additional Services</p>
             </div>
             <div className="col-6 ">
               <p className="text-end">₺ 
               {
-                totalPrice
+                rentalState.totalPrice
               }
               </p>
               <p className="text-end">₺
@@ -157,11 +166,12 @@ const BookingDetailsCard = (props: Props) => {
 
           <div className="d-flex mt-3">
             <div className="col-6">
+              <p className="card-text fs-6">Taxes</p>
               <p className="card-text fs-4">Total Amount</p>
-              <p className="card-text fs-6">Including Taxes</p>
             </div>
-            <div className="col-6 ">
-              <p className="text-end fs-2">₺{totalAmount}</p>
+            <div className="col-6">
+              <p className="text-end fs-6">₺{tax}</p>
+              <p className="text-end fs-2 mt-4">₺{totalAmount}</p>
             </div>
           </div>
         </div>
