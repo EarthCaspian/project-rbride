@@ -1,12 +1,6 @@
+import { RentalExtrasModel } from "../store/rentalSlice";
 
-export interface RentalServices {
-    id: number
-    header: string
-    description: string
-    price: number
-}
-
-export const rentalInsuranceOptions : RentalServices[] = [
+export const rentalInsuranceOptions : RentalExtrasModel[] = [
     {
         id: 1,
         header : "Compact Comprehensive Repair Coverage Insurance",
@@ -27,7 +21,7 @@ export const rentalInsuranceOptions : RentalServices[] = [
     }
 ];
 
-export const rentalExtraServices : RentalServices[] = [
+export const rentalExtraServices : RentalExtrasModel[] = [
     {
         id: 1,
         header: "Child Seat",
