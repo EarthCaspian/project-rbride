@@ -2,6 +2,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import HoverImage from "./HoverImage";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import RentalService from "../../services/RentalService";
+import { formatLocalDateToYYYYMMDD } from "../../utils/formatDate";
 
 type Props = {};
 
@@ -10,6 +14,18 @@ interface BookingInformation {}
 const initialValues: BookingInformation = {};
 
 const PaymentDetailsCard = (props: Props) => {
+
+  const rentalState = useSelector((state: RootState) => state.rental.rental);
+
+  // ONCLICK EVENT 
+  // Function to send all data related to the rental state to the rental service for making a backend request.
+  const postRentalToDataBase = () =>
+  {
+    const startDate = formatLocalDateToYYYYMMDD(rentalState.startDate);
+    const endDate = formatLocalDateToYYYYMMDD(rentalState.endDate);
+    RentalService.add({startDate: startDate, endDate: endDate, carId: rentalState.car.id, userId: 1});
+  }
+
   return (
     <div className="border border-secondary border-opacity-25 rounded py-2 ps-2 mb-4">
       <div className="border-bottom mb-3">
@@ -95,7 +111,7 @@ const PaymentDetailsCard = (props: Props) => {
               </div>
 
               <div className="col-12 fw-bold mb-2">
-                  <Link to={'/completion'} className="btn btn-success">Complete Booking</Link>
+                  <Link to={'/completion'} className="btn btn-success" onClick={postRentalToDataBase}>Complete Booking</Link>
               </div>
             </div>
           </div>
