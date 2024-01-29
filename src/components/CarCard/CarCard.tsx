@@ -1,19 +1,12 @@
 import { Link } from "react-router-dom";
 import "./style.css";
 import { CarModel } from "../../models/response/CarModel";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/cartSlice";
 
 type Props = {
   car: CarModel;
 };
 
 const CarCard = (car: Props) => {
-
-  const dispatch = useDispatch();
-  const addCarToCart = () => {
-    dispatch(addToCart(car.car))
-}
 
 
   return (
@@ -52,17 +45,18 @@ const CarCard = (car: Props) => {
           <p className="card-text fs-6 fw-light">{car.car.color.name}</p>
         </div>
 
-        {/* Buttons */}
-        <div className="card-body">
-          <Link to={"/car-details/" + car.car.id} className="btn btn-primary me-3">
-            See More
-          </Link>
-          {/* <Link to={"/"}  className="btn btn-success">
-            Book Now
-          </Link> */}
-          <Link to={"/booknow"} onClick={addCarToCart} className="btn btn-success">
-            Book Now
-          </Link>
+        {/* Daily Price */}
+        <div className="row d-flex align-items-center">
+          <div className="col-6  d-flex align-items-baseline justify-content-center">
+            <h4>₺{car.car.dailyPrice}</h4>
+            <h6>/day</h6>
+          </div>
+          {/* See more */}
+          <div className="col-6 card-body text-center">
+            <Link to={"/car-details/" + car.car.id} className="btn btn-primary me-3 w-75">
+              See More
+            </Link>
+          </div>
         </div>
       </div>
     </div>
