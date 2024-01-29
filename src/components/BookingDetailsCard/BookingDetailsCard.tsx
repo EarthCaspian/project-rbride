@@ -1,48 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectRental } from "../../store/rentalSlice";
 import { RootState } from "../../store/configureStore";
 
 type Props = {};
 
 const BookingDetailsCard = (props: Props) => {
+    
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [tax, setTax] = useState(0);
 
-  
-  // const totalPrice = JSON.parse(localStorage.getItem("rentalTotalPrice") || " ");
-  // const selectedStartDate = JSON.parse(localStorage.getItem("startDate") || " ");
-  // const selectedEndDate = JSON.parse(localStorage.getItem("endDate") || " ");
-  /*
-  const utcStartDate = Date.UTC(
-    selectedStartDate.getFullYear(), // There is a problem
-    selectedStartDate.getMonth(),
-    selectedStartDate.getDate()
-  );
-  const utcEndDate = Date.UTC(
-    selectedEndDate.getFullYear(),
-    selectedEndDate.getMonth(),
-    selectedEndDate.getDate()
-    );
+  const rentalAllState = useSelector((state: RootState)=> state.rental);
+  const rentalState = rentalAllState.rental;
+  const rentalInsuranceState = rentalAllState.insurance;
+  const rentalExtraServicesState = rentalAllState.extraServices;
     
-    
-    const formattedStartDate = new Date(utcStartDate).toLocaleDateString();
-    const formattedEndDate = new Date(utcEndDate).toLocaleDateString();*/
-    
-    
-    const rentalAllState = useSelector((state: RootState)=> state.rental);
-    const rentalState = rentalAllState.rental;
-    const rentalInsuranceState = rentalAllState.insurance;
-    const rentalExtraServicesState = rentalAllState.extraServices;
-    
-    let additionalServiceTotalPrice :number = rentalInsuranceState.price;
-    rentalExtraServicesState.forEach((extra) => additionalServiceTotalPrice += extra.price);
+  let additionalServiceTotalPrice :number = rentalInsuranceState.price;
+  rentalExtraServicesState.forEach((extra) => additionalServiceTotalPrice += extra.price);
 
-    const [totalAmount, setTotalAmount] = useState(0);
-    const [tax, setTax] = useState(0);
-    useEffect(() => {
-      setTax((rentalState.totalPrice + additionalServiceTotalPrice)*0.18);
-      setTotalAmount((rentalState.totalPrice + additionalServiceTotalPrice)*1.18);
-    }, [])
-
+  useEffect(() => {
+    setTax((rentalState.totalPrice + additionalServiceTotalPrice)*0.18);
+    setTotalAmount((rentalState.totalPrice + additionalServiceTotalPrice)*1.18);
+  }, [])
 
   return (
     <div>
@@ -149,7 +127,7 @@ const BookingDetailsCard = (props: Props) => {
           </h6>
           <div className="d-flex border-bottom">
             <div className="col-6">
-              <p className="card-text text-start">2 days rental ₺{rentalState.car.dailyPrice}/day</p>
+              <p className="card-text text-start">{rentalState.totalPrice / rentalState.car.dailyPrice} days rental ₺{rentalState.car.dailyPrice}/day</p>
               <p className="card-text">Additional Services</p>
             </div>
             <div className="col-6 ">
