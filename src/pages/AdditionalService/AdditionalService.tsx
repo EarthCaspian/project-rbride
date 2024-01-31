@@ -1,49 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BookingStepsCard from "../../components/BookingStepsCard/BookingStepsCard";
 import { rentalExtraServices, rentalInsuranceOptions } from "../../utils/rentalExtraServices";
-import { useDispatch } from "react-redux";
-import { addExtraServicesToRent, addInsuranceToRent } from "../../store/rentalSlice";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RentalExtrasModel, addRentalSelectedExtraServices, addRentalSelectedInsurance } from "../../store/rentalSlice";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/configureStore";
+import { Button } from "react-bootstrap";
+
 
 type Props = {};
 
 const AdditionalService = (props: Props) => {
 
 
-  const [lastIndex, setLastIndex] = useState<number>(rentalExtraServices.length);
-  const [selectedExtras, setSelectedExtras] = useState<boolean[]>(Array(rentalExtraServices.length).fill(false));
-  const [selectedInsurance, setSelectedInsurance] = useState<boolean[]>(Array(rentalInsuranceOptions.length).fill(false));
-
+  const rentalState = useSelector((state: RootState) => state.rental);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const switchTheExtraServiceOption = (index: number) => {
-    const spreadedArray = [...selectedExtras];
-    spreadedArray[index] = !spreadedArray[index];
-    setSelectedExtras(spreadedArray);
-  }
+  const lastIndex:number = rentalExtraServices.length;
 
+  // Each index of this boolean array corresponds in turn to the indexes of the rentalExtraServices array. The indexes corresponding to the user-selected options are represented by true. In the first case all indexes are represented by false if no selection has been made before.
+  const [selectedExtras, setSelectedExtras] = useState<boolean[]>(Array(rentalExtraServices.length).fill(false));
+  // Each index of this boolean array corresponds in turn to the indexes of the rentalInsuranceOptions array. The index corresponding to the user-selected option is represented by true. In the first case all indexes are represented by false if no selection has been made before.
+  const [selectedInsurance, setSelectedInsurance] = useState<boolean[]>(Array(rentalInsuranceOptions.length).fill(false));
+  
+  const spreadedExtras = [...selectedExtras];
+  const spreadedInsurances = [...selectedInsurance];
+
+  //Switch the previously selected options during rendering
+  useEffect(() => {
+    //Switch the insurance option
+    if (rentalState.insurance.id !== 0)
+      switchTheInsuranceOption(rentalState.insurance.id - 1);
+    //Switch extra service options
+    rentalState.extraServices.forEach((extra) => {
+      switchTheExtraServiceOption(extra.id -1);
+  });
+  }, []);
+
+  //For a rental, only one insurance option can be selected at a time. When a new option is chosen, if a different option had been selected before, its index is set to false.
   const switchTheInsuranceOption = (index: number) => {
-    const spreadedArray = [...selectedInsurance];
-    spreadedArray[index] = !spreadedArray[index]
-    if (spreadedArray[index]){
-      spreadedArray.forEach((option, i) => {
-        if (i != index)
-        spreadedArray[i] = false;
+    spreadedInsurances[index] = !spreadedInsurances[index]
+    if (spreadedInsurances[index]){
+      spreadedInsurances.forEach((option, i) => {
+        if (i !== index)
+        spreadedInsurances[i] = false;
         }) 
     }
-    setSelectedInsurance(spreadedArray);
+    setSelectedInsurance(spreadedInsurances);
   }
 
-  const addExtrasToRent = () => {
-    selectedInsurance.forEach((insurance, i) => {
-      if (insurance == true)
-        dispatch(addInsuranceToRent(rentalInsuranceOptions[i]));
-    })
+  //For a rental, multiple extra services can be selected simultaneously.
+  const switchTheExtraServiceOption = (index : number) => {
+    spreadedExtras[index] = !spreadedExtras[index];
+    setSelectedExtras(spreadedExtras);
+  }
 
-    selectedExtras.forEach((extra, i) => {
-      if (extra == true)
-        dispatch(addExtraServicesToRent(rentalExtraServices[i]));
-    })
+  // BUTTON CLICK EVENT
+  // Function that updates the rental state with new selections
+  // Then navigates to the booknow page
+  const addExtrasToRent = (values:any) => {
+
+    const insurance : RentalExtrasModel | undefined = rentalInsuranceOptions.find((extra, i) => selectedInsurance[i] == true);
+    insurance ?
+      dispatch(addRentalSelectedInsurance(insurance)) :
+      dispatch(addRentalSelectedInsurance({id: 0, header:'', description:'', price:0}));
+
+    const extras : RentalExtrasModel[] = rentalExtraServices.filter((extra, i) => selectedExtras[i] == true)
+    dispatch(addRentalSelectedExtraServices(extras));
+    navigate('/booknow');
   }
 
   return (
@@ -152,7 +177,7 @@ const AdditionalService = (props: Props) => {
 
       </div>
       <div className="container-fluid col-6 d-flex justify-content-center ">
-        <Link  to='/booknow' className="custom-btn rounded mt-5 mb-5 w-75" onClick={addExtrasToRent}> <b>Submit</b> </Link>
+        <Button type="submit" className="custom-btn rounded mt-5 mb-5 w-75" onClick={addExtrasToRent}> <b>Submit</b> </Button>
       </div>
     </div>
   );

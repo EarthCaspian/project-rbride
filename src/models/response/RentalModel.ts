@@ -10,3 +10,10 @@ export interface RentalModel {
 	car: CarModel;
 	userEmail: string;
 }
+
+export interface AddRentalRequestModel {
+	startDate : any;
+	endDate : any;
+	carId: number;
+	userId: number;
+}

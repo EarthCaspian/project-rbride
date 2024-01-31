@@ -2,16 +2,21 @@ import { RentalModel } from './../models/response/RentalModel';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from './configureStore';
 import { CarModel } from '../models/response/CarModel';
-import { RentalServices } from '../utils/rentalExtraServices';
-
 
 export interface RentalState{
     rental: RentalModel ;
-    insurance : RentalServices;
-    extraServices : RentalServices[];
+    insurance : RentalExtrasModel;
+    extraServices : RentalExtrasModel[];
 }
 
-//Current date have been serialized to string format to comply with JSON standards.
+export interface RentalExtrasModel {
+    id: number;
+    header: string;
+    description: string;
+    price: number;
+}
+
+//Current date has been serialized to string format to comply with JSON standards.
 const currentDate : Date = new Date();
 const currentDateString : string = currentDate.toLocaleDateString();
 
@@ -26,12 +31,12 @@ const initialRentalState : RentalState = {
         car: {},
         userEmail: '',
     },
-    insurance : JSON.parse(localStorage.getItem("insurance") || "[]" ) || 
+    insurance : JSON.parse(localStorage.getItem("insurance") || "{}" ) || 
     {
-        id:0, 
+        id:0,
         header: '', 
         description: '', 
-        price: 0
+        price: 0,
     },
     extraServices : JSON.parse(localStorage.getItem("extraServices") || "[]" )
 }
@@ -46,7 +51,6 @@ export const rentalSlice = createSlice({
             // Update the startDate for the rental item
             state.rental.startDate = action.payload;
             // Update localStorage
-            // localStorage.setItem("startDate", JSON.stringify(action.payload));
             localStorage.setItem("rental", JSON.stringify(state.rental));
 
         },
@@ -54,9 +58,7 @@ export const rentalSlice = createSlice({
    
             // Update the startDate for the rental item
             state.rental.endDate = action.payload;
-
             // Update localStorage
-            //localStorage.setItem("endDate", JSON.stringify(action.payload));
             localStorage.setItem("rental", JSON.stringify(state.rental));
 
         },
@@ -64,28 +66,36 @@ export const rentalSlice = createSlice({
             // Update the total price(calculated by selected days and car daily price, not included addition fees or taxes) for the rental item
             state.rental.totalPrice = action.payload;
             // Update localStorage
-            // localStorage.setItem("rentalTotalPrice", JSON.stringify(action.payload));
             localStorage.setItem("rental", JSON.stringify(state.rental));
 
         },
-        addCarToRent(state: RentalState, action: PayloadAction<CarModel>) {
+        addRentalSelectedCar(state: RentalState, action: PayloadAction<CarModel>) {
+            // Update the car for the rental item
             state.rental.car = action.payload;
+            // Update LocalStorage
             localStorage.setItem("rental", JSON.stringify(state.rental));
         },
-        addInsuranceToRent(state: RentalState, action: PayloadAction<RentalServices>) {
+        addRentalSelectedInsurance(state: RentalState, action: PayloadAction<RentalExtrasModel>) {
+            // Update the insurance for the rental item
             state.insurance = action.payload;
             localStorage.setItem("insurance", JSON.stringify(state.insurance));
         },
-        addExtraServicesToRent(state : RentalState, action : PayloadAction<RentalServices>) {
-            let isExist = state.extraServices.find((service) => service.id == action.payload.id);
-            if (!isExist)
-                state.extraServices.push({id: action.payload.id, header: action.payload.header, description: action.payload.description, price: action.payload.price});
+        addRentalSelectedExtraServices(state : RentalState, action : PayloadAction<RentalExtrasModel[]>) {
+            // Update the extra services for the rental item
+            state.extraServices = action.payload;
             localStorage.setItem("extraServices", JSON.stringify(state.extraServices));
         }
     },
 });
 
+export const {
+    handleRentalStartDate, 
+    handleRentalEndDate, 
+    handleRentalTotalPrice, 
+    addRentalSelectedCar, 
+    addRentalSelectedInsurance, 
+    addRentalSelectedExtraServices
+} = rentalSlice.actions;
 
-export const {handleRentalStartDate, handleRentalEndDate, handleRentalTotalPrice, addCarToRent, addInsuranceToRent, addExtraServicesToRent} = rentalSlice.actions;
 export const rentalReducer = rentalSlice.reducer;
 export const selectRental = (state: RootState) => state.rental;

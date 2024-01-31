@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CarModel } from "../../models/response/CarModel";
 import DateChooser from "../DateChooser/DateChooser";
 import {
-  addCarToRent,
+  addRentalSelectedCar,
   handleRentalEndDate,
   handleRentalStartDate,
   handleRentalTotalPrice,
 } from "../../store/rentalSlice";
 import { addToCart } from "../../store/cartSlice";
+import { RootState } from "../../store/configureStore";
+import { formatLocalDateToYYYYMMDD } from "../../utils/formatDate";
 
 type Props = {
-  car?: CarModel;
+  car: CarModel;
   screenWidth: boolean;
 };
 
@@ -21,14 +23,15 @@ export const PaymentDetailsCard = (props: Props) => {
   const car = props.car;
   const screenWidth = props.screenWidth;
 
-  const currentDate = new Date();
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(currentDate);
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(currentDate);
+  const rentalState = useSelector((state: RootState) => state.rental.rental);
+  const dispatch = useDispatch();
+
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.startDate)));
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.endDate)));
   const [days, setDays] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [dateSelection, setDateSelection] = useState<boolean>(true);
+  const [isDateSelectionValid, setIsDateSelectionValid] = useState<boolean>(true);
   
-  const dispatch = useDispatch();
   
   //Total Price
   useEffect(() => {
@@ -72,32 +75,29 @@ export const PaymentDetailsCard = (props: Props) => {
     return days;
   };
 
-  const calculateTotalPrice = async (days: number): Promise<number> => {
-    
-    const dailyPrice = car?.dailyPrice;
-    if (dailyPrice != null) {
-      const daysDifference = calculateDaysDifference(
-        selectedStartDate,
-        selectedEndDate
-      );
-      const total = dailyPrice * daysDifference;
-      setTotalPrice(total);
-    }
-    return totalPrice;
+  //PRICE CALCULATING
+  // Function to calculate the total price based on the total number of days and the daily amount of the car
+  const calculateTotalPrice = (days: number) => {
+    calculateDaysDifference(selectedStartDate, selectedEndDate);
+    setTotalPrice(car.dailyPrice * days);
   };
 
+  //BUTTON CLICK EVENT
+  //Function that updates the rental state.
   //Rental State is changed only on the button click event.
-  const addTheCarToRent = () => {
+  const addReceivedDatasToRentalState = () => {
     if (car && totalPrice) {
       //Both dates have been serialized to string format to comply with JSON standards.
       dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
       dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
-      dispatch(addCarToRent(car));
+      dispatch(addRentalSelectedCar(car));
       dispatch(handleRentalTotalPrice(totalPrice));
       //dispatch(addToCart(car));
     }
     else {
-      setDateSelection(false);
+      // The variable indicating whether a valid date is chosen.
+      // if set to false, triggers the display of a warning message through the JSX element with the id "warning-message".
+      setIsDateSelectionValid(false);
     }
   };
 
@@ -159,7 +159,7 @@ export const PaymentDetailsCard = (props: Props) => {
                   <DateChooser
                     selectedDate={selectedStartDate}
                     onDateChange={handleStartDateChange}
-                    minDate={currentDate}
+                    minDate={new Date()}
                     closeWin={true}
                   />
                 </div>
@@ -202,7 +202,7 @@ export const PaymentDetailsCard = (props: Props) => {
                 <h6> Daily Price: </h6>
               </td>
               <td className="col-8 text-center">
-                <h5>₺{car?.dailyPrice}</h5>
+                <h5>₺{car.dailyPrice}</h5>
               </td>
             </tr>
             {/* Total price row */}
@@ -225,14 +225,14 @@ export const PaymentDetailsCard = (props: Props) => {
           <Link 
             to={`${totalPrice ? "/additionalservices" : "" }`}
             className="custom-btn w-75 shadow p-3 mb-2 rounded"
-            onClick={addTheCarToRent}
+            onClick={addReceivedDatasToRentalState}
           >
             <b>Book Now</b>
           </Link>
-            <p 
+            <p id="warning-message"
               className="row d-flex justify-content-center"
               style={{color: "red"}}>
-                {!dateSelection ? "Please choose a date and time." : ""}
+                {!isDateSelectionValid ? "Please choose a date and time." : ""}
             </p>
         </div>
       </div>
