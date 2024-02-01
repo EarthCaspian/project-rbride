@@ -1,7 +1,10 @@
+import { ModelModel } from './../models/response/ModelModel';
 import { RentalModel } from './../models/response/RentalModel';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from './configureStore';
 import { CarModel } from '../models/response/CarModel';
+import { BrandModel } from '../models/response/BrandModel';
+import { ColorModel } from '../models/response/ColorModel';
 
 export interface RentalState{
     rental: RentalModel ;
@@ -16,34 +19,69 @@ export interface RentalExtrasModel {
     price: number;
 }
 
+const initialBrandState : BrandModel = {
+    id :0,
+    name: "",
+    logoPath: "",
+};
+
+const initialModelState : ModelModel = {
+    name: "",
+    brand: initialBrandState,
+};
+
+const initialColorState : ColorModel = {
+    id: 0,
+    name: "",
+    code: "",
+};
+
+const initialCarState : CarModel = {
+    id: 0,
+	modelYear: 2020,
+	plate: "",
+	minFindeksRate: 0,
+	kilometer: 0,
+	dailyPrice: 0,
+	imagePath: "",
+	model: initialModelState,
+	color: initialColorState,
+};
+
 //Current date has been serialized to string format to comply with JSON standards.
 const currentDate : Date = new Date();
 const currentDateString : string = currentDate.toLocaleDateString();
 
-const initialRentalState : RentalState = {
-    rental : JSON.parse(localStorage.getItem("rental") || "[]" ) ||
-    {
-        startDate: currentDateString,
-        endDate: currentDateString,
-        returnDate: null,
-        startKilometer: 0,
-        totalPrice: 0,
-        car: {},
-        userEmail: '',
-    },
-    insurance : JSON.parse(localStorage.getItem("insurance") || "{}" ) || 
-    {
-        id:0,
-        header: '', 
-        description: '', 
-        price: 0,
-    },
+const initialRentalState : RentalModel = {
+    startDate: currentDateString,
+    endDate: currentDateString,
+    returnDate: null,
+    startKilometer: 0,
+    totalPrice: 0,
+    car: initialCarState,
+    userEmail: "",
+}
+
+const initialInsuranceState : RentalExtrasModel = {
+    id:0,
+    header: '', 
+    description: '', 
+    price: 0,
+}
+
+const initialRentalSliceState : RentalState = {
+    // rental : JSON.parse(localStorage.getItem("rental") || JSON.stringify(initialRentalState)),
+
+    rental : JSON.parse(localStorage.getItem("rental") || JSON.stringify(initialRentalState)),
+
+    insurance : JSON.parse(localStorage.getItem("insurance") || JSON.stringify(initialInsuranceState)),
+
     extraServices : JSON.parse(localStorage.getItem("extraServices") || "[]" )
 }
 
 export const rentalSlice = createSlice({
     name: 'rental',
-    initialState: initialRentalState,
+    initialState: initialRentalSliceState,
 
     reducers: {
         handleRentalStartDate(state: RentalState, action: PayloadAction<string>){
