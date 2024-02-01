@@ -37,7 +37,7 @@ const BookingCompletion = (props: Props) => {
           <div className="row g-0">
             <div className="col-md-4">
               <img
-                src="/assets/car.png"
+                src={rentalState.car.imagePath}
                 className="img-fluid rounded-start"
                 alt="..."
               />
