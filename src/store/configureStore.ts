@@ -1,11 +1,13 @@
 import { combineReducers, configureStore} from "@reduxjs/toolkit";
 import { cartReducer} from "./cartSlice";
 import { rentalReducer } from "./rentalSlice";
+import { loadingReducer } from "./loadingSlice";
 
 
 const rootReducer = combineReducers({
   cart: cartReducer,
   rental: rentalReducer,
+  loading: loadingReducer
 });
 
 const store = () => {

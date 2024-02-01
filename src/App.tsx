@@ -14,12 +14,14 @@ import { CarDetails } from "./pages/CarDetails/CarDetails";
 import BookNow from "./pages/BookNow/BookNow";
 import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
+import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 
 function App() {
   return (
     <>
       <Provider store={store()}>
         <Navbar />
+        <LoadingOverlay/>
         <Routes>
           <Route
             path="/"
