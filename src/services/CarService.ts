@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { CarModel } from "../models/response/CarModel";
 
-const API_URL="http://localhost:8080/cars"; 
+const API_URL="http://localhost:8080/api/cars"; 
 
 class CarService {
 
     getAll(): Promise<AxiosResponse<CarModel[]>>{
-        return axios.get<CarModel[]>(`${API_URL}/getall`);
+        return axios.get<CarModel[]>(`${API_URL}/getAll`);
     }
 
     getById(id: number) {
