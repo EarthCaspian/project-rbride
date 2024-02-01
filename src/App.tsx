@@ -14,6 +14,9 @@ import { CarDetails } from "./pages/CarDetails/CarDetails";
 import BookNow from "./pages/BookNow/BookNow";
 import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
+import Profile from "./pages/Profile/Profile/Profile";
+import Orders from "./pages/Profile/Order/Orders";
+
 
 function App() {
   return (
@@ -35,6 +38,8 @@ function App() {
           <Route path="/car-details/:id" element={<CarDetails />} />
           <Route path="/additionalservices" element={<AdditionalService />} />
           <Route path="/booknow" element={<BookNow />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
