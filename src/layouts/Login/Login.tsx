@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./login.module.css";
 import { Link } from "react-router-dom";
+import { LoginModel } from "../../models/requests/LoginModel";
+import LoginService from "../../services/LoginService";
 
 type Props = {};
 
@@ -18,7 +20,13 @@ const Login = (props: Props) => {
       loginPassword: Yup.string().required("Password is required"),
     }),
     onSubmit: (values) => {
-      
+      console.log('Form submitted:', values);
+      const loginData: LoginModel = {
+        email: values.loginUsername,
+        password:values.loginPassword
+      };
+
+      LoginService.login(loginData);
     },
   });
 
