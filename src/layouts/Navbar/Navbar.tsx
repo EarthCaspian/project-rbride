@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { clearCart } from "../../store/cartSlice";
+import path from "path";
 
 type Props = {};
 
@@ -14,6 +15,8 @@ const Navbar = (props: Props) => {
   const handleClear = () => {
     dispatch(clearCart())
   }
+
+  const location = useLocation();
 
   return (
     <nav
@@ -59,7 +62,10 @@ const Navbar = (props: Props) => {
                 Book Now
               </Link>
             </li>
-            <li className="nav-item dropdown">
+
+            {/* Disabled until Corporate Customer setup complete */}
+            
+            {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
                 to={"/"}
@@ -79,15 +85,17 @@ const Navbar = (props: Props) => {
                 ))}
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="btn btn-success ms-2" onClick={handleClear}>Clear Selections</button></li>
-            </ul>
-            </li>
+              </ul>
+            </li> */}
             
           </ul>
          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li><Link className="btn btn-outline-primary me-2" to={"/login"} type="button">Login</Link></li>
             <li><Link className="btn btn-outline-secondary me-2" to={"/register"} type="button">Register</Link></li>
          </ul>
-          <form className="d-flex" role="search">
+
+          {/* Search box */}
+          {location.pathname === '/cars' && <form className="d-flex" role="search">
             <input
               className="form-control me-2"
               type="search"
@@ -97,7 +105,9 @@ const Navbar = (props: Props) => {
             <button className="btn btn-outline-success" type="submit">
               Search
             </button>
-          </form>
+          </form>}
+          {/* Search box */}        
+
         </div>
       </div>
     </nav>
