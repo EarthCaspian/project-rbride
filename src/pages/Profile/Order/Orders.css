@@ -1,0 +1,14 @@
+.orders {
+    margin-left: 20rem;
+    margin-top: 6rem;
+    margin-bottom: 3rem;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
