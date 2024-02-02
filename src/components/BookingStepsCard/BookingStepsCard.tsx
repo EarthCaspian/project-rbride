@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -20,40 +20,40 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
           <Link to="/">
             <img
               className={
-                stepPage == "Login"
+                stepPage === "Login"
                 ? "opacity-100 step-image img-fluid"
                 : "opacity-25 step-image img-fluid"
               }
               style={{maxWidth:"3.5rem", maxHeight:"3.5rem"}}
               src="/assets/StepCardImages/StepLogin.png"
-              >
+              alt="login">
             </img>
           </Link>
         </div>
         <div className="col-2">
-          <Link to={`/car-details/${rentalState.car.id}`}>
+        <Link to={`${rentalState.car.id !== 0 ? `/car-details/${rentalState.car.id}` : "/cars"}`}>
             <img
               className={
-                stepPage == "ChooseCar"
+                stepPage === "ChooseCar"
                 ? "opacity-100 step-image img-fluid"
                 : "opacity-25 step-image img-fluid"
               }
               style={{maxWidth:"3.5rem", maxHeight:"3.5rem"}}
               src="/assets/StepCardImages/StepChooseCar.png"
-              ></img>
+              alt="choosecar"></img>
             </Link>
         </div>
         <div className="col-2">
           <Link to="/additionalservices">
             <img
               className={
-                stepPage == "AdditionalService"
+                stepPage === "AdditionalService"
                 ? "opacity-100 step-image img-fluid"
                 : "opacity-25 step-image img-fluid"
               }
               style={{maxWidth:"3.5rem", maxHeight:"3.5rem"}}
               src="/assets/StepCardImages/StepAdditionalService.png"
-              >
+              alt="additionalservice">
             </img>
           </Link>
         </div>
@@ -61,13 +61,13 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
           <Link to="/booknow">
             <img
               className={
-                stepPage == "BookNow"
+                stepPage === "BookNow"
                 ? "opacity-100 step-image img-fluid"
                 : "opacity-25 step-image img-fluid"
               }
               style={{maxWidth:"3.5rem", maxHeight:"3.5rem"}}
               src="/assets/StepCardImages/StepFillForm&Payment.png"
-              >
+              alt="booknow">
             </img>
           </Link>
         </div>
@@ -75,13 +75,13 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
           <Link to="/completion">
             <img
               className={
-                stepPage == "StepCompletion"
+                stepPage === "StepCompletion"
                 ? "opacity-100 step-image img-fluid"
                 : "opacity-25 step-image img-fluid"
               }
               style={{maxWidth:"3.5rem", maxHeight:"3.5rem"}}
               src="/assets/StepCardImages/StepCompletion.png"
-              >
+              alt="stepcompletion">
             </img>
           </Link>
         </div>

@@ -14,6 +14,7 @@ import { CarDetails } from "./pages/CarDetails/CarDetails";
 import BookNow from "./pages/BookNow/BookNow";
 import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
+
 import Profile from "./pages/Profile/Profile/Profile";
 import Orders from "./pages/Profile/Order/Orders";
 
@@ -23,6 +24,7 @@ function App() {
     <>
       <Provider store={store()}>
         <Navbar />
+        <LoadingOverlay/>
         <Routes>
           <Route
             path="/"

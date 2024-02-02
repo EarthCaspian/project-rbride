@@ -6,7 +6,7 @@ export interface CarModel {
 	modelYear: number;
 	plate: string;
 	minFindeksRate: number;
-	kilometer: bigint;
+	kilometer: number;
 	dailyPrice: number;
 	imagePath: string;
 	model: ModelModel;

@@ -34,9 +34,8 @@ const CarCard = (car: Props) => {
         </div>
 
         {/* Car Image */}
-        {/* <img src={car.car.imagePath} className="card-img-top" style={{objectFit:"cover", width:"100%",  height:"200px"}} alt="car image" /> */}
         <div className="card-wrapper" style={{position: "relative", paddingBottom: "50%", height: "0"}}>
-        <img src={car.car.imagePath} className="card-img-top"  alt="car image" />
+        <img src={car.car.imagePath} className="card-img-top" style={{objectFit:"cover", width:"100%",  height:"150px"}}  alt="car" />
         </div>
         
         {/* Car Summary */}
