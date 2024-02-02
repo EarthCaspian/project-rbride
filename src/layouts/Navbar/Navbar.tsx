@@ -46,17 +46,21 @@ const Navbar = (props: Props) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to={"/"}>
                 Home
               </Link>
             </li>
+
             <li className="nav-item">
               <Link className="nav-link" to={"/cars"}>
                 Cars
               </Link>
             </li>
+
             <li className="nav-item">
               <Link className="nav-link" to={"/booknow"}>
                 Book Now
@@ -68,8 +72,8 @@ const Navbar = (props: Props) => {
                 Profile
               </Link>
             </li>
-            <li className="nav-item dropdown">
-              
+            
+            {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
                 to={"/"}
@@ -90,9 +94,10 @@ const Navbar = (props: Props) => {
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="btn btn-success ms-2" onClick={handleClear}>Clear Selections</button></li>
               </ul>
-            </li> */}
+            </li>  */}
             
           </ul>
+          
          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li><Link className="btn btn-outline-primary me-2" to={"/login"} type="button">Login</Link></li>
             <li><Link className="btn btn-outline-secondary me-2" to={"/register"} type="button">Register</Link></li>
