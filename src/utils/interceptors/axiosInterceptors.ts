@@ -4,9 +4,9 @@ import {
 	decreaseRequestCount,
 	increaseRequestCount,
 } from "../../store/loadingSlice";
-import { useDispatch } from "react-redux";
+import store from "../../store/configureStore";
 
-const dispatch = useDispatch();
+
 
 const axiosInstance = axios.create({
     baseURL:"http://localhost:8080/api/"
@@ -14,21 +14,22 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(config => {
     let token = TokenService.getToken();
+    console.log('Token:', token);
     if (token) config.headers.Authorization = `Bearer ${token}`;
+    console.log('Headers:', config.headers); 
 
-
-    dispatch(increaseRequestCount());
+    store.dispatch(increaseRequestCount());
     
     return config;
 })
 
 axiosInstance.interceptors.response.use(
     response => {
-        dispatch(decreaseRequestCount());
+        store.dispatch(decreaseRequestCount());
         return response;
     },
     error => {
-        dispatch(decreaseRequestCount());
+        store.dispatch(decreaseRequestCount());
         console.log(error);
     }
 )
