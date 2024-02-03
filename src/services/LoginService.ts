@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { LoginModel } from '../models/requests/LoginModel';
 
-const API_URL = "http://localhost:8080/auth";
+import { LoginModel } from '../models/requests/LoginModel';
+import axiosInstance from '../utils/interceptors/axiosInterceptors';
+
 
 class LoginService {
     login(request : LoginModel) {
-        return axios.post(`${API_URL}/login`, request)
+        return axiosInstance.post("auth/login", request)
     };
 }
 
