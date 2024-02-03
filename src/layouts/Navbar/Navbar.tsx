@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { clearCart } from "../../store/cartSlice";
 import path from "path";
+import { selectIsLoggedIn, setLoggedOut } from "../../store/loginSlice";
 
 type Props = {};
 
@@ -17,6 +18,12 @@ const Navbar = (props: Props) => {
   }
 
   const location = useLocation();
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const handleLogout = () => {
+    dispatch(setLoggedOut());
+  }
 
   return (
     <nav
@@ -98,11 +105,29 @@ const Navbar = (props: Props) => {
             
           </ul>
           
-         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li><Link className="btn btn-outline-primary me-2" to={"/login"} type="button">Login</Link></li>
-            <li><Link className="btn btn-outline-secondary me-2" to={"/register"} type="button">Register</Link></li>
-         </ul>
-
+            {isLoggedIn ? (
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li>
+                <Link className="btn btn-warning me-2" to={"/"} type="button" onClick={handleLogout}>
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li>
+                <Link className="btn btn-outline-primary me-2" to={"/login"} type="button">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link className="btn btn-outline-secondary me-2" to={"/register"} type="button">
+                  Register
+                </Link>
+              </li>
+            </ul>
+          )}
+          
           {/* Search box */}
           {location.pathname === '/cars' && <form className="d-flex" role="search">
             <input
