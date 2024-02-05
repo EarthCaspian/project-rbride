@@ -22,7 +22,7 @@ import Orders from "./pages/Profile/Order/Orders";
 function App() {
   return (
     <>
-      <Provider store={store()}>
+      <Provider store={store}>
         <Navbar />
         <LoadingOverlay/>
         <Routes>

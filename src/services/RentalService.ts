@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AddRentalRequestModel } from "../models/response/RentalModel";
 
-const API_URL="http://localhost:8080/rentals";
+const API_URL="http://localhost:8080/api/rentals";
 
 class RentalService {
     //Function to send a request to the backend for adding a rental entry to the database.

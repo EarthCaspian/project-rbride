@@ -6,10 +6,29 @@ import "./login.module.css";
 import { Link } from "react-router-dom";
 import { LoginModel } from "../../models/requests/LoginModel";
 import LoginService from "../../services/LoginService";
+import TokenService from "../../services/TokenService";
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../../store/loginSlice";
 
 type Props = {};
 
+interface LoginResponse {
+  token: string;
+}
+
+interface AuthCResult {
+  success: boolean;
+  message: string;
+  loginResponse: LoginResponse;
+}
+
+interface ServerResponse {
+  data: AuthCResult;
+}
+
 const Login = (props: Props) => {
+
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       loginUsername: "",
@@ -26,7 +45,19 @@ const Login = (props: Props) => {
         password:values.loginPassword
       };
 
-      LoginService.login(loginData);
+      LoginService.login(loginData)
+      .then((response:ServerResponse) => {
+        if (response && response.data && response.data.loginResponse) {
+          const token = response.data.loginResponse.token;
+          TokenService.setToken(token);
+          dispatch(setLoggedIn());
+        } else {
+          console.error('Invalid response structure:', response);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
     },
   });
 

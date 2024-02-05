@@ -67,7 +67,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="profile container mt-5">
             <Sidebar />
             <h2 className="title">Profile Page</h2>
             <form onSubmit={handleSubmit}>

@@ -19,12 +19,12 @@ label {
     margin-bottom: 3rem;
 }
 
-form{
+.profile form{
     margin-left: 10rem;
 }
 
-input[type="text"],
-input[type="email"] {
+.profile input[type="text"],
+.profile input[type="email"] {
     width: calc(100% - 20px);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
