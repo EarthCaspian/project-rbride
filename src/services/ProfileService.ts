@@ -1,23 +1,33 @@
-import axios, { AxiosResponse } from "axios";
-import { GetProfileModel } from "../models/response/GetProfileModel";
+import axios from 'axios';
+import { ProfileModel } from '../models/response/ProfileModel';
+import axiosInstance from '../utils/interceptors/axiosInterceptors';
 
 
-const ProfileService = {
-    getProfile(userID : any) {
-        return fetch(`/api/profiles/${userID}`)
-            .then(response => response.json());
-    },
+class ProfileService {
 
-    updateProfile(userID : any, userData : any) {
-        return fetch(`/api/profiles/${userID}`, {
-            method: 'PUT',
+    getProfile(token: string): Promise<ProfileModel> {
+        return axiosInstance.get<ProfileModel>(`/users/getProfile`, {
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
+                Authorization: `Bearer ${token}`
+            }
         })
-        .then(response => response.json());
+        .then(response => response.data)
+        .catch(error => {
+            throw error;
+        });
     }
-};
 
-export default ProfileService;
+    updateProfile(token: string, userData: { email: string, password: string }): Promise<ProfileModel> {
+        return axiosInstance.put<ProfileModel>(`/users/update`, userData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(response => response.data)
+        .catch(error => {
+            throw error;
+        });
+    }
+}
+
+export default new ProfileService();

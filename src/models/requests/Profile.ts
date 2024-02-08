@@ -1,4 +1,4 @@
-export interface GetProfileModel {
+export interface ProfileModel {
     email: string;
     password: string;
 }

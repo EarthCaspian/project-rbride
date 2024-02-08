@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import './Profile.css';
 import Sidebar from '../Sidebar/Sidebar';
 import TokenService from '../../../services/TokenService';
 import * as Yup from 'yup';
 import ProfileService from '../../../services/ProfileService';
 
-// ProfileModel oluşturuldu
-const ProfileModel = Yup.object().shape({
+const ProfileSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().required('Password is required')
 });
@@ -16,6 +15,8 @@ const Profile = () => {
         email: '',
         password: '',
     });
+    
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const token = TokenService.getToken();
@@ -25,45 +26,55 @@ const Profile = () => {
     }, []);
 
     const fetchUserDetails = () => {
-        ProfileService.getProfile() // Profil servisini kullanarak profil bilgilerini alıyoruz
-        .then(data => {
-            setUser(data);
-        })
-        .catch(error => console.error('Error fetching user data:', error));
-};
+        const token = TokenService.getToken();
 
-    const updateEmail = (e : any) => {
+        if (token) {
+            ProfileService.getProfile(token)
+                .then(data => {
+                    setUser({ email: data.email, password: data.password });
+                })
+                .catch(error => {
+                    console.error('Unable to fetch user data:', error);
+                    setError('Unable to fetch user data. Please try again later.');
+                });
+        }
+    };
+
+    const updateInputValue = (e : ChangeEvent<HTMLInputElement>, key: string) => {
+        const { value } = e.target;
         setUser(prevState => ({
             ...prevState,
-            email: e.target.value
+            [key]: value
         }));
     };
 
-    const updatePassword = (e : any) => {
-        setUser(prevState => ({
-            ...prevState,
-            password: e.target.value
-        }));
-    };
-
-    const handleSubmit = (e : any) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        ProfileModel.validate(user)
+        ProfileSchema.validate(user)
             .then(() => {
-                ProfileService.updateProfile(user) // Profil servisini kullanarak profil bilgilerini güncelliyoruz
-                    .then(data => {
-                        console.log('User data updated:', data);
-                    })
-                    .catch(error => console.error('Error updating user data:', error));
+                const token = TokenService.getToken();
+                if (token) {
+                    ProfileService.updateProfile(token, user)
+                        .then(updatedData => {
+                            console.log('User data successfully updated:', updatedData);
+                        })
+                        .catch(error => {
+                            console.error('Unable to update user data:', error);
+                            setError('Unable to update user data. Please try again later.');
+                        });
+                }
             })
-            .catch(error => console.error('Validation error:', error));
+            .catch(error => {
+                console.error('Validation error:', error);
+                setError('Please enter a valid email address and password.');
+            });
     };
-    
 
     return (
         <div className="profile container mt-5">
             <Sidebar />
             <h2 className="title">Profile Page</h2>
+            {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Email Address</label>
@@ -71,7 +82,7 @@ const Profile = () => {
                         type="email"
                         className="form-control"
                         value={user.email}
-                        onChange={updateEmail}
+                        onChange={e => updateInputValue(e, 'email')}
                     />
                 </div>
                 <div className="form-group">
@@ -80,7 +91,7 @@ const Profile = () => {
                         type="password"
                         className="form-control"
                         value={user.password}
-                        onChange={updatePassword}
+                        onChange={e => updateInputValue(e, 'password')}
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">Update</button>
