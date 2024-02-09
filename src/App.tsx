@@ -17,6 +17,8 @@ import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
 import Orders from "./pages/Profile/Order/Orders";
+import AdminPanel from "./pages/AdminPanel/AdminPanel";
+import { AddCarForm } from "./components/AdminPanelCards/AddCarForm";
 
 
 function App() {
@@ -34,6 +36,9 @@ function App() {
               </>
             }
           />
+          <Route path="/admin" element={<AdminPanel/>}>
+            <Route path="/admin/addCar" element={<AddCarForm/>}/>
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cars" element={<Cars />} />
