@@ -7,7 +7,7 @@ import ProfileService from '../../../services/ProfileService';
 
 const ProfileSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    password: Yup.string()
 });
 
 const Profile = () => {
@@ -15,7 +15,6 @@ const Profile = () => {
         email: '',
         password: '',
     });
-    
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -31,7 +30,7 @@ const Profile = () => {
         if (token) {
             ProfileService.getProfile(token)
                 .then(data => {
-                    setUser({ email: data.email, password: data.password });
+                    setUser({ email: data.email, password: '' });
                 })
                 .catch(error => {
                     console.error('Unable to fetch user data:', error);
@@ -40,7 +39,7 @@ const Profile = () => {
         }
     };
 
-    const updateInputValue = (e : ChangeEvent<HTMLInputElement>, key: string) => {
+    const updateInputValue = (e: ChangeEvent<HTMLInputElement>, key: string) => {
         const { value } = e.target;
         setUser(prevState => ({
             ...prevState,

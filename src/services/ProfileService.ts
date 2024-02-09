@@ -1,14 +1,13 @@
-import axios from 'axios';
 import { ProfileModel } from '../models/response/ProfileModel';
 import axiosInstance from '../utils/interceptors/axiosInterceptors';
-
+import { UpdateProfileRequest } from '../models/requests/UpdateProfileRequest';
 
 class ProfileService {
 
     getProfile(token: string): Promise<ProfileModel> {
         return axiosInstance.get<ProfileModel>(`/users/getProfile`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `${token}`
             }
         })
         .then(response => response.data)
@@ -17,10 +16,10 @@ class ProfileService {
         });
     }
 
-    updateProfile(token: string, userData: { email: string, password: string }): Promise<ProfileModel> {
-        return axiosInstance.put<ProfileModel>(`/users/update`, userData, {
+    updateProfile(token: string, updateRequest: UpdateProfileRequest): Promise<ProfileModel> {
+        return axiosInstance.put<ProfileModel>(`/users/updateProfile`, updateRequest, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `${token}`
             }
         })
         .then(response => response.data)
