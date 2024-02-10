@@ -1,5 +1,6 @@
 import axios from "axios";
-import { AddRentalRequestModel } from "../models/response/RentalModel";
+import { AddRentalRequestModel, GetRentalByUserIdRequest } from "../models/response/RentalModel";
+import axiosInstance from "../utils/interceptors/axiosInterceptors";
 
 const API_URL="http://localhost:8080/api/rentals";
 
@@ -13,6 +14,18 @@ class RentalService {
         .catch(error => {
             console.log(error + ": Invalid parameters or malformed data.");
         })
+    }
+
+    getRentals(token: string): Promise<GetRentalByUserIdRequest[]> {
+        return axiosInstance.get<GetRentalByUserIdRequest[]>(`/rentals/getRentalsByUserId`, {
+            headers: {
+                Authorization: `${token}`
+            }
+        })
+        .then(response => response.data)
+        .catch(error => {
+            throw error;
+        });
     }
 }
 

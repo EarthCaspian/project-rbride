@@ -16,7 +16,7 @@ import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
-import Orders from "./pages/Profile/Order/Orders";
+import Rentals from "./pages/Profile/Rentals/Rentals";
 
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
           <Route path="/additionalservices" element={<AdditionalService />} />
           <Route path="/booknow" element={<BookNow />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>

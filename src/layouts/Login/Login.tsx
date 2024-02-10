@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./login.module.css";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { LoginModel } from "../../models/requests/LoginModel";
 import LoginService from "../../services/LoginService";
 import TokenService from "../../services/TokenService";
@@ -27,7 +27,7 @@ interface ServerResponse {
 }
 
 const Login = (props: Props) => {
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -51,6 +51,7 @@ const Login = (props: Props) => {
           const token = response.data.loginResponse.token;
           TokenService.setToken(token);
           dispatch(setLoggedIn());
+          navigate('/');
         } else {
           console.error('Invalid response structure:', response);
         }
@@ -58,6 +59,7 @@ const Login = (props: Props) => {
       .catch(error => {
         console.log(error);
       });
+
     },
   });
 

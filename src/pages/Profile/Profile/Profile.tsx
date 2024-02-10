@@ -7,7 +7,7 @@ import ProfileService from '../../../services/ProfileService';
 
 const ProfileSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string()
+    password: Yup.string().min(1, 'Please enter your current or new password'),
 });
 
 const Profile = () => {

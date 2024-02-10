@@ -1,4 +1,4 @@
-.orders {
+.rentals {
     margin-left: 20rem;
     margin-top: 6rem;
     margin-bottom: 3rem;
@@ -9,6 +9,6 @@ ul {
     padding: 0;
 }
 
-.orders ul li {
+.rentals ul li {
     margin-bottom: 10px;
 }
