@@ -18,7 +18,9 @@ import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
 import Orders from "./pages/Profile/Order/Orders";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
-import { AddCarForm } from "./components/AdminPanelCards/AddCarForm";
+import { AddCarForm } from "./components/AdminPanelCards/CarAdmin/AddCarForm";
+import { AddBrandForm } from "./components/AdminPanelCards/BrandAdmin/AddBrandForm";
+import { AddModelForm } from "./components/AdminPanelCards/ModelAdmin/AddModelForm";
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
           />
           <Route path="/admin" element={<AdminPanel/>}>
             <Route path="/admin/addCar" element={<AddCarForm/>}/>
+            <Route path="/admin/addBrand" element={<AddBrandForm/>}/>
+            <Route path="/admin/addModel" element={<AddModelForm/>}/>
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
