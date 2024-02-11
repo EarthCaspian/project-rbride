@@ -1,0 +1,22 @@
+.form-field {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-field .error-message {
+    color: red;
+    margin-top: 5px;
+}
+
