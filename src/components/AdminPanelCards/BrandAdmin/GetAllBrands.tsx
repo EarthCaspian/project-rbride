@@ -1,0 +1,42 @@
+import React , {useState, useEffect} from 'react'
+import { BrandModel } from '../../../models/response/BrandModel';
+import BrandService from '../../../services/BrandService';
+
+type Props = {}
+
+const GetAllBrands = (props: Props) => {
+
+    const [brands, setBrands] = useState<BrandModel[]>([]);
+
+    useEffect(() => {
+      BrandService.getAllBrands().then(setBrands)
+    }, [])
+
+
+
+  return (
+    <div>
+        <h2>All Brands</h2>
+        <table className="table table-bordered">
+      <thead>
+        <tr>
+          <th>Brand Name</th>
+          <th>Brand ID</th>
+          <th>Brand Logo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {brands.map((brand) => 
+          <tr key={brand.id}>
+            <td>{brand.name}</td>
+            <td>{brand.id}</td>
+            <td><img height={50} src={brand.logoPath} alt="brand-logo" /></td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+    </div>
+  )
+}
+
+export default GetAllBrands
