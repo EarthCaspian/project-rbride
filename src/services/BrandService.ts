@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AddBrandModel } from "../models/requests/AddBrandModel";
+import { BrandModel } from "../models/response/BrandModel";
 
 const API_URL="http://localhost:8080/api/brands"; 
 
@@ -13,6 +14,10 @@ class BrandService {
         .catch(error => {
             console.log(error + ": Something went wrong.");
         })
+    }
+
+    getAllBrands():Promise<BrandModel[]> {
+        return axios.get(`${API_URL}/getAll`).then(response => response.data);
     }
 }
 

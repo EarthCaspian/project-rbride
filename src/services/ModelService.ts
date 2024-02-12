@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AddModelModel } from "../models/requests/AddModelModel";
+import { GetAllModelModel } from "../models/response/ModelModel";
 
 const API_URL="http://localhost:8080/api/models"; 
 
@@ -13,6 +14,10 @@ class ModelService {
         .catch(error => {
             console.log(error + ": Something went wrong.");
         })
+    }
+    
+    getAllModels():Promise<GetAllModelModel[]> {
+        return axios.get(`${API_URL}/getAll`).then(response => response.data);
     }
 }
 
