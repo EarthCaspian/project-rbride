@@ -1,11 +1,18 @@
-import axios from "axios";
+
+import axios, { AxiosResponse } from "axios";
+
 import { AddBrandModel } from "../models/requests/AddBrandModel";
+
 import { BrandModel } from "../models/response/BrandModel";
 
 const API_URL="http://localhost:8080/api/brands"; 
 
 class BrandService {
 
+
+    getAll(): Promise<AxiosResponse<BrandModel[]>>{
+        return axios.get<BrandModel[]>(`${API_URL}/getAll`);
+    }
     add(request : AddBrandModel) {
         return axios.post(`${API_URL}/add`, request)
         .then(response => {
@@ -16,9 +23,6 @@ class BrandService {
         })
     }
 
-    getAllBrands():Promise<BrandModel[]> {
-        return axios.get(`${API_URL}/getAll`).then(response => response.data);
-    }
 }
 
 export default new BrandService();
