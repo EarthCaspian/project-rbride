@@ -9,11 +9,13 @@ import LoginService from "../../services/LoginService";
 import TokenService from "../../services/TokenService";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../../store/loginSlice";
+import { setUser } from "../../store/userSlice";
 
 type Props = {};
 
 interface LoginResponse {
   token: string;
+  userId: number;
 }
 
 interface AuthCResult {
@@ -48,9 +50,10 @@ const Login = (props: Props) => {
       LoginService.login(loginData)
       .then((response:ServerResponse) => {
         if (response && response.data && response.data.loginResponse) {
-          const token = response.data.loginResponse.token;
+          const { token, userId } = response.data.loginResponse;
           TokenService.setToken(token);
           dispatch(setLoggedIn());
+          dispatch(setUser({ userId }));
           navigate('/');
         } else {
           console.error('Invalid response structure:', response);

@@ -17,11 +17,3 @@ export interface AddRentalRequestModel {
 	carId: number;
 	userId: number;
 }
-
-export interface GetRentalByUserIdRequest {
-    car: CarModel;
-    startDate: any;
-    returnDate: any;
-    totalPrice: number;
-	userId: number;
-}
