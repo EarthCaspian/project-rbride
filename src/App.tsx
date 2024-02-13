@@ -26,6 +26,7 @@ import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
 
 
+
 function App() {
   return (
     <>
@@ -56,7 +57,7 @@ function App() {
           <Route path="/additionalservices" element={<AdditionalService />} />
           <Route path="/booknow" element={<BookNow />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>

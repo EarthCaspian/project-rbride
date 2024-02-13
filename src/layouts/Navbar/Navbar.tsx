@@ -74,11 +74,7 @@ const Navbar = (props: Props) => {
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to={"/profile"}>
-                Profile
-              </Link>
-            </li>
+
             
             {/* <li className="nav-item dropdown">
               <Link
@@ -107,6 +103,11 @@ const Navbar = (props: Props) => {
           
             {isLoggedIn ? (
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="btn btn-outline-primary me-2" to={"/profile"} type="button">
+                  Profile
+                </Link>
+              </li>
               <li>
                 <Link className="btn btn-warning me-2" to={"/"} type="button" onClick={handleLogout}>
                   Logout
