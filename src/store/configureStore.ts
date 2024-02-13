@@ -5,7 +5,6 @@ import { loadingReducer } from "./loadingSlice";
 import { loginReducer } from "./loginSlice";
 import { filterReducer } from "./filterSlice";
 
-
 const rootReducer = combineReducers({
   cart: cartReducer,
   rental: rentalReducer,
