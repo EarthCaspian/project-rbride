@@ -24,7 +24,9 @@ class ModelService {
             console.log(error + ": Something went wrong.");
         })
     }
-    
+    getAllModels():Promise<GetAllModelModel[]> {
+        return axios.get(`${API_URL}/getAll`).then(response => response.data);
+    }
    
 
   

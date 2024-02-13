@@ -23,6 +23,11 @@ class BrandService {
         })
     }
 
+    getAllBrands():Promise<BrandModel[]> {
+        return axios.get(`${API_URL}/getAll`).then(response => response.data);
+    }
+
+
 }
 
 export default new BrandService();
