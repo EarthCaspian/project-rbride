@@ -1,13 +1,19 @@
-
 import CarList from '../../layouts/CarList/CarList'
+import FilterBar from '../../layouts/FilterBar/FilterBar'
 
 
 
 
 const Cars = () => {
   return (
-    <div className='container mt-4'>
-        <CarList></CarList>
+
+    <div className='container'>
+      <div className='row'>
+        <FilterBar></FilterBar>
+      </div>
+      <div className='container mt-5'>
+          <CarList></CarList>
+      </div>
     </div>
   )
 }
