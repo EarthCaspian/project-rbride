@@ -2,7 +2,9 @@ import React , {useState, useEffect} from 'react'
 import CarService from '../../../services/CarService';
 import { AxiosResponse } from 'axios';
 import { CarModel } from '../../../models/response/CarModel';
-import { GetAllCarsModel } from '../../../models/response/GetAllCarsModel';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 type Props = {}
 
@@ -20,8 +22,16 @@ const GetAllCars = (props: Props) => {
         });
       };
 
+      const deleteCar = (id: number) => {
+        CarService.delete(id).then((response) => {
+          fetchCars();
+          toast.success(response.data.message); 
+        });
+      };
+
   return (
     <div>
+        <ToastContainer />
         <h2>All Cars</h2>
         <table className="table table-bordered">
       <thead>
@@ -49,6 +59,9 @@ const GetAllCars = (props: Props) => {
             <td><img height={50} src={car.imagePath} alt="car-image" /></td>
             <td>{car.model.name}</td>
             <td>{car.color.name}</td>
+            <td>
+              <button className='btn btn-danger' onClick={() => deleteCar(car.id)}>Delete</button>
+            </td>
           </tr>
         )}
       </tbody>
