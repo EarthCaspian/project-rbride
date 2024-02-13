@@ -1,5 +1,6 @@
-import axios from "axios";
-import { AddRentalRequestModel } from "../models/response/RentalModel";
+import axios, { AxiosResponse } from "axios";
+import { RentalModel } from "../models/response/RentalModel";
+import { AddRentalRequestModel } from "../models/requests/RentalModel";
 
 const API_URL="http://localhost:8080/api/rentals";
 
@@ -13,6 +14,10 @@ class RentalService {
         .catch(error => {
             console.log(error + ": Invalid parameters or malformed data.");
         })
+    }
+
+    getAll() : Promise<AxiosResponse<RentalModel[]>> {
+        return axios.get<RentalModel[]>(`${API_URL}/getAll`);
     }
 }
 
