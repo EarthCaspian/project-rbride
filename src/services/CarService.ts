@@ -1,8 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { CarModel } from "../models/response/CarModel";
+import { CarModel, DeleteResponse } from "../models/response/CarModel";
 import { AddCarModel } from "../models/requests/AddCarModel";
 
 const API_URL="http://localhost:8080/api/cars"; 
+
+
 
 class CarService {
 
@@ -15,7 +17,7 @@ class CarService {
     }
 
     delete(id: number) {
-        return axios.delete<CarModel>(`${API_URL}/${id}`);
+        return axios.delete<DeleteResponse>(`${API_URL}/delete`, { data: { id } });
     }
 
     add(request : AddCarModel) {

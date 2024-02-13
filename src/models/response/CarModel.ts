@@ -12,3 +12,8 @@ export interface CarModel {
 	model: ModelModel;
 	color: ColorModel;
 }
+
+export interface DeleteResponse {
+	success: boolean;
+	message: string;
+  }
