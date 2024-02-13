@@ -16,7 +16,7 @@ import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
-import Orders from "./pages/Profile/Order/Orders";
+import Rentals from "./pages/Profile/Rentals/Rentals";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import { AddCarForm } from "./components/AdminPanelCards/CarAdmin/AddCarForm";
 import { AddBrandForm } from "./components/AdminPanelCards/BrandAdmin/AddBrandForm";
