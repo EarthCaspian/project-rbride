@@ -20,12 +20,13 @@ export interface RentalExtrasModel {
 }
 
 const initialBrandState : BrandModel = {
-    id :0,
+    id : 0,
     name: "",
     logoPath: "",
 };
 
 const initialModelState : ModelModel = {
+    id : 0,
     name: "",
     brand: initialBrandState,
 };
