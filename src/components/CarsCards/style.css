@@ -1,0 +1,31 @@
+.brandLogo{
+    width: 60px;
+}
+
+/* .custom-accordion-btn {
+    height: 75%;
+    background-color: rgb(253, 179, 94, 0.8);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+} */
+
+.custom-accordion-body {
+    background-color:  rgba(253, 179, 94, 0.8);
+    display: flex;
+    justify-content: center;
+
+}
+
+.row-align-center {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+/* .custom-submit-btn {
+    background-color: #09272d;
+    color: white;
+    
+} */

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "./style.css";
-import { CarModel } from "../../models/response/CarModel";
+import "../style.css";
+import { CarModel } from "../../../models/response/CarModel";
 
 type Props = {
   car: CarModel;
