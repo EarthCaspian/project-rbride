@@ -28,6 +28,7 @@ export const PaymentDetailsCard = (props: Props) => {
   const rentalState = useSelector((state: RootState) => state.rental.rental);
   const loginState = useSelector((state:RootState) => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //  Car
   const car = props.car;

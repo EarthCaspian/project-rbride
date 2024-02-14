@@ -16,7 +16,6 @@ import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
-import Orders from "./pages/Profile/Order/Orders";
 import Footer from "./layouts/Footer/Footer";
 import Rentals from "./pages/Profile/Rentals/Rentals";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
@@ -26,8 +25,6 @@ import { AddModelForm } from "./components/AdminPanelCards/ModelAdmin/AddModelFo
 import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
 import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
-
-
 
 function App() {
   return (

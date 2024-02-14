@@ -14,7 +14,6 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   login: loginReducer,
   filter: filterReducer,
-  login: loginReducer,
   customer: customerReducer,
   invoice: invoiceReducer,
   booking: bookingReducer,
