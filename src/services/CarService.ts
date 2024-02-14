@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { CarModel, DeleteResponse } from "../models/response/CarModel";
+import { CarModel } from "../models/response/CarModel";
 import { AddCarModel } from "../models/requests/AddCarModel";
+import { SuccessResponse } from "../models/response/SuccessResponse";
 
 const API_URL="http://localhost:8080/api/cars"; 
 
@@ -17,16 +18,18 @@ class CarService {
     }
 
     delete(id: number) {
-        return axios.delete<DeleteResponse>(`${API_URL}/delete`, { data: { id } });
+        return axios.delete<SuccessResponse>(`${API_URL}/delete`, { data: { id } });
     }
 
     add(request : AddCarModel) {
-        return axios.post(`${API_URL}/add`, request)
+        return axios.post<SuccessResponse>(`${API_URL}/add`, request)
         .then(response => {
             console.log(response + ": The car has been successfully added to the database.");
+            return response;
         })
         .catch(error => {
             console.log(error + ": Something went wrong.");
+            return { data: { success: false, message: "Something went wrong." } };
         })
     }
 }
