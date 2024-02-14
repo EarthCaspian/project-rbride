@@ -24,6 +24,7 @@ import { AddModelForm } from "./components/AdminPanelCards/ModelAdmin/AddModelFo
 import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
 import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
+import ContactPage from "./pages/Contact/ContactPage";
 
 
 
@@ -59,6 +60,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
+          <Route path="/contactpage" element={<ContactPage />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
       </Provider>

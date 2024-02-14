@@ -4,6 +4,7 @@ import { rentalReducer } from "./rentalSlice";
 import { loadingReducer } from "./loadingSlice";
 import { loginReducer } from "./loginSlice";
 import { filterReducer } from "./filterSlice";
+import { userReducer } from "./userSlice";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   login: loginReducer,
   filter: filterReducer,
+  user: userReducer,
 });
 
 export const store = configureStore({
