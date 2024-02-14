@@ -10,12 +10,12 @@ import {
   handleRentalTotalPrice,
 } from "../../store/rentalSlice";
 import { RootState } from "../../store/configureStore";
-import { calculateDatesDifference, formatLocalDateToYYYYMMDD } from "../../utils/formatDate";
+import { calculateDatesDifference } from "../../utils/formatDate";
 import { Button } from "react-bootstrap";
-import { RentalModel } from "../../models/response/RentalModel";
 import RentalService from "../../services/RentalService";
 import CarService from "../../services/CarService";
 import { filterCarByDates } from "../../utils/filterCarsByOptions";
+import { RentalResponseModel } from "../../models/response/RentalResponseModel";
 
 type Props = {
   car: CarModel;
@@ -34,8 +34,8 @@ export const PaymentDetailsCard = (props: Props) => {
   const car = props.car;
 
   // Date
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(rentalState.startDate));
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(rentalState.endDate));
     //  Converting dates to JSON string format to send them Redux store as a seriliazed value
   const serializedStartDate = selectedStartDate.toJSON();
   const serializedEndDate = selectedEndDate.toJSON();
@@ -46,7 +46,7 @@ export const PaymentDetailsCard = (props: Props) => {
   
   //  Total Price
   const [totalPrice, setTotalPrice] = useState<number>(car.dailyPrice);
-  const [rentalsResponse, setRentalsResponse] = useState<RentalModel[]>([]);
+  const [rentalsResponse, setRentalsResponse] = useState<RentalResponseModel[]>([]);
   const [carsResponse, setCarsResponse] = useState<CarModel[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -114,7 +114,7 @@ export const PaymentDetailsCard = (props: Props) => {
   //Total Price
   // Function to calculate the total price based on the total number of days and the daily amount of the car
   const calculateTotalPrice = (days: number) => {
-    setDays(calculateDatesDifference(selectedStartDate, selectedEndDate));
+    calculateDatesDifference(selectedStartDate, selectedEndDate);
     setTotalPrice(car.dailyPrice * days);
   };
 
