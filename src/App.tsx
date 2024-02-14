@@ -17,14 +17,14 @@ import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
 import Orders from "./pages/Profile/Order/Orders";
-
+import Footer from "./layouts/Footer/Footer";
 
 function App() {
   return (
     <>
       <Provider store={store}>
         <Navbar />
-        <LoadingOverlay/>
+        <LoadingOverlay />
         <Routes>
           <Route
             path="/"
@@ -45,6 +45,7 @@ function App() {
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
+        <Footer />
       </Provider>
     </>
   );
