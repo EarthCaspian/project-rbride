@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.module.css';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import RegisterService from '../../services/RegisterService';
 import { useState } from 'react';
 import RoleService from '../../services/RoleService';
@@ -13,6 +13,7 @@ import { RegisterModel } from '../../models/requests/RegisterModel';
 type Props = {};
 
 const Register = (props: Props) => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       registerEmail: '',
@@ -32,9 +33,18 @@ const Register = (props: Props) => {
         roles: [values.roles],
       };
       
-      RegisterService.register(registerData);
+      try {
+        RegisterService.register(registerData);
+        // Redirect to login page after successful registration
+        navigate('/login');
+      } catch (error) {
+        console.error('Registration failed:', error);
+        // Handle error if registration fails
+      }
     },
   });
+
+
 
   const [roles, setRoles] = useState<RoleModel[]>([]);
 

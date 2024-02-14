@@ -20,15 +20,16 @@ export interface RentalExtrasModel {
   price: number;
 }
 
-const initialBrandState: BrandModel = {
-  id: 0,
-  name: "",
-  logoPath: "",
+const initialBrandState : BrandModel = {
+    id : 0,
+    name: "",
+    logoPath: "",
 };
 
-const initialModelState: ModelModel = {
-  name: "",
-  brand: initialBrandState,
+const initialModelState : ModelModel = {
+    id : 0,
+    name: "",
+    brand: initialBrandState,
 };
 
 const initialColorState: ColorModel = {

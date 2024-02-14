@@ -18,6 +18,16 @@ import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
 import Orders from "./pages/Profile/Order/Orders";
 import Footer from "./layouts/Footer/Footer";
+import Rentals from "./pages/Profile/Rentals/Rentals";
+import AdminPanel from "./pages/AdminPanel/AdminPanel";
+import { AddCarForm } from "./components/AdminPanelCards/CarAdmin/AddCarForm";
+import { AddBrandForm } from "./components/AdminPanelCards/BrandAdmin/AddBrandForm";
+import { AddModelForm } from "./components/AdminPanelCards/ModelAdmin/AddModelForm";
+import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
+import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
+import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
+
+
 
 function App() {
   return (
@@ -34,6 +44,14 @@ function App() {
               </>
             }
           />
+          <Route path="/admin" element={<AdminPanel/>}>
+            <Route path="/admin/addCar" element={<AddCarForm/>}/>
+            <Route path="/admin/getAllCars" element={<GetAllCars/>}/>
+            <Route path="/admin/addBrand" element={<AddBrandForm/>}/>
+            <Route path="/admin/getAllBrands" element={<GetAllBrands/>}/>
+            <Route path="/admin/addModel" element={<AddModelForm/>}/>
+            <Route path="/admin/getAllModels" element={<GetAllModels/>}/>
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cars" element={<Cars />} />
@@ -41,7 +59,7 @@ function App() {
           <Route path="/additionalservices" element={<AdditionalService />} />
           <Route path="/booknow" element={<BookNow />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
