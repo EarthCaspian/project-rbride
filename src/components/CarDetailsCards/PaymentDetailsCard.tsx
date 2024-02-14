@@ -9,9 +9,6 @@ import {
   handleRentalStartDate,
   handleRentalTotalPrice,
 } from "../../store/rentalSlice";
-import { addToCart } from "../../store/cartSlice";
-import { RootState } from "../../store/configureStore";
-import { formatLocalDateToYYYYMMDD } from "../../utils/formatDate";
 
 type Props = {
   car: CarModel;
@@ -19,40 +16,45 @@ type Props = {
 };
 
 export const PaymentDetailsCard = (props: Props) => {
-  
-  const car = props.car;
   const screenWidth = props.screenWidth;
 
-  const rentalState = useSelector((state: RootState) => state.rental.rental);
   const dispatch = useDispatch();
 
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.startDate)));
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.endDate)));
-  const [days, setDays] = useState<number>(0);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  //  Car
+  const car = props.car;
+
+  // Date
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
+    //  Converting dates to JSON string format to send them Redux store as a seriliazed value
+  const serializedStartDate = selectedStartDate.toJSON();
+  const serializedEndDate = selectedEndDate.toJSON();
+
+  const [days, setDays] = useState<number>(1);
+ 
   const [isDateSelectionValid, setIsDateSelectionValid] = useState<boolean>(true);
   
-  
-  //Total Price
+  //  Total Price
+  const [totalPrice, setTotalPrice] = useState<number>(car.dailyPrice);
   useEffect(() => {
     calculateTotalPrice(days);
   }, [days]);
 
-  // DATE CHOOSING
-  //    Start date
+  // Date Choosing Functions for date picker
+  //    Start date:
   const handleStartDateChange = (date: Date) => {
       setSelectedStartDate(date);
       if (calculateDaysDifference(date, selectedEndDate) < 0)
         setSelectedEndDate(date);
+      calculateDaysDifference(date ,selectedEndDate);
   };
-  //    End date
+  //    End date:
   const handleEndDateChange = (date: Date) => {
     setSelectedEndDate(date);
     calculateDaysDifference(selectedStartDate, date);
   };
 
-  // DAYS CALCULATING
-  // Function to calculate the number of days between two dates
+  // Number of Reservation days
   const calculateDaysDifference = (startDate: Date, endDate: Date): number => {
     // Convert both dates to UTC to ensure consistency
     const utcStartDate = Date.UTC(
@@ -69,13 +71,13 @@ export const PaymentDetailsCard = (props: Props) => {
     const timeDifference = utcEndDate - utcStartDate;
     // Convert the difference from milliseconds to days
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    if (daysDifference < 0)
-      return -1;
-    setDays(daysDifference);
+    if (daysDifference < 0) return -1;  // End Date can not be earlier than start date
+    if(daysDifference == 0) return 1;   // This line allows us daily/hourly renting
+    else setDays(daysDifference);
     return days;
   };
 
-  //PRICE CALCULATING
+  //Total Price
   // Function to calculate the total price based on the total number of days and the daily amount of the car
   const calculateTotalPrice = (days: number) => {
     calculateDaysDifference(selectedStartDate, selectedEndDate);
@@ -88,11 +90,10 @@ export const PaymentDetailsCard = (props: Props) => {
   const addReceivedDatasToRentalState = () => {
     if (car && totalPrice) {
       //Both dates have been serialized to string format to comply with JSON standards.
-      dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-      dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+      dispatch(handleRentalStartDate(serializedStartDate));
+      dispatch(handleRentalEndDate(serializedEndDate));
       dispatch(addRentalSelectedCar(car));
       dispatch(handleRentalTotalPrice(totalPrice));
-      //dispatch(addToCart(car));
     }
     else {
       // The variable indicating whether a valid date is chosen.
@@ -108,7 +109,7 @@ export const PaymentDetailsCard = (props: Props) => {
           screenWidth ? "custom-fixed" : ""
         }`}
       >
-        {/* PAYMENT TABLE */}
+        {/* RESERVATION DETAIL TABLE */}
         <table
           id="payment-table"
           className="table table-borderless w-75 "
@@ -118,7 +119,7 @@ export const PaymentDetailsCard = (props: Props) => {
           <thead>
             <tr>
               <td colSpan={2}>
-                <p className="display-6"> Payment Details </p>
+                <p className="display-6"> Reservation Details </p>
               </td>
             </tr>
           </thead>
@@ -232,7 +233,7 @@ export const PaymentDetailsCard = (props: Props) => {
             <p id="warning-message"
               className="row d-flex justify-content-center"
               style={{color: "red"}}>
-                {!isDateSelectionValid ? "Please choose a date and time." : ""}
+                {!isDateSelectionValid ? "Please choose a date!" : ""}
             </p>
         </div>
       </div>
