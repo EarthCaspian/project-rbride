@@ -23,8 +23,6 @@ type Props = {
 };
 
 export const PaymentDetailsCard = (props: Props) => {
-  
-  const car = props.car;
   const screenWidth = props.screenWidth;
 
   const rentalState = useSelector((state: RootState) => state.rental.rental);
@@ -32,11 +30,22 @@ export const PaymentDetailsCard = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.startDate)));
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.endDate)));
-  const [days, setDays] = useState<number>(0);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  //  Car
+  const car = props.car;
+
+  // Date
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
+    //  Converting dates to JSON string format to send them Redux store as a seriliazed value
+  const serializedStartDate = selectedStartDate.toJSON();
+  const serializedEndDate = selectedEndDate.toJSON();
+
+  const [days, setDays] = useState<number>(1);
+ 
   const [isDateSelectionValid, setIsDateSelectionValid] = useState<boolean>(true);
+  
+  //  Total Price
+  const [totalPrice, setTotalPrice] = useState<number>(car.dailyPrice);
   const [rentalsResponse, setRentalsResponse] = useState<RentalModel[]>([]);
   const [carsResponse, setCarsResponse] = useState<CarModel[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -63,21 +72,46 @@ export const PaymentDetailsCard = (props: Props) => {
     }
   }
 
-  // DATE CHOOSING
-  //    Start date
+  // Date Choosing Functions for date picker
+  //    Start date:
   const handleStartDateChange = (date: Date) => {
       setSelectedStartDate(date);
       if (calculateDatesDifference(date, selectedEndDate) < 0)
         setSelectedEndDate(date);
+      calculateDaysDifference(date ,selectedEndDate);
       // setDays(calculateDatesDifference(selectedStartDate, selectedEndDate));
   };
-  //    End date
+  //    End date:
   const handleEndDateChange = (date: Date) => {
     setSelectedEndDate(date);
+    calculateDaysDifference(selectedStartDate, date);
+  };
+
+  // Number of Reservation days
+  const calculateDaysDifference = (startDate: Date, endDate: Date): number => {
+    // Convert both dates to UTC to ensure consistency
+    const utcStartDate = Date.UTC(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    const utcEndDate = Date.UTC(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
+    // Calculate the difference in milliseconds
+    const timeDifference = utcEndDate - utcStartDate;
+    // Convert the difference from milliseconds to days
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    if (daysDifference < 0) return -1;  // End Date can not be earlier than start date
+    if(daysDifference == 0) return 1;   // This line allows us daily/hourly renting
+    else setDays(daysDifference);
+    return days;
     // setDays(calculateDatesDifference(selectedStartDate, date));
   };
 
-  //PRICE CALCULATING
+  //Total Price
   // Function to calculate the total price based on the total number of days and the daily amount of the car
   const calculateTotalPrice = (days: number) => {
     setDays(calculateDatesDifference(selectedStartDate, selectedEndDate));
@@ -88,17 +122,22 @@ export const PaymentDetailsCard = (props: Props) => {
   //Function that updates the rental state.
   //Rental State is changed only on the button click event.
   const addReceivedDatasToRentalState = () => {
-    //Both dates have been serialized to string format to comply with JSON standards.
-    dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-    dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+      //Both dates have been serialized to string format to comply with JSON standards.
 
+    //Both dates have been serialized to string format to comply with JSON standards.
+    //dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
+    //dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+    dispatch(addRentalSelectedCar(car));
+    dispatch(handleRentalTotalPrice(totalPrice));
     //Check whether this car is available for rent on the selected dates. If it is not, isAvailable variable set undefined,so it cannot pass the condition.
     const isAvailable = filterCarByDates(carsResponse, rentalsResponse, rentalState).find(filteredCar => filteredCar.id === car.id);
 
     if (car && isAvailable && totalPrice) {
+
+      dispatch(handleRentalStartDate(serializedStartDate));
+      dispatch(handleRentalEndDate(serializedEndDate));
       dispatch(addRentalSelectedCar(car));
       dispatch(handleRentalTotalPrice(totalPrice));
-
       loginState.isLoggedIn ? navigate("/additionalservices") : navigate("/login");
     }
     else {
@@ -118,7 +157,7 @@ export const PaymentDetailsCard = (props: Props) => {
           screenWidth ? "custom-fixed" : ""
         }`}
       >
-        {/* PAYMENT TABLE */}
+        {/* RESERVATION DETAIL TABLE */}
         <table
           id="payment-table"
           className="table table-borderless w-75 "
@@ -128,7 +167,7 @@ export const PaymentDetailsCard = (props: Props) => {
           <thead>
             <tr>
               <td colSpan={2}>
-                <p className="display-6"> Payment Details </p>
+                <p className="display-6"> Reservation Details </p>
               </td>
             </tr>
           </thead>

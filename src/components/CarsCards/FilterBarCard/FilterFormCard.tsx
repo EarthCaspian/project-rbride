@@ -57,8 +57,8 @@ const FilterFormCard = (props: Props) => {
     const rentalState = useSelector((state: RootState) => state.rental.rental);
     const dispatch = useDispatch();
 
-    const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.startDate)));
-    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(formatLocalDateToYYYYMMDD(rentalState.endDate)));
+    const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(rentalState.startDate));
+    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(rentalState.endDate));
 
     const handleStartDateChange = (date: Date) => {
         setSelectedStartDate(date);
@@ -75,8 +75,10 @@ const FilterFormCard = (props: Props) => {
     const handleSelections = (values : ValuesType) => {
         //Received day selections are sent to the rental state.   
         //Both dates have been serialized to string format to comply with JSON standards.
-        dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-        dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+        //dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
+        //dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+        dispatch(handleRentalStartDate(selectedStartDate.toJSON()));
+        dispatch(handleRentalEndDate(selectedEndDate.toJSON()));
         //Received brand selections are sent to the filter state.
         if (values.brandOptions)
             dispatch(handleBrandSelection(props.brands.filter((brand) => values.brandOptions.find(option => option.value === brand.id))));
