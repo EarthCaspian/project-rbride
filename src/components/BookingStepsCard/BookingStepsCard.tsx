@@ -31,7 +31,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
           </Link>
         </div>
         <div className="col-2">
-        <Link to={`${rentalState.car.id !== 0 ? `/car-details/${rentalState.car.id}` : "/cars"}`}>
+        <Link to={`${rentalState.car && rentalState.car.id !== 0 ? `/car-details/${rentalState.car.id}` : "/cars"}`}>
             <img
               className={
                 stepPage === "ChooseCar"
