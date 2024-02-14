@@ -13,7 +13,3 @@ export interface CarModel {
 	color: ColorModel;
 }
 
-export interface DeleteResponse {
-	success: boolean;
-	message: string;
-  }
