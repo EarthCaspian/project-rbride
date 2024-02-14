@@ -7,9 +7,10 @@ import { Link , useNavigate } from "react-router-dom";
 import { LoginModel } from "../../models/requests/LoginModel";
 import LoginService from "../../services/LoginService";
 import TokenService from "../../services/TokenService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoggedIn } from "../../store/loginSlice";
 import { setUser } from "../../store/userSlice";
+import { selectReferringPage } from "../../store/referringPageSlice";
 
 type Props = {};
 
@@ -31,6 +32,7 @@ interface ServerResponse {
 const Login = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const referringPageState = useSelector(selectReferringPage);
   const formik = useFormik({
     initialValues: {
       loginUsername: "",
@@ -54,7 +56,7 @@ const Login = (props: Props) => {
           TokenService.setToken(token);
           dispatch(setLoggedIn());
           dispatch(setUser({ userId }));
-          navigate('/');
+          navigate(referringPageState);
         } else {
           console.error('Invalid response structure:', response);
         }
