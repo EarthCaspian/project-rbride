@@ -90,9 +90,10 @@ export  const FilterBarCard = () => {
   const handleSelections =  (values : ValuesType) => {
     //Received day selections are sent to the rental state.   
     //Both dates have been serialized to string format to comply with JSON standards.  
-    dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-    dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
-
+    //dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
+    //dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+    dispatch(handleRentalStartDate(selectedStartDate.toJSON()));
+    dispatch(handleRentalEndDate(selectedEndDate.toJSON()));
     //Received brand selection is sent to the filter state.
     if (values.brandOption)
         dispatch(handleBrandSelection(brands.filter((brand : BrandModel) => values.brandOption.value === brand.id)));

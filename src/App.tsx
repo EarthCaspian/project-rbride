@@ -16,6 +16,7 @@ import AdditionalService from "./pages/AdditionalService/AdditionalService";
 import BookingCompletion from "./pages/BookingCompletion/BookingCompletion";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import Profile from "./pages/Profile/Profile/Profile";
+import Footer from "./layouts/Footer/Footer";
 import Rentals from "./pages/Profile/Rentals/Rentals";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import { AddCarForm } from "./components/AdminPanelCards/CarAdmin/AddCarForm";
@@ -25,14 +26,12 @@ import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
 import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
 
-
-
 function App() {
   return (
     <>
       <Provider store={store}>
         <Navbar />
-        <LoadingOverlay/>
+        <LoadingOverlay />
         <Routes>
           <Route
             path="/"
@@ -61,6 +60,7 @@ function App() {
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
+        <Footer />
       </Provider>
     </>
   );
