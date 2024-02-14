@@ -2,8 +2,7 @@ import React , {useState, useEffect} from 'react'
 import CarService from '../../../services/CarService';
 import { AxiosResponse } from 'axios';
 import { CarModel } from '../../../models/response/CarModel';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 type Props = {}
@@ -31,7 +30,6 @@ const GetAllCars = (props: Props) => {
 
   return (
     <div>
-        <ToastContainer />
         <h2>All Cars</h2>
         <table className="table table-bordered">
       <thead>
