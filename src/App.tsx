@@ -27,6 +27,7 @@ import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GetCarById from "./components/AdminPanelCards/CarAdmin/GetCarById";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/admin" element={<AdminPanel/>}>
             <Route path="/admin/addCar" element={<AddCarForm/>}/>
             <Route path="/admin/getAllCars" element={<GetAllCars/>}/>
+            <Route path="/admin/getCarById" element={<GetCarById/>}/>
             <Route path="/admin/addBrand" element={<AddBrandForm/>}/>
             <Route path="/admin/getAllBrands" element={<GetAllBrands/>}/>
             <Route path="/admin/addModel" element={<AddModelForm/>}/>
