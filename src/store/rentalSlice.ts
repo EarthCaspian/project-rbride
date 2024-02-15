@@ -72,7 +72,7 @@ const initialInsuranceState: RentalExtrasModel = {
 
 const initialRentalSliceState: RentalState = {
   rental:
-    JSON.parse(localStorage.getItem("rental") || "{}") || initialRentalState,
+    JSON.parse(localStorage.getItem("rental") || JSON.stringify(initialRentalState)),
 
   insurance:
     JSON.parse(localStorage.getItem("insurance") || "{}") ||
