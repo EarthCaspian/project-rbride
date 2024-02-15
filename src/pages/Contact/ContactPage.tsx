@@ -1,10 +1,36 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import "./Contact.css";
 import { sendEmail } from '../../services/ContactService';
+import { ContactModel } from '../../models/requests/ContactModel';
 
 const ContactForm: React.FC = () => {
+    const initialValues: ContactModel = {
+        subject: '',
+        name: '',
+        surname: '',
+        email: '',
+        message: ''
+    };
+
+    const handleSubmit = async () => {
+        try {
+            // Send the data to backend
+            const response = await sendEmail(initialValues);
+            if (response.success) {
+                console.log('Mail sent successfully');
+                // Handle successful submission, e.g., show a success message
+            } else {
+                console.error('Failed to send mail');
+                // Handle failed submission, e.g., show an error message
+            }
+        } catch (error) {
+            console.error('Error sending mail:', error);
+            // Handle error, e.g., show an error message
+        }
+    };
+
     return (
         <div className="row">
             <div className="col-xl-13 col-lg-11 col-24">
@@ -22,13 +48,7 @@ const ContactForm: React.FC = () => {
             </div>
             <div className="offset-xl-1 col-xl-10 col-lg-13 col-24">
                 <Formik
-                    initialValues={{
-                        subject: '',
-                        name: '',
-                        surname: '',
-                        email: '',
-                        message: ''
-                    }}
+                    initialValues={initialValues}
                     validationSchema={Yup.object({
                         subject: Yup.string().required('Subject selection is required'),
                         name: Yup.string().required('Please enter your name'),
@@ -36,29 +56,10 @@ const ContactForm: React.FC = () => {
                         email: Yup.string().email('Please enter a valid email address').required('Email address is required'),
                         message: Yup.string().required('Please enter your message'),
                     })}
-                    onSubmit={(values, { setSubmitting }) => {
-                    // Send the data to backend
-                    sendEmail(values)
-                    .then(response => {
-                        if (response.success) {
-                            console.log('Mail sent successfully');
-                            // Handle successful submission, e.g., show a success message
-                        } else {
-                            console.error('Failed to send mail');
-                            // Handle failed submission, e.g., show an error message
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error sending mail:', error);
-                        // Handle error, e.g., show an error message
-                    })
-                    .finally(() => {
-                        setSubmitting(false);
-                    });
-            }}
+                    onSubmit={handleSubmit}
                 >
                     <Form className="primary-form">
-                        <h4 className="form-title">Bize Ulaşın</h4>
+                        <h4 className="form-title mb-5">Bize Ulaşın</h4>
                         <div className="row" data-recording-disable="">
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
@@ -103,7 +104,7 @@ const ContactForm: React.FC = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-end">
-                            <button type="submit" className="btn btn-primary">Gönder</button>
+                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Gönder</button>
                         </div>
                     </Form>
                 </Formik>
