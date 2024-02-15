@@ -29,3 +29,9 @@
     color: white;
     
 } */
+
+.error-text {
+    color: red;
+    width:75%;
+    font-size: smaller;
+  }
