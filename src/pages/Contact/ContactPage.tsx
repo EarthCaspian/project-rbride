@@ -9,6 +9,9 @@ import ReCAPTCHA from "react-google-recaptcha";
 const ContactForm: React.FC = () => {
 
     const [capVal, setCapVal] = useState<string | null>(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState('');
     
     const initialValues: ContactModel = {
         subject: '',
@@ -20,23 +23,34 @@ const ContactForm: React.FC = () => {
 
     const handleSubmit = async (values: ContactModel) => {
         try {
+            setSubmitting(true);
             if (capVal) {
                 // Send the data to backend
                 const response = await sendEmail(values);
                 if (response.success) {
                     console.log('Mail sent successfully');
+                    setSubmitSuccess(true);
+                    setSubmitError('');
                     // Handle successful submission, e.g., show a success message
                 } else {
                     console.error('Failed to send mail');
+                    setSubmitSuccess(false);
+                    setSubmitError(response.error || 'Failed to send mail');
                     // Handle failed submission, e.g., show an error message
                 }
             } else {
                 console.error('reCAPTCHA not validated');
+                setSubmitSuccess(false);
+                setSubmitError('reCAPTCHA not validated');
                 // Handle case when reCAPTCHA is not validated
             }
         } catch (error) {
             console.error('Error sending mail:', error);
+            setSubmitSuccess(false);
+            setSubmitError('Error sending mail');
             // Handle error, e.g., show an error message
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -115,8 +129,11 @@ const ContactForm: React.FC = () => {
                         </div>
                         <ReCAPTCHA sitekey="" onChange={(val) => setCapVal(val)}/>
                         <div className="d-flex justify-content-end">
-                            <button type="submit" className="btn btn-primary" disabled={!capVal}>Gönder</button>
+                            <button type="submit" className="btn btn-primary" disabled={!capVal || submitting}>
+                                {submitting ? 'Gönderiliyor...' : 'Gönder'}</button>
                         </div>
+                        {submitSuccess && <div className="alert alert-success mt-3">Form başarıyla gönderildi.</div>}
+                        {submitError && <div className="alert alert-danger mt-3">{submitError}</div>}
                     </Form>
                 </Formik>
             </div>
