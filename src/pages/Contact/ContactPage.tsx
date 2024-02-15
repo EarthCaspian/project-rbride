@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import "./Contact.css";
 import { sendEmail } from '../../services/ContactService';
 import { ContactModel } from '../../models/requests/ContactModel';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const ContactForm: React.FC = () => {
+
+    const [capVal, setCapVal] = useState<string | null>(null);
+    
     const initialValues: ContactModel = {
         subject: '',
         name: '',
@@ -14,22 +18,28 @@ const ContactForm: React.FC = () => {
         message: ''
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (values: ContactModel) => {
         try {
-            // Send the data to backend
-            const response = await sendEmail(initialValues);
-            if (response.success) {
-                console.log('Mail sent successfully');
-                // Handle successful submission, e.g., show a success message
+            if (capVal) {
+                // Send the data to backend
+                const response = await sendEmail(values);
+                if (response.success) {
+                    console.log('Mail sent successfully');
+                    // Handle successful submission, e.g., show a success message
+                } else {
+                    console.error('Failed to send mail');
+                    // Handle failed submission, e.g., show an error message
+                }
             } else {
-                console.error('Failed to send mail');
-                // Handle failed submission, e.g., show an error message
+                console.error('reCAPTCHA not validated');
+                // Handle case when reCAPTCHA is not validated
             }
         } catch (error) {
             console.error('Error sending mail:', error);
             // Handle error, e.g., show an error message
         }
     };
+
 
     return (
         <div className="row">
@@ -103,8 +113,9 @@ const ContactForm: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                        <ReCAPTCHA sitekey="" onChange={(val) => setCapVal(val)}/>
                         <div className="d-flex justify-content-end">
-                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Gönder</button>
+                            <button type="submit" className="btn btn-primary" disabled={!capVal}>Gönder</button>
                         </div>
                     </Form>
                 </Formik>
