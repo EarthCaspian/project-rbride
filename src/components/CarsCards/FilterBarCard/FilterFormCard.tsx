@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { calculateDatesDifference, formatLocalDateToYYYYMMDD } from '../../../utils/formatDate';
+import { calculateDatesDifference } from '../../../utils/formatDate';
 import { RootState } from '../../../store/configureStore';
 import { handleRentalEndDate, handleRentalStartDate } from '../../../store/rentalSlice';
 import { handleBrandSelection, handleColorSelection, handleMaxDailyPrice, handleMinDailyPrice, handleModelSelection } from '../../../store/filterSlice';
 import { BrandModel } from '../../../models/response/BrandModel';
 import { ColorModel } from '../../../models/response/ColorModel';
 import { ModelModel } from '../../../models/response/ModelModel';
-import { Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import DateChooser from '../../DateChooser/DateChooser';
 import CustomSelect, { OptionType } from '../../CustomSelect/CustomSelect';
@@ -29,21 +29,6 @@ interface ValuesType {
   maxDailyPrice: number;
 }
 
-const initialValues : ValuesType = {
-    brandOptions : [],
-    colorOptions: [],
-    modelOptions: [],
-    minDailyPrice : 0,
-    maxDailyPrice: 2000,
-};
-
-const ValidationSchema = Yup.object({
-  minDailyPrice : Yup.number().min(0),
-    // .when('maxDailyPrice', (maxDailyPrice, schema) => (schema.max(maxDailyPrice, 'Enter less than max price.'))),
-  maxDailyPrice: Yup.number().min(0),
-    // .when('minDailyPrice', (minDailyPrice, schema) => (schema.max(minDailyPrice, 'Enter greater than min price.'))),
-})
-
 type Props = {
     brands: BrandModel[];
     colors: ColorModel[];
@@ -60,6 +45,19 @@ const FilterFormCard = (props: Props) => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(rentalState.startDate));
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(rentalState.endDate));
 
+    const initialValues : ValuesType = {
+      brandOptions : [],
+      colorOptions: [],
+      modelOptions: [],
+      minDailyPrice : props.selectedOptions?.minDailyPrice || 0,
+      maxDailyPrice: props.selectedOptions?.maxDailyPrice || 2000,
+    };
+
+    const ValidationSchema = Yup.object().shape({
+      minDailyPrice : Yup.number().max(Yup.ref('maxDailyPrice'), "Minimum price cannot exceed maximum price.")
+      .min(0, "price cannot be less than 0."),
+    });
+
     const handleStartDateChange = (date: Date) => {
         setSelectedStartDate(date);
         if (calculateDatesDifference(date, selectedEndDate) < 0)
@@ -74,9 +72,7 @@ const FilterFormCard = (props: Props) => {
     // Function that updates the rental state and filter state with selections.
     const handleSelections = (values : ValuesType) => {
         //Received day selections are sent to the rental state.   
-        //Both dates have been serialized to string format to comply with JSON standards.
-        //dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-        //dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
+        //Both dates have been serialized to JSON format to comply with JSON standards.
         dispatch(handleRentalStartDate(selectedStartDate.toJSON()));
         dispatch(handleRentalEndDate(selectedEndDate.toJSON()));
         //Received brand selections are sent to the filter state.
@@ -185,7 +181,8 @@ const FilterFormCard = (props: Props) => {
                           name="minDailyPrice" 
                           type="number" 
                           placeholder="Min..." 
-                          className="form-control" />
+                          className="form-control" 
+                        />
                     </div>
                     <div className="col-6"> 
                       <Field 
@@ -193,11 +190,14 @@ const FilterFormCard = (props: Props) => {
                           name="maxDailyPrice" 
                           type="number" 
                           placeholder="Max..."
-                          className="form-control" />
+                          className="form-control" 
+                      />
                     </div>
+                    <ErrorMessage name="minDailyPrice">
+                      {(message) => <p className="error-text pl-2 mt-2">{message}</p>}
+                    </ErrorMessage>
                   </div>
                 </div>
-                    
                 {/* SUBMIT BUTTON */}
                 <div className="d-grid gap-2 mt-4">
                   <button 

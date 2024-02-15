@@ -6,15 +6,15 @@ import CarService from "../../services/CarService";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import RentalService from "../../services/RentalService";
-import { RentalModel } from "../../models/response/RentalModel";
 import { filterCarByBrand, filterCarByColor, filterCarByDates, filterCarByModel, filterCarByPrice } from "../../utils/filterCarsByOptions";
+import { RentalResponseModel } from "../../models/response/RentalResponseModel";
 
 const CarList = () => {
 
   const [cars, setCars] = useState<CarModel[]>([]);
   const filterState = useSelector((state: RootState) => state.filter);
   const rentalState = useSelector((state: RootState) => state.rental.rental);
-  let rentalsResponse : RentalModel[];
+  let rentalsResponse : RentalResponseModel[];
   let carsResponse : CarModel[];
 
   useEffect(() => {
@@ -27,9 +27,9 @@ const CarList = () => {
     applyFiltersToCars();
   };
 
-  const fetchRentals = () :Promise<RentalModel[]> => {
+  const fetchRentals = () :Promise<RentalResponseModel[]> => {
     return (
-      RentalService.getAll().then((rentalResponse: AxiosResponse<RentalModel[]>) => {
+      RentalService.getAll().then((rentalResponse: AxiosResponse<RentalResponseModel[]>) => {
         return (rentalResponse.data);
       })
     );
@@ -46,11 +46,11 @@ const CarList = () => {
   // Applies filters sequentially to create a new list of cars and updates it.
   const applyFiltersToCars = () => {
     // Apply date, brand, model, color, and price filters sequentially
-    let filteredCarsList = filterCarByDates(carsResponse, rentalsResponse, rentalState);
-    filteredCarsList = filterCarByBrand(filteredCarsList, filterState);
+    let filteredCarsList = filterCarByBrand(carsResponse, filterState);
     filteredCarsList = filterCarByModel(filteredCarsList, filterState);
     filteredCarsList = filterCarByColor(filteredCarsList, filterState);
     filteredCarsList = filterCarByPrice(filteredCarsList, filterState);
+    filteredCarsList = filterCarByDates(filteredCarsList, rentalsResponse, rentalState);
     // Set the new filtered list of cars
     setCars(filteredCarsList);
   };

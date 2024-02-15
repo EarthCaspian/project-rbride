@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { RentalModel } from "../models/response/RentalModel";
 import { AddRentalRequestModel } from "./../models/requests/AddRentalRequestModel";
 import { RentalResponseModel } from "../models/response/RentalResponseModel";
 import { GetRentalIdModel } from "../models/response/GetRentalIdModel";
@@ -19,8 +18,8 @@ class RentalService {
         })
     }
 
-    getAll() : Promise<AxiosResponse<RentalModel[]>> {
-        return axios.get<RentalModel[]>(`${API_URL}/getAll`);
+    getAll() : Promise<AxiosResponse<RentalResponseModel[]>> {
+        return axios.get<RentalResponseModel[]>(`${API_URL}/getAll`);
     }
   
   getById(id: number) {

@@ -10,12 +10,10 @@ import {
   handleRentalTotalPrice,
 } from "../../store/rentalSlice";
 import { RootState } from "../../store/configureStore";
-import { calculateDatesDifference, formatLocalDateToYYYYMMDD } from "../../utils/formatDate";
+import { calculateDatesDifference } from "../../utils/formatDate";
 import { Button } from "react-bootstrap";
-import { RentalModel } from "../../models/response/RentalModel";
 import RentalService from "../../services/RentalService";
-import CarService from "../../services/CarService";
-import { filterCarByDates } from "../../utils/filterCarsByOptions";
+import { RentalResponseModel } from "../../models/response/RentalResponseModel";
 
 type Props = {
   car: CarModel;
@@ -23,8 +21,8 @@ type Props = {
 };
 
 export const PaymentDetailsCard = (props: Props) => {
+  
   const screenWidth = props.screenWidth;
-
   const rentalState = useSelector((state: RootState) => state.rental.rental);
   const loginState = useSelector((state:RootState) => state.login);
   const dispatch = useDispatch();
@@ -34,42 +32,51 @@ export const PaymentDetailsCard = (props: Props) => {
   const car = props.car;
 
   // Date
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
-    //  Converting dates to JSON string format to send them Redux store as a seriliazed value
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(rentalState.startDate));
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(rentalState.endDate));
+   //  Converting dates to JSON string format to send them Redux store as a seriliazed value
   const serializedStartDate = selectedStartDate.toJSON();
   const serializedEndDate = selectedEndDate.toJSON();
 
   const [days, setDays] = useState<number>(1);
  
-  const [isDateSelectionValid, setIsDateSelectionValid] = useState<boolean>(true);
-  
   //  Total Price
   const [totalPrice, setTotalPrice] = useState<number>(car.dailyPrice);
-  const [rentalsResponse, setRentalsResponse] = useState<RentalModel[]>([]);
-  const [carsResponse, setCarsResponse] = useState<CarModel[]>([]);
+
+  // Rentals response
+  const [rentalsResponse, setRentalsResponse] = useState<RentalResponseModel[]>([]);
+  // The variable indicating whether a valid date is chosen.
+  const [isAvailable, setIsAvailable] = useState<boolean>(true);
+  // The variable holding the error message to be displayed via the JSX element with id "warning-message".
   const [errorMessage, setErrorMessage] = useState("");
 
   let  alreadyFetch = 0;
-  //Total Price
+
   useEffect(() => {
+    if (!alreadyFetch++) // This line ensures that rentals fetched only once during initial component mount
+      fetchRentals();
     calculateTotalPrice(days);
-    if (!alreadyFetch++)
-      fetchCarsAndRentals();
+    availabilityCheck();
   }, [selectedEndDate, selectedStartDate, days]);
 
   
-  const fetchCarsAndRentals = async () => {
-    try {
-      const [carsResponse, rentalsResponse] = await Promise.all([
-        CarService.getAll(),
-        RentalService.getAll()
-      ]);
-      setCarsResponse(carsResponse.data);
-      setRentalsResponse(rentalsResponse.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  const fetchRentals =() => {
+    RentalService.getAll().then((response) => {
+      setRentalsResponse(response.data);
+      return response.data;
+    })
+  }
+
+  // Function to check the availability of the car on selected days
+  const availabilityCheck = () => {
+    // listing all previous leases of the car that have not yet been returned
+    const rentals : RentalResponseModel[] | undefined = rentalsResponse.filter((rental) => rental.car.id === car.id && calculateDatesDifference(new Date(), new Date(rental.endDate)) >= 0);
+    console.log(rentals); 
+    setErrorMessage("");
+    let isExist = rentals?.some(rental => 
+              calculateDatesDifference(new Date(rental.endDate), new Date(selectedStartDate)) <= 0 && 
+              calculateDatesDifference(new Date(selectedEndDate), new Date(rental.startDate)) <= 0)
+    setIsAvailable(!isExist);
   }
 
   // Date Choosing Functions for date picker
@@ -78,43 +85,26 @@ export const PaymentDetailsCard = (props: Props) => {
       setSelectedStartDate(date);
       if (calculateDatesDifference(date, selectedEndDate) < 0)
         setSelectedEndDate(date);
-      calculateDaysDifference(date ,selectedEndDate);
-      // setDays(calculateDatesDifference(selectedStartDate, selectedEndDate));
+      calculateReservationDays(date ,selectedEndDate);
   };
   //    End date:
   const handleEndDateChange = (date: Date) => {
     setSelectedEndDate(date);
-    calculateDaysDifference(selectedStartDate, date);
+    calculateReservationDays(selectedStartDate, date);
   };
 
   // Number of Reservation days
-  const calculateDaysDifference = (startDate: Date, endDate: Date): number => {
-    // Convert both dates to UTC to ensure consistency
-    const utcStartDate = Date.UTC(
-      startDate.getFullYear(),
-      startDate.getMonth(),
-      startDate.getDate()
-    );
-    const utcEndDate = Date.UTC(
-      endDate.getFullYear(),
-      endDate.getMonth(),
-      endDate.getDate()
-    );
-    // Calculate the difference in milliseconds
-    const timeDifference = utcEndDate - utcStartDate;
-    // Convert the difference from milliseconds to days
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    if (daysDifference < 0) return -1;  // End Date can not be earlier than start date
-    if(daysDifference == 0) return 1;   // This line allows us daily/hourly renting
-    else setDays(daysDifference);
+  const calculateReservationDays = (startDate: Date, endDate: Date): number => {
+    let datesDifference = calculateDatesDifference(startDate, endDate);
+    if(datesDifference == 0) datesDifference = 1; // This line allows us daily/hourly renting
+    setDays(datesDifference);
     return days;
-    // setDays(calculateDatesDifference(selectedStartDate, date));
   };
 
   //Total Price
   // Function to calculate the total price based on the total number of days and the daily amount of the car
   const calculateTotalPrice = (days: number) => {
-    setDays(calculateDatesDifference(selectedStartDate, selectedEndDate));
+    calculateReservationDays(selectedStartDate, selectedEndDate);
     setTotalPrice(car.dailyPrice * days);
   };
 
@@ -122,18 +112,7 @@ export const PaymentDetailsCard = (props: Props) => {
   //Function that updates the rental state.
   //Rental State is changed only on the button click event.
   const addReceivedDatasToRentalState = () => {
-      //Both dates have been serialized to string format to comply with JSON standards.
-
-    //Both dates have been serialized to string format to comply with JSON standards.
-    //dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-    //dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
-    dispatch(addRentalSelectedCar(car));
-    dispatch(handleRentalTotalPrice(totalPrice));
-    //Check whether this car is available for rent on the selected dates. If it is not, isAvailable variable set undefined,so it cannot pass the condition.
-    const isAvailable = filterCarByDates(carsResponse, rentalsResponse, rentalState).find(filteredCar => filteredCar.id === car.id);
-
-    if (car && isAvailable && totalPrice) {
-
+    if (car && isAvailable) {
       dispatch(handleRentalStartDate(serializedStartDate));
       dispatch(handleRentalEndDate(serializedEndDate));
       dispatch(addRentalSelectedCar(car));
@@ -141,12 +120,7 @@ export const PaymentDetailsCard = (props: Props) => {
       loginState.isLoggedIn ? navigate("/additionalservices") : navigate("/login");
     }
     else {
-      // The variable indicating whether a valid date is chosen.
-      // if set to false, triggers the display of a warning message through the JSX element with the id "warning-message".
-      setErrorMessage("The vehicle is not available on the selected dates.")
-      if (isAvailable)
-        setErrorMessage("Please choose at least 1 day.");
-      setIsDateSelectionValid(false);
+      setErrorMessage("The vehicle is not available on the selected dates.");
     }
   };
 
@@ -280,7 +254,7 @@ export const PaymentDetailsCard = (props: Props) => {
             <p id="warning-message"
               className="row d-flex justify-content-center"
               style={{color: "red"}}>
-                {!isDateSelectionValid ? errorMessage : ""}
+                {errorMessage}
             </p>
         </div>
       </div>
