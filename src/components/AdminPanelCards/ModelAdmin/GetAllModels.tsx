@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from 'react'
 import ModelService from '../../../services/ModelService';
 import { GetAllModelModel } from '../../../models/response/ModelModel';
+import { toast } from 'react-toastify';
 
 
 type Props = {}
@@ -10,9 +11,19 @@ const GetAllModels = (props: Props) => {
     const [models, setModels] = useState<GetAllModelModel[]>([]);
 
     useEffect(() => {
-      ModelService.getAllModels().then(setModels)
+      fetchModels();
     }, [])
 
+    const fetchModels = () => {
+      ModelService.getAllModels().then(setModels)
+    }
+
+    const deleteModel = (id: number) => {
+      ModelService.delete(id).then((response) => {
+        fetchModels();
+        toast.success(response.data.message); 
+      });
+    };
 
   return (
     <div>
@@ -31,6 +42,9 @@ const GetAllModels = (props: Props) => {
             <td>{model.name}</td>
             <td>{model.id}</td>
             <td>{model.brand.name}</td>
+            <td>
+              <button className='btn btn-danger' onClick={() => deleteModel(model.id)}>Delete</button>
+            </td>
           </tr>
         )}
       </tbody>

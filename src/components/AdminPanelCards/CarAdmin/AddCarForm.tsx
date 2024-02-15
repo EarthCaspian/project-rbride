@@ -3,6 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import CarService from '../../../services/CarService';
 import "../AddForm.css";
+import { toast } from 'react-toastify';
+
 
 const AddCarSchema = Yup.object().shape({
     kilometer: Yup.number().required('Required'),
@@ -32,8 +34,9 @@ export const AddCarForm = () => (
             validationSchema={AddCarSchema}
             onSubmit={(values, { setSubmitting }) => {
                 CarService.add(values)
-                .then(() => {
+                .then((response) => {
                     setSubmitting(false);
+                    toast.success(response.data.message); 
                 });
             }}
         >
