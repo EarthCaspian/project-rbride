@@ -14,6 +14,7 @@ const AdminPanel = (props: Props) => {
         <h3>Car Ops</h3>
         <Link to="/admin/addCar">Add Car</Link>
         <Link to="/admin/getAllCars">Get All Cars</Link>
+        <Link to="/admin/getCarById">Get Car By ID</Link>
         <hr />
         <h3>Brand Ops</h3>
         <Link to="/admin/addBrand">Add Brand</Link>
