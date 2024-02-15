@@ -1,6 +1,6 @@
 export interface AddRentalRequestModel {
-	startDate : any;
-	endDate : any;
+	startDate : Date| null;
+	endDate : Date| null;
 	carId: number;
 	userId: number;
 }
