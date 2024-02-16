@@ -127,7 +127,7 @@ const ContactForm: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <ReCAPTCHA sitekey="" onChange={(val) => setCapVal(val)}/>
+                        <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY || ''} onChange={(val) => setCapVal(val)}/>
                         <div className="d-flex justify-content-end">
                             <button type="submit" className="btn btn-primary" disabled={!capVal || submitting}>
                                 {submitting ? 'Gönderiliyor...' : 'Gönder'}</button>
