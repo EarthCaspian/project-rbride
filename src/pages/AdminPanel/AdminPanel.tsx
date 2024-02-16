@@ -19,10 +19,12 @@ const AdminPanel = (props: Props) => {
         <h3>Brand Ops</h3>
         <Link to="/admin/addBrand">Add Brand</Link>
         <Link to="/admin/getAllBrands">Get All Brands</Link>
+        <Link to="/admin/getBrandById">Get Brand By ID</Link>
         <hr />
         <h3>Model Ops</h3>
         <Link to="/admin/addModel">Add Model</Link>
         <Link to="/admin/getAllModels">Get All Models</Link>
+        <Link to="/admin/getModelById">Get Model By ID</Link>
       </div>
     </div>
     <div className="admin-content mt-5">
