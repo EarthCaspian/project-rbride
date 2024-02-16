@@ -3,6 +3,7 @@ import CarService from '../../../services/CarService';
 import { AxiosResponse } from 'axios';
 import { CarModel } from '../../../models/response/CarModel';
 import { toast } from 'react-toastify';
+import { Link, Outlet } from 'react-router-dom';
 
 
 type Props = {}
@@ -31,6 +32,7 @@ const GetAllCars = (props: Props) => {
   return (
     <div>
         <h2>All Cars</h2>
+        <p>Table listing of all the cars currently in the database.Please refer to the update/delete column for related operations.</p>
         <table className="table table-bordered">
       <thead>
         <tr>
@@ -43,6 +45,7 @@ const GetAllCars = (props: Props) => {
           <th>Image</th>
           <th>Model Name</th>
           <th>Color</th>
+          <th>Update/Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -58,6 +61,7 @@ const GetAllCars = (props: Props) => {
             <td>{car.model.name}</td>
             <td>{car.color.name}</td>
             <td>
+              <Link to={`/admin/getAllCars/update/${car.id}`} className='btn btn-warning me-2'>Update</Link>
               <button className='btn btn-danger' onClick={() => deleteCar(car.id)}>Delete</button>
             </td>
           </tr>

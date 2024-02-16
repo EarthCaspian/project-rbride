@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import CarService from '../../../services/CarService';
 import { CarModel } from '../../../models/response/CarModel';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 type Props = {}
 
@@ -16,9 +18,18 @@ const GetCarById = (props: Props) => {
       }
     };
   
+    const deleteCar = (id: number) => {
+      CarService.delete(id).then((response) => {
+        getCar();
+        toast.success(response.data.message); 
+      });
+    };
+
+
     return (
       <div>
         <h1>Get Car By ID</h1>
+        <p>Enter the car id to get the desired car entry.Please refer to the update/delete column for related operations.</p>
             <div className="d-flex align-items-center mt-3 mb-3">
             <input
                 type="number"
@@ -45,6 +56,7 @@ const GetCarById = (props: Props) => {
                 <th>Image</th>
                 <th>Model Name</th>
                 <th>Color</th>
+                <th>Update/Delete</th>
               </tr>
             </thead>
             {/* Table body */}
@@ -59,6 +71,10 @@ const GetCarById = (props: Props) => {
                 <td><img height={50} src={car.imagePath} alt="car-image" /></td>
                 <td>{car.model.name}</td>
                 <td>{car.color.name}</td>
+                <td>
+                  <Link to={`/admin/getAllCars/update/${car.id}`} className='btn btn-warning me-2'>Update</Link>
+                  <button className='btn btn-danger' onClick={() => deleteCar(car.id)}>Delete</button>
+                </td>
               </tr>
             </tbody>
           </table>
