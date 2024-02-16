@@ -2,3 +2,12 @@
     width: "auto"; 
     height: "auto";
 }
+
+.step-button{
+    background: none;
+    /* border-radius: 100%; */
+    width: 60%;
+    height: 150%;
+    /* border-color: rgb(200, 200, 200); */
+    border: none;
+}

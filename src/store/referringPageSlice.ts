@@ -5,7 +5,7 @@ interface referringPageState {
 }
 
 const initialState: referringPageState = {
-  referringPage: "/",
+  referringPage: JSON.parse(localStorage.getItem("referringPage") || JSON.stringify("/")),
 };
 
 const referringPageSlice = createSlice({
@@ -14,6 +14,7 @@ const referringPageSlice = createSlice({
   reducers: {
     setReferringPage: (state, action : PayloadAction<string>) => {
       state.referringPage = action.payload;
+      localStorage.setItem("referringPage", JSON.stringify(state.referringPage));
     },
   },
 });

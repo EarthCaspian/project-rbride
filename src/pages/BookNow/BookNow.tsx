@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./style.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomerService from "../../services/CustomerService";
 import { RootState } from "../../store/configureStore";
 import { CustomerModel } from "../../models/requests/CustomerModel";
@@ -11,6 +11,7 @@ import BookingStepsCard from "../../components/BookingStepsCard/BookingStepsCard
 import BookingDetailsCard from "../../components/BookingDetailsCard/BookingDetailsCard";
 import CustomerFormCard from "../../components/CustomerFormCard/CustomerFormCard";
 import PaymentDetailsCard from "../../components/PaymentDetailsCard/PaymentDetailsCard";
+import { setStepLevel } from "../../store/stepsSlice";
 
 type Props = {};
 
@@ -21,6 +22,7 @@ const BookNow = (props: Props) => {
     (state: RootState) => state.customer.customer
   );
   const RentalState = useSelector((state: RootState) => state.rental.rental);
+  const dispatch = useDispatch();
   //const IsBookedState = useSelector((state: RootState) => state.booking.isBookedCompleted);
 
   const togglePopup = () => {
@@ -45,6 +47,8 @@ const BookNow = (props: Props) => {
       userId: 1,
     };
 
+    dispatch(setStepLevel(3));
+    
     try {
       await Promise.all([
         RentalService.add(rentalModel),

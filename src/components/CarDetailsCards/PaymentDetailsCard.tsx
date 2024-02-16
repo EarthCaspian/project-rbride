@@ -14,6 +14,7 @@ import { calculateDatesDifference } from "../../utils/formatDate";
 import { Button } from "react-bootstrap";
 import RentalService from "../../services/RentalService";
 import { RentalResponseModel } from "../../models/response/RentalResponseModel";
+import { setStepLevel } from "../../store/stepsSlice";
 
 type Props = {
   car: CarModel;
@@ -113,6 +114,10 @@ export const PaymentDetailsCard = (props: Props) => {
   //Rental State is changed only on the button click event.
   const addReceivedDatasToRentalState = () => {
     if (car && isAvailable) {
+      if (loginState.isLoggedIn)
+        dispatch(setStepLevel(1));
+      else
+        dispatch(setStepLevel(0));
       dispatch(handleRentalStartDate(serializedStartDate));
       dispatch(handleRentalEndDate(serializedEndDate));
       dispatch(addRentalSelectedCar(car));

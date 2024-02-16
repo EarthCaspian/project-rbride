@@ -6,6 +6,7 @@ import { RentalExtrasModel, addRentalSelectedExtraServices, addRentalSelectedIns
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/configureStore";
 import { Button } from "react-bootstrap";
+import { setStepLevel } from "../../store/stepsSlice";
 
 
 type Props = {};
@@ -68,6 +69,9 @@ const AdditionalService = (props: Props) => {
 
     const extras : RentalExtrasModel[] = rentalExtraServices.filter((extra, i) => selectedExtras[i] == true)
     dispatch(addRentalSelectedExtraServices(extras));
+
+    dispatch(setStepLevel(2));
+    
     navigate('/booknow');
   }
 
