@@ -28,6 +28,7 @@ const CarCard = (car: Props) => {
                 src={car.car.model.brand.logoPath}
                 className="brandLogo float-end mb-2"
                 alt="brand logo"
+                height={50}
               />
             </div>
           </div>

@@ -25,14 +25,20 @@ import { AddModelForm } from "./components/AdminPanelCards/ModelAdmin/AddModelFo
 import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
 import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
+
 import ContactPage from "./pages/Contact/ContactPage";
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   return (
     <>
       <Provider store={store}>
         <Navbar />
-        <LoadingOverlay />
+        <LoadingOverlay/>
+        <ToastContainer/>
         <Routes>
           <Route
             path="/"

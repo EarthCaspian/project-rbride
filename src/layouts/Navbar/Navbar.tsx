@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { clearCart } from "../../store/cartSlice";
 import path from "path";
 import { selectIsLoggedIn, setLoggedOut } from "../../store/loginSlice";
+import { setStepLevel } from "../../store/stepsSlice";
 
 type Props = {};
 
@@ -23,6 +24,7 @@ const Navbar = (props: Props) => {
 
   const handleLogout = () => {
     dispatch(setLoggedOut());
+    dispatch(setStepLevel(0));
   }
 
   return (

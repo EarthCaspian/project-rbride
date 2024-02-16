@@ -7,7 +7,9 @@ import { filterReducer } from "./filterSlice";
 import { userReducer } from "./userSlice";
 import { customerReducer } from "./customerSlice";
 import { invoiceReducer } from "./invoiceSlice";
-import { bookingReducer, bookingSlice } from "./bookingSlice";
+import { bookingReducer } from "./bookingSlice";
+import { referringPageReducer } from "./referringPageSlice";
+import { stepsReducer } from "./stepsSlice";
 
 
 const rootReducer = combineReducers({
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   customer: customerReducer,
   invoice: invoiceReducer,
   booking: bookingReducer,
+  referringPage : referringPageReducer,
+  steps: stepsReducer,
 });
 
 export const store = configureStore({

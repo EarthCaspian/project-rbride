@@ -7,6 +7,9 @@ import { CarDetailsCard } from '../../components/CarDetailsCards/CarDetailsCard'
 import { PaymentDetailsCard } from '../../components/CarDetailsCards/PaymentDetailsCard';
 import { FooterCard } from '../../components/CarDetailsCards/FooterCard';
 import BookingStepsCard from '../../components/BookingStepsCard/BookingStepsCard';
+import { useDispatch } from "react-redux";
+import { setReferringPage } from '../../store/referringPageSlice';
+
 
 type Props = {}
 
@@ -16,6 +19,9 @@ export const CarDetails = (props: Props) => {
     const params = useParams<{id:string}>();
     const [screenWidth, setScreenWidth] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    dispatch(setReferringPage(`/car-details/${params.id}`))
 
     useEffect(() => {
       fetchCar();

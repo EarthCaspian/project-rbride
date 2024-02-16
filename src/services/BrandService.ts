@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from "axios";
 import { AddBrandModel } from "../models/requests/AddBrandModel";
 
 import { BrandModel } from "../models/response/BrandModel";
+import { SuccessResponse } from "../models/response/SuccessResponse";
 
 const API_URL="http://localhost:8080/api/brands"; 
 
@@ -17,9 +18,11 @@ class BrandService {
         return axios.post(`${API_URL}/add`, request)
         .then(response => {
             console.log(response + ": The brand has been successfully added to the database.");
+            return response;
         })
         .catch(error => {
             console.log(error + ": Something went wrong.");
+            return { data: { success: false, message: "Something went wrong." } };
         })
     }
 
@@ -27,6 +30,9 @@ class BrandService {
         return axios.get(`${API_URL}/getAll`).then(response => response.data);
     }
 
+    delete(id: number) {
+        return axios.delete<SuccessResponse>(`${API_URL}/delete`, { data: { id } });
+    }
 
 }
 
