@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from "axios";
 import { CarModel } from "../models/response/CarModel";
 import { AddCarModel } from "../models/requests/AddCarModel";
 import { SuccessResponse } from "../models/response/SuccessResponse";
+import { UpdateCarFormValues } from "../components/AdminPanelCards/CarAdmin/UpdateCarForm";
 
 const API_URL="http://localhost:8080/api/cars"; 
-
 
 
 class CarService {
@@ -25,6 +25,18 @@ class CarService {
         return axios.post<SuccessResponse>(`${API_URL}/add`, request)
         .then(response => {
             console.log(response + ": The car has been successfully added to the database.");
+            return response;
+        })
+        .catch(error => {
+            console.log(error + ": Something went wrong.");
+            return { data: { success: false, message: "Something went wrong." } };
+        })
+    }
+
+    update(car: UpdateCarFormValues) {
+        return axios.put<SuccessResponse>(`${API_URL}/update`, car)
+        .then(response => {
+            console.log(response + ": The car has been successfully updated in the database.");
             return response;
         })
         .catch(error => {
