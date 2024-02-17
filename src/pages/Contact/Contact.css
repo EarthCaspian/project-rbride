@@ -1,0 +1,13 @@
+.map-card{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    margin-top: 120px;
+    margin-bottom: 40px;
+    
+}
+
+.contact-item h4,
+.contact-item p {
+    margin-bottom: 30px;
+}

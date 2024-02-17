@@ -25,6 +25,9 @@ import { AddModelForm } from "./components/AdminPanelCards/ModelAdmin/AddModelFo
 import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
 import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
+
+import ContactPage from "./pages/Contact/ContactPage";
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GetCarById from "./components/AdminPanelCards/CarAdmin/GetCarById";
@@ -33,6 +36,7 @@ import GetBrandById from "./components/AdminPanelCards/BrandAdmin/GetBrandById";
 import UpdateBrandForm from "./components/AdminPanelCards/BrandAdmin/UpdateBrandForm";
 import GetModelById from "./components/AdminPanelCards/ModelAdmin/GetModelById";
 import UpdateModelForm from "./components/AdminPanelCards/ModelAdmin/UpdateModelForm";
+
 
 function App() {
   return (
@@ -73,6 +77,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
+          <Route path="/contactpage" element={<ContactPage />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
         <Footer />
