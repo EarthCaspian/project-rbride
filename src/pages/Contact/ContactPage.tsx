@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import "./Contact.css";
 import { sendEmail } from '../../services/ContactService';
@@ -61,9 +61,9 @@ const ContactForm: React.FC = () => {
                 <div className="map-card">
                     <div className="contact-item">
                         <h4 className="company">TOBETO</h4>
-                        <p className="desc"><strong>Adres: </strong> Kavacık, Rüzgarlıbahçe Mah. Çampınarı Sok. No:4 Smart Plaza B Blok Kat:3 34805, Beykoz/İstanbul</p>
-                        <p className="phone"><strong>Telefon: </strong>(0216) 331 48 00</p>
-                        <p className="mail"><strong>E-Posta: </strong>info@tobeto.com</p>
+                        <p className="desc"><strong>Address: </strong> Kavacık, Rüzgarlıbahçe Mah. Çampınarı Sok. No:4 Smart Plaza B Blok Kat:3 34805, Beykoz/İstanbul</p>
+                        <p className="phone"><strong>Telephone: </strong>(0216) 331 48 00</p>
+                        <p className="mail"><strong>Email: </strong>info@tobeto.com</p>
                     </div>
                     <div className="map-item">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12028.132037675927!2d29.0957136!3d41.0901254!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab65635b94473%3A0x688e9b2eaf799804!2sEnocta%20%C4%B0stanbul%20Ofisi!5e0!3m2!1str!2str!4v1707914323496!5m2!1str!2str" width="100%" height="250px" style={{ border: 0 }} aria-hidden="false" tabIndex={0}></iframe>
@@ -83,45 +83,45 @@ const ContactForm: React.FC = () => {
                     onSubmit={handleSubmit}
                 >
                     <Form className="primary-form">
-                        <h4 className="form-title mb-5">Bize Ulaşın</h4>
+                        <h4 className="form-title mb-5">Contact Us</h4>
                         <div className="row" data-recording-disable="">
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
-                                    <label htmlFor="name" className="field-desc">Adınız *</label>
+                                    <label htmlFor="name" className="field-desc">Name *</label>
                                     <Field className="form-control required onlyLetters" type="text" id="name" name="name" />
                                     <ErrorMessage name="name" />
                                 </div>
                             </div>
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
-                                    <label htmlFor="surname" className="field-desc">Soyadınız *</label>
+                                    <label htmlFor="surname" className="field-desc">Surname *</label>
                                     <Field className="form-control required onlyLetters" type="text" id="surname" name="surname" />
                                     <ErrorMessage name="surname" />
                                 </div>
                             </div>
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
-                                    <label htmlFor="email" className="field-desc">E-Posta *</label>
+                                    <label htmlFor="email" className="field-desc">Email *</label>
                                     <Field className="form-control required email" type="email" id="email" name="email" />
                                     <ErrorMessage name="email" />
                                 </div>
                             </div>
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
-                                    <label htmlFor="subject" className="field-desc">Konu *</label>
+                                    <label htmlFor="subject" className="field-desc">Subject *</label>
                                     <Field as="select" name="subject" id="subject" className="form-control primary-select2 required select2-hidden-accessible">
-                                        <option value="">Seçiniz</option>
-                                        <option value="Öneri">Öneri</option>
-                                        <option value="Teşekkür">Teşekkür</option>
-                                        <option value="Eleştiri">Eleştiri</option>
-                                        <option value="Talep">Talep</option>
+                                        <option value="">Select</option>
+                                        <option value="Suggestion">Suggestion</option>
+                                        <option value="Thanks">Thanks</option>
+                                        <option value="Criticism">Criticism</option>
+                                        <option value="Request">Request</option>
                                     </Field>
                                     <ErrorMessage name="subject" />
                                 </div>
                             </div>
                             <div className="col-md-12 col-12">
                                 <div className="form-group">
-                                    <label htmlFor="message" className="field-desc">Mesajınız *</label>
+                                    <label htmlFor="message" className="field-desc">Message *</label>
                                     <Field as="textarea" className="form-control required" name="message" id="message" />
                                     <ErrorMessage name="message" />
                                 </div>
@@ -130,9 +130,9 @@ const ContactForm: React.FC = () => {
                         <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY || ''} onChange={(val) => setCapVal(val)}/>
                         <div className="d-flex justify-content-end">
                             <button type="submit" className="btn btn-primary" disabled={!capVal || submitting}>
-                                {submitting ? 'Gönderiliyor...' : 'Gönder'}</button>
+                                {submitting ? 'Sending...' : 'Submit'}</button>
                         </div>
-                        {submitSuccess && <div className="alert alert-success mt-3">Form başarıyla gönderildi.</div>}
+                        {submitSuccess && <div className="alert alert-success mt-3">Form submitted successfully.</div>}
                         {submitError && <div className="alert alert-danger mt-3">{submitError}</div>}
                     </Form>
                 </Formik>
