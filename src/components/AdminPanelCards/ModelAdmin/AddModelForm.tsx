@@ -13,6 +13,8 @@ const AddModelSchema = Yup.object().shape({
 export const AddModelForm = () => (
     <div>
         <h1>Add Model</h1>
+        <p>Enter the required model information to add a car model to the database. 
+            Please refer to the valid entry requirement warnings in the form for correct data entry.</p>
         <Formik
             initialValues={{
                 name: '',

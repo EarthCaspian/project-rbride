@@ -27,6 +27,12 @@ import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GetCarById from "./components/AdminPanelCards/CarAdmin/GetCarById";
+import UpdateCarForm from "./components/AdminPanelCards/CarAdmin/UpdateCarForm";
+import GetBrandById from "./components/AdminPanelCards/BrandAdmin/GetBrandById";
+import UpdateBrandForm from "./components/AdminPanelCards/BrandAdmin/UpdateBrandForm";
+import GetModelById from "./components/AdminPanelCards/ModelAdmin/GetModelById";
+import UpdateModelForm from "./components/AdminPanelCards/ModelAdmin/UpdateModelForm";
 
 function App() {
   return (
@@ -47,10 +53,16 @@ function App() {
           <Route path="/admin" element={<AdminPanel/>}>
             <Route path="/admin/addCar" element={<AddCarForm/>}/>
             <Route path="/admin/getAllCars" element={<GetAllCars/>}/>
+            <Route path="/admin/getAllCars/update/:id" element={<UpdateCarForm/>}/>
+            <Route path="/admin/getCarById" element={<GetCarById/>}/>
             <Route path="/admin/addBrand" element={<AddBrandForm/>}/>
             <Route path="/admin/getAllBrands" element={<GetAllBrands/>}/>
+            <Route path="/admin/getAllBrands/update/:id" element={<UpdateBrandForm/>}/>
+            <Route path="/admin/getBrandById" element={<GetBrandById/>}/>
             <Route path="/admin/addModel" element={<AddModelForm/>}/>
             <Route path="/admin/getAllModels" element={<GetAllModels/>}/>
+            <Route path="/admin/getModelById" element={<GetModelById/>} />
+            <Route path="/admin/getAllModels/update/:id" element={<UpdateModelForm/>}/>
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
