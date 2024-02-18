@@ -1,7 +1,7 @@
-export interface ContactModel {
+export interface JoinUsModel {
     name: string;
     surname: string;
     email: string;
-    subject: string;
+    phone: string;
     message: string;
 }

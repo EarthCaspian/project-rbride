@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import "./contact.css";
-import { sendEmail } from '../../services/ContactService';
-import { ContactModel } from '../../models/requests/ContactModel';
 import ReCAPTCHA from "react-google-recaptcha";
+import { JoinUsModel } from '../../models/requests/JoinUsModel';
+import { sendEmail } from '../../services/JoinUsService';
+import "./joinus.css";
 
-const ContactForm: React.FC = () => {
+const JoinUs: React.FC = () => {
 
     const [capVal, setCapVal] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState('');
     
-    const initialValues: ContactModel = {
-        subject: '',
+    const initialValues: JoinUsModel = {
         name: '',
         surname: '',
         email: '',
+        phone: '',
         message: ''
     };
 
-    const handleSubmit = async (values: ContactModel) => {
+    const handleSubmit = async (values: JoinUsModel) => {
         try {
             setSubmitting(true);
             if (capVal) {
@@ -56,34 +56,21 @@ const ContactForm: React.FC = () => {
 
 
     return (
-        <div className="row">
-            <div className="col-xl-13 col-lg-11 col-24">
-                <div className="map-card">
-                    <div className="contact-item">
-                        <h4 className="company">TOBETO</h4>
-                        <p className="desc"><strong>Address: </strong> Kavacık, Rüzgarlıbahçe Mah. Çampınarı Sok. No:4 Smart Plaza B Blok Kat:3 34805, Beykoz/İstanbul</p>
-                        <p className="phone"><strong>Telephone: </strong>(0216) 331 48 00</p>
-                        <p className="mail"><strong>Email: </strong>info@tobeto.com</p>
-                    </div>
-                    <div className="map-item">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12028.132037675927!2d29.0957136!3d41.0901254!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab65635b94473%3A0x688e9b2eaf799804!2sEnocta%20%C4%B0stanbul%20Ofisi!5e0!3m2!1str!2str!4v1707914323496!5m2!1str!2str" width="100%" height="250px" style={{ border: 0 }} aria-hidden="false" tabIndex={0}></iframe>
-                    </div>
-                </div>
-            </div>
+        <div className="join-us row">
             <div className="offset-xl-1 col-xl-10 col-lg-13 col-24">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={Yup.object({
-                        subject: Yup.string().required('Subject selection is required'),
                         name: Yup.string().required('Please enter your name'),
                         surname: Yup.string().required('Please enter your surname'),
                         email: Yup.string().email('Please enter a valid email address').required('Email address is required'),
+                        phone: Yup.string().required('Please enter your phone number'),
                         message: Yup.string().required('Please enter your message'),
                     })}
                     onSubmit={handleSubmit}
                 >
                     <Form className="primary-form">
-                        <h4 className="form-title mb-5">Contact Us</h4>
+                        <h4 className="form-title mb-5">Join Us</h4>
                         <div className="row" data-recording-disable="">
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
@@ -108,15 +95,9 @@ const ContactForm: React.FC = () => {
                             </div>
                             <div className="col-md-6 col-12">
                                 <div className="form-group">
-                                    <label htmlFor="subject" className="field-desc">Subject *</label>
-                                    <Field as="select" name="subject" id="subject" className="form-control primary-select2 required select2-hidden-accessible">
-                                        <option value="">Select</option>
-                                        <option value="Suggestion">Suggestion</option>
-                                        <option value="Thanks">Thanks</option>
-                                        <option value="Criticism">Criticism</option>
-                                        <option value="Request">Request</option>
-                                    </Field>
-                                    <ErrorMessage name="subject" />
+                                    <label htmlFor="phone" className="field-desc">Phone *</label>
+                                    <Field className="form-control required" type="text" id="phone" name="phone" />
+                                    <ErrorMessage name="phone" />
                                 </div>
                             </div>
                             <div className="col-md-12 col-12">
@@ -141,4 +122,4 @@ const ContactForm: React.FC = () => {
     );
 };
 
-export default ContactForm;
+export default JoinUs;
