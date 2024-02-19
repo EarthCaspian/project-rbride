@@ -17,9 +17,11 @@ type Props = {};
 const BookingCompletion: React.FC = (props: Props) => {
   const dispatch = useDispatch();
   const rentalState = useSelector((state: RootState) => state.rental.rental);
+  const rentalLocationsState = useSelector((state: RootState) => state.rental.locations);
   const invoiceState = useSelector((state: RootState) => state.invoice.invoice);
   const rentalExtraState = useSelector((state: RootState) => state.rental);
   const customer = useSelector((state: RootState) => state.customer.customer);
+  const userState = useSelector((state: RootState) => state.user)
 
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const BookingCompletion: React.FC = (props: Props) => {
       startDate: rentalState.startDate,
       endDate: rentalState.endDate,
       carId: rentalState.car.id,
-      userId: 1, //TO DO: to be updated!!!
+      userId: userState.userId,
     };
   
     RentalService.getRentalId(rentalIdRequestModel)
@@ -140,7 +142,7 @@ const BookingCompletion: React.FC = (props: Props) => {
                 <IconComponent iconName="Clock" />
                 {formatStringDate(rentalState.startDate)}
               </p>
-              <GoogleMapLocations locationName="İstanbul Airport" />
+              <GoogleMapLocations locationName={rentalLocationsState.pickUp?.name} />
             </div>
           </div>
           <div className="col-4 mx-auto">
@@ -150,7 +152,7 @@ const BookingCompletion: React.FC = (props: Props) => {
                 <IconComponent iconName="Clock" />
                 {formatStringDate(rentalState.endDate)}
               </p>
-              <GoogleMapLocations locationName="İstanbul Airport" />
+              <GoogleMapLocations locationName={rentalLocationsState.dropOff?.name} />
             </div>
           </div>
         </div>
