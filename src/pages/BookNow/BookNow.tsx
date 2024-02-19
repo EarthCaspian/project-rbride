@@ -13,6 +13,7 @@ import CustomerFormCard from "../../components/CustomerFormCard/CustomerFormCard
 import PaymentDetailsCard from "../../components/PaymentDetailsCard/PaymentDetailsCard";
 import { setStepLevel } from "../../store/stepsSlice";
 import { useNavigate } from "react-router-dom";
+import { setCustomerIsValid } from "../../store/customerSlice";
 
 type Props = {};
 
@@ -30,6 +31,9 @@ const BookNow = (props: Props) => {
 
   useEffect(() => {
     CompleteBooking();
+    return () => {
+      dispatch(setCustomerIsValid(false));
+    }
   }, [CustomerState.isValid]);
 
   const CompleteBooking = async () => {
