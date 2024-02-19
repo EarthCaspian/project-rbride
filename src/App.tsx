@@ -26,12 +26,27 @@ import GetAllModels from "./components/AdminPanelCards/ModelAdmin/GetAllModels";
 import GetAllBrands from "./components/AdminPanelCards/BrandAdmin/GetAllBrands";
 import GetAllCars from "./components/AdminPanelCards/CarAdmin/GetAllCars";
 
+import ContactPage from "./pages/Contact/ContactPage";
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import GetCarById from "./components/AdminPanelCards/CarAdmin/GetCarById";
+import UpdateCarForm from "./components/AdminPanelCards/CarAdmin/UpdateCarForm";
+import GetBrandById from "./components/AdminPanelCards/BrandAdmin/GetBrandById";
+import UpdateBrandForm from "./components/AdminPanelCards/BrandAdmin/UpdateBrandForm";
+import GetModelById from "./components/AdminPanelCards/ModelAdmin/GetModelById";
+import UpdateModelForm from "./components/AdminPanelCards/ModelAdmin/UpdateModelForm";
+import FAQs from "./components/FAQ/Faq";
+import JoinUs from "./components/JoinUs/JoinUs";
+
+
 function App() {
   return (
     <>
       <Provider store={store}>
         <Navbar />
-        <LoadingOverlay />
+        <LoadingOverlay/>
+        <ToastContainer/>
         <Routes>
           <Route
             path="/"
@@ -44,10 +59,16 @@ function App() {
           <Route path="/admin" element={<AdminPanel/>}>
             <Route path="/admin/addCar" element={<AddCarForm/>}/>
             <Route path="/admin/getAllCars" element={<GetAllCars/>}/>
+            <Route path="/admin/getAllCars/update/:id" element={<UpdateCarForm/>}/>
+            <Route path="/admin/getCarById" element={<GetCarById/>}/>
             <Route path="/admin/addBrand" element={<AddBrandForm/>}/>
             <Route path="/admin/getAllBrands" element={<GetAllBrands/>}/>
+            <Route path="/admin/getAllBrands/update/:id" element={<UpdateBrandForm/>}/>
+            <Route path="/admin/getBrandById" element={<GetBrandById/>}/>
             <Route path="/admin/addModel" element={<AddModelForm/>}/>
             <Route path="/admin/getAllModels" element={<GetAllModels/>}/>
+            <Route path="/admin/getModelById" element={<GetModelById/>} />
+            <Route path="/admin/getAllModels/update/:id" element={<UpdateModelForm/>}/>
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -58,6 +79,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
+          <Route path="/contactpage" element={<ContactPage />} />
+          <Route path="/faqspage" element={<FAQs />} />
+          <Route path="/joinus" element={<JoinUs />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
         <Footer />

@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import BrandService from '../../../services/BrandService';
 import "../AddForm.css";
+import { toast } from 'react-toastify';
 
 const AddBrandSchema = Yup.object().shape({
     name: Yup.string().required('Required'),
@@ -12,6 +13,8 @@ const AddBrandSchema = Yup.object().shape({
 export const AddBrandForm = () => (
     <div>
         <h1>Add Brand</h1>
+        <p>Enter the required brand information to add a car brand to the database. 
+            Please refer to the valid entry requirement warnings in the form for correct data entry.</p>
         <Formik
             initialValues={{
                 name: '',
@@ -20,8 +23,9 @@ export const AddBrandForm = () => (
             validationSchema={AddBrandSchema}
             onSubmit={(values, { setSubmitting }) => {
                 BrandService.add(values)
-                .then(() => {
+                .then((response) => {
                     setSubmitting(false);
+                    toast.success(response.data.message); 
                 });
             }}
         >

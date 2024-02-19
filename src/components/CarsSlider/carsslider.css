@@ -1,0 +1,88 @@
+.home_fleet {
+    font-family: 'din-2014', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #212529;
+  }
+  
+  .cars_slider_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .component_header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .cars_slider_title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .cars_slider_text {
+    font-size: 1.2rem;
+  }
+  
+  .home_fleet-slider {
+    position: relative;
+    overflow: hidden;
+    margin-top: 30px;
+  }
+  
+  .swiper-container {
+    width: 100%;
+    height: auto;
+  }
+  
+  .swiper-wrapper {
+    display: flex;
+    transition-duration: 0ms;
+    transition: transform 0.5s ease;
+  }
+  
+  .swiper-slide {
+    flex-shrink: 0;
+    width: 470px;
+    margin-right: 10px;
+    transition: margin-right 0.5s ease;
+  }
+  
+  .cars_slider_image {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cars_slider_image img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .text_wrap {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .cars_slider_btn {
+    background-color: #09272d;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 10px 40px;
+    border-radius: 5px;
+    text-decoration: none;
+
+  }
+  
+  .cars_slider_btn:hover {
+    background-color: rgba(212, 96, 24, 0.685);
+  }
+
+  .slider-button{
+    text-align: center;
+  }
+  .slider-button .btn {
+    width: 300px;
+  }

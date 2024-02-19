@@ -1,0 +1,61 @@
+.home_featured{
+    margin-top: 70px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    --rem: 16;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    font-family: 'Anta', sans-serif !important;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    z-index: 1;
+    width: 100%;
+    padding: 10px;
+    background: #fff; 
+
+}
+
+.contact_card {
+    width: 500px; 
+    height: 400px;
+
+}
+
+.contact_card-img-top {
+    max-width: 100%; 
+    height: auto;
+}
+
+.contact_card-footer{
+    text-align: center;
+}
+
+.contact_card-body{
+    width: 100%;
+    text-align: center;
+}
+
+.contact_card-title{
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.contact_card-text{
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: 10px;
+    
+}

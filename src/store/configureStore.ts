@@ -4,12 +4,14 @@ import { rentalReducer } from "./rentalSlice";
 import { loadingReducer } from "./loadingSlice";
 import { loginReducer } from "./loginSlice";
 import { filterReducer } from "./filterSlice";
+import { userReducer } from "./userSlice";
 import { customerReducer } from "./customerSlice";
 import { invoiceReducer } from "./invoiceSlice";
 import { bookingReducer } from "./bookingSlice";
 import { referringPageReducer } from "./referringPageSlice";
 import { stepsReducer } from "./stepsSlice";
-import { userReducer } from "./userSlice";
+
+
 
 const rootReducer = combineReducers({
   cart: cartReducer,
