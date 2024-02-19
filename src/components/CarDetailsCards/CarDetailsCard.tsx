@@ -14,7 +14,12 @@ export const CarDetailsCard = (props: Props) => {
         <div className='row d-flex align-items-center justify-content-center' >
 
             {/* CAR IMAGE */}
-            <img id='car-img' src={car.imagePath} className="card-img-top img-fluid rounded-start mb-5" alt='...' style={{maxWidth: 600}}/>
+            <img id='car-img' src={car.imagePath} className="card-img-top img-fluid mb-5" alt='...' style={{maxWidth: 600, borderRadius:25}}/>
+
+            <div className='col d-flex flex-column align-items-end p-0' style={{maxWidth:125}}>
+                <img src='/images/boltz.jpeg' className='mb-3' style={{maxWidth: 125,borderRadius:25 , border: '2px solid lightgray'}} alt='...' />
+                <p className='text-center'>Included within BOLTZ PROGRAM</p>
+            </div>
 
             {/* CAR DETAILS */}
             <div id='car-details' className='row d-flex align-items-center mt-4 w-75'>

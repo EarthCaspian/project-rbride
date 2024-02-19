@@ -41,7 +41,7 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
     <div className="home_fleet">
       <div className="cars_slider_container">
         <div className="component_header">
-          <h2 className="cars_slider_title">ROBORIDE CARS</h2>
+          <h2 className="cars_slider_title anta-regular">ROBORIDE FLEET</h2>
         </div>
       </div>
       <div className="home_fleet-slider" ref={sliderRef}>
@@ -54,8 +54,8 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
                     <img className="lazy" src={slide.imageUrl} alt={slide.title} />
                   </div>
                   <div className="text_wrap">
-                    <h3 className="slider-title"><strong>{slide.title}</strong></h3>
-                    <p className="cars_slider_text">{slide.description}</p>
+                    <h3 className="slider-title anta-regular"><strong>{slide.title}</strong></h3>
+                    <p className="cars_slider_text anta-regular">{slide.description}</p>
                   </div>
                 </div>
               </li>
@@ -70,7 +70,7 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
           <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
         </div>
       </div>
-      <div className="slider-button">
+      <div className="slider-button anta-regular">
         <button className="cars_slider_btn btn-brand btn-success" onClick={handleViewAllCars}><span><strong>VIEW ALL CARS</strong></span></button>
       </div>
     </div>
