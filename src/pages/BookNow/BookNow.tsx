@@ -12,6 +12,7 @@ import BookingDetailsCard from "../../components/BookingDetailsCard/BookingDetai
 import CustomerFormCard from "../../components/CustomerFormCard/CustomerFormCard";
 import PaymentDetailsCard from "../../components/PaymentDetailsCard/PaymentDetailsCard";
 import { setStepLevel } from "../../store/stepsSlice";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -21,10 +22,10 @@ const BookNow = (props: Props) => {
   const RentalState = useSelector((state: RootState) => state.rental.rental);
   const UserState = useSelector((state : RootState) => state.user);
   const dispatch = useDispatch();
-  //const IsBookedState = useSelector((state: RootState) => state.booking.isBookedCompleted);
+  const navigate = useNavigate();
 
   const togglePopup = () => {
-    console.log("Toggle popup is working"); //Delete!!!!! 
+    navigate("/completion");
   };
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const BookNow = (props: Props) => {
 
           {/* BOOKING DETAILS CARD */}
           <div className="col-4">
-            <BookingDetailsCard></BookingDetailsCard>
+            <BookingDetailsCard />
           </div>
           <div className="col-8">
             {/* CUSTOMER FORM CARD */}
