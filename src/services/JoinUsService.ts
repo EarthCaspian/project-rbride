@@ -1,8 +1,7 @@
-import { ContactModel } from "../models/requests/ContactModel";
+import { JoinUsModel } from "../models/requests/JoinUsModel";
 
-
-const sendEmail = async (values : ContactModel) => {
-    const url = 'http://localhost:8080/api/contact/sendContactPageEmail';
+const sendEmail = async (values : JoinUsModel) => {
+    const url = 'http://localhost:8080/api/contact/sendJoinUsEmail';
     const options = {
         method: 'POST',
         headers: {

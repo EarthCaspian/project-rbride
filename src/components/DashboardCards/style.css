@@ -22,14 +22,14 @@
 }
 
 .custom-form {
-    width:50%;
     background-color: rgba(255, 150, 84, 0.8);
     padding: 1rem;
     border-radius: 1rem;
     position: absolute;
-    top: 80%;
+    top: 350px;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translateX(-50%); 
+    z-index: 999;
 }
 
 .custom-label {

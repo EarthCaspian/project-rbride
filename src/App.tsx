@@ -36,6 +36,8 @@ import GetBrandById from "./components/AdminPanelCards/BrandAdmin/GetBrandById";
 import UpdateBrandForm from "./components/AdminPanelCards/BrandAdmin/UpdateBrandForm";
 import GetModelById from "./components/AdminPanelCards/ModelAdmin/GetModelById";
 import UpdateModelForm from "./components/AdminPanelCards/ModelAdmin/UpdateModelForm";
+import FAQs from "./components/FAQ/Faq";
+import JoinUs from "./components/JoinUs/JoinUs";
 
 
 function App() {
@@ -78,6 +80,8 @@ function App() {
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/completion" element={<BookingCompletion />} />
           <Route path="/contactpage" element={<ContactPage />} />
+          <Route path="/faqspage" element={<FAQs />} />
+          <Route path="/joinus" element={<JoinUs />} />
           <Route path="*" element={<FourOhFour />} />
         </Routes>
         <Footer />
