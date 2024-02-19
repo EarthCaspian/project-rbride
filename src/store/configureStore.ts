@@ -9,12 +9,14 @@ import { invoiceReducer } from "./invoiceSlice";
 import { bookingReducer } from "./bookingSlice";
 import { referringPageReducer } from "./referringPageSlice";
 import { stepsReducer } from "./stepsSlice";
+import { userReducer } from "./userSlice";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
   rental: rentalReducer,
   loading: loadingReducer,
   login: loginReducer,
+  user : userReducer,
   filter: filterReducer,
   customer: customerReducer,
   invoice: invoiceReducer,
