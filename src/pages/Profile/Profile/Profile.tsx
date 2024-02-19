@@ -72,7 +72,7 @@ const Profile = () => {
     return (
         <div className="profile container mt-5">
             <Sidebar />
-            <h2 className="title">Profile Page</h2>
+            <h2 className="profile-title">Profile Page</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">

@@ -26,34 +26,34 @@
 
 }
 
-.card {
+.contact_card {
     width: 500px; 
     height: 400px;
 
 }
 
-.card-img-top {
+.contact_card-img-top {
     max-width: 100%; 
     height: auto;
 }
 
-.card-footer{
+.contact_card-footer{
     text-align: center;
 }
 
-.card-body{
+.contact_card-body{
     width: 100%;
     text-align: center;
 }
 
-.card-title{
+.contact_card-title{
     font-size: 32px;
     font-weight: bold;
     line-height: 1.2;
     margin-bottom: 20px;
 }
 
-.card-text{
+.contact_card-text{
     font-size: 16px;
     line-height: 28px;
     margin-bottom: 10px;

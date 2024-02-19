@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import "./contact.css";
+import "./Contact.css";
 import { sendEmail } from '../../services/ContactService';
 import { ContactModel } from '../../models/requests/ContactModel';
 import ReCAPTCHA from "react-google-recaptcha";
