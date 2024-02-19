@@ -28,9 +28,9 @@ export const filterCarByPrice = (cars : CarModel[],  filterState : FilterState) 
 }
 
 //filter cars by availability on selected dates
-export const filterCarByDates = (cars: CarModel[], rentalsResponse : RentalResponseModel[], rentalState : RentalStateModel) => {
-    const selectedStartDate = rentalState.startDate;
-    const selectedEndDate = rentalState.endDate;
+export const filterCarByDates = (cars: CarModel[], rentalsResponse : RentalResponseModel[], filterState : FilterState) => {
+    const selectedStartDate = filterState.startDate;
+    const selectedEndDate = filterState.endDate;
     let filteredCarsList = cars.filter((car) => {
         //check if there is any rental record for this car in the rentalsResponse
         const rentals : RentalResponseModel[] | undefined = rentalsResponse.filter((rentals) => rentals.car.id === car.id);   
