@@ -12,10 +12,9 @@ import {
 
 interface Props {
   onClose: () => void;
-  rentalId: number;
 }
 
-const SubmitBookingPopUp: React.FC<Props> = ({ onClose }, rentalId) => {
+const SubmitBookingPopUp: React.FC<Props> = ({ onClose }) => {
   const dispatch = useDispatch();
   const rentalState = useSelector((state: RootState) => state.rental.rental);
   const rentalExtraState = useSelector((state: RootState) => state.rental);

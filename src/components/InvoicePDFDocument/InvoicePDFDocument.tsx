@@ -11,14 +11,14 @@ import {
 import { formatDateToStringDate } from "../../utils/formatDate";
 import { InvoiceModel } from "../../models/response/Invoice.Model";
 import { RentalState } from "../../store/rentalSlice";
-import { CustomerModel } from "../../models/requests/CustomerModel";
+import { CustomerStateModel } from "../../store/customerSlice";
 import { RentalStateModel } from "../../models/response/RentalStateModel";
 
 type InvoicePdf = {
   invoice: InvoiceModel;
   rental: RentalStateModel;
   rentalExtras: RentalState;
-  customer: CustomerModel;
+  customer: CustomerStateModel;
 };
 
 // Defining styles

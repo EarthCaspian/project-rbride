@@ -4,7 +4,7 @@ import CarService from '../../services/CarService';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../components/CarDetailsCards/CarDetails.css'
 import { CarDetailsCard } from '../../components/CarDetailsCards/CarDetailsCard';
-import { PaymentDetailsCard } from '../../components/CarDetailsCards/PaymentDetailsCard';
+import { ReservationDetailsCard } from '../../components/CarDetailsCards/PaymentDetailsCard';
 import { FooterCard } from '../../components/CarDetailsCards/FooterCard';
 import BookingStepsCard from '../../components/BookingStepsCard/BookingStepsCard';
 import { useDispatch } from "react-redux";
@@ -63,7 +63,7 @@ export const CarDetails = (props: Props) => {
             </div>
             {/* PAYMENT DETAILS */}
             <div id='payment-details' className='col-lg-4 col-md-12 d-flex align-items-center'>
-                {car !== undefined && <PaymentDetailsCard car={car} screenWidth={screenWidth} />}
+                {car !== undefined && <ReservationDetailsCard car={car} screenWidth={screenWidth} />}
             </div>
         </div >
         {/* FOOTER */}

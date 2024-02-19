@@ -15,6 +15,7 @@ const BookingDetailsCard = (props: Props) => {
   const rentalState = rentalAllState.rental;
   const rentalInsuranceState = rentalAllState.insurance;
   const rentalExtraServicesState = rentalAllState.extraServices;
+  const rentalLocations = rentalAllState.locations;
 
   //  Additional Service Total Price Calculation (Insurance + Extra Services)
   let additionalServiceTotalPrice: number = rentalInsuranceState.price;
@@ -71,11 +72,11 @@ const BookingDetailsCard = (props: Props) => {
           </h5>
           <div className="d-flex">
             <h6 className="card-text col-2">from </h6>
-            <p className="card-text col-8">İstanbul Sabiha Gökçen Havalimanı</p>
+            <p className="card-text col-8">{rentalLocations.pickUp?.name}</p>
           </div>
           <div className="d-flex">
             <h6 className="card-text col-2">to </h6>
-            <p className="card-text col-8">İstanbul Sabiha Gökçen Havalimanı</p>
+            <p className="card-text col-8">{rentalLocations.dropOff?.name}</p>
           </div>
         </div>
 

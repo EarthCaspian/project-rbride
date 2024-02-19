@@ -1,9 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CustomerModel } from "../models/requests/CustomerModel";
 import { RootState } from "./configureStore";
 
+export interface CustomerStateModel {
+  firstName: string;
+  lastName: string;
+  birthdate: string;
+  internationalId: string;
+  licenceIssueDate: string;
+}
+
 export interface CustomerState {
-  customer: CustomerModel;
+  customer: CustomerStateModel;
+  isValid : boolean;
 }
 
 const initialCustomerSliceState: CustomerState = {
@@ -13,8 +21,8 @@ const initialCustomerSliceState: CustomerState = {
     birthdate: "",
     internationalId: "",
     licenceIssueDate: "",
-    userId: 1,
   },
+  isValid : false,
 };
 
 export const customerSlice = createSlice({
@@ -57,6 +65,9 @@ export const customerSlice = createSlice({
       state.customer.licenceIssueDate = action.payload;
       localStorage.setItem("customer", JSON.stringify(state.customer));
     },
+    setCustomerIsValid(state: CustomerState, action : PayloadAction<boolean>) {
+      state.isValid = action.payload;
+    }
   },
 });
 
@@ -68,4 +79,5 @@ export const {
   handleCustomerInternationalId,
   handleCustomerLastName,
   handleCustomerLicenceIssueDate,
+  setCustomerIsValid,
 } = customerSlice.actions;

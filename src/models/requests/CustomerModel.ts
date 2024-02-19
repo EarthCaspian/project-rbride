@@ -1,8 +1,8 @@
 export interface CustomerModel{
     firstName: string;
     lastName: string;
-    birthdate: string;
+    birthdate: Date | null;
     internationalId: string;
-    licenceIssueDate: string;
+    licenceIssueDate: Date | null;
     userId: number;
 }

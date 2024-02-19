@@ -37,6 +37,7 @@ export const CustomSelect = (props : CustomSelectProps) => {
           onChange={onChange}
           options={props.options}
           isMulti={props.isMulti}
+          placeholder={props.placeholder}
         />
     );
 };

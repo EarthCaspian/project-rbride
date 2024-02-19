@@ -1,16 +1,17 @@
+import { LocationModel } from './../utils/locations';
 import { ModelModel } from "./../models/response/ModelModel";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./configureStore";
 import { CarModel } from "../models/response/CarModel";
 import { BrandModel } from "../models/response/BrandModel";
 import { ColorModel } from "../models/response/ColorModel";
-import { RentalResponseModel } from "../models/response/RentalResponseModel";
 import { RentalStateModel } from "../models/response/RentalStateModel";
 
 export interface RentalState {
   rental: RentalStateModel;
   insurance: RentalExtrasModel;
   extraServices: RentalExtrasModel[];
+  locations : LocationsStateModel;
 }
 
 export interface RentalExtrasModel {
@@ -18,6 +19,11 @@ export interface RentalExtrasModel {
   header: string;
   description: string;
   price: number;
+}
+
+interface LocationsStateModel {
+  pickUp : LocationModel;
+  dropOff : LocationModel;
 }
 
 const initialBrandState : BrandModel = {
@@ -52,15 +58,14 @@ const initialCarState: CarModel = {
 
 const currentDate: Date = new Date();
 
-const initialRentalState: RentalResponseModel = {
+const initialRentalState: RentalStateModel = {
   id: 0,
-  startDate: currentDate,
-  endDate: currentDate,
+  startDate: currentDate.toJSON(),
+  endDate: currentDate.toJSON(),
   returnDate: null,
   startKilometer: 0,
   totalPrice: 0,
   car: initialCarState,
-  userId: 1,
 };
 
 const initialInsuranceState: RentalExtrasModel = {
@@ -69,6 +74,11 @@ const initialInsuranceState: RentalExtrasModel = {
   description: "",
   price: 0,
 };
+
+const initialLocationsState : LocationsStateModel = {
+  pickUp : {name: "", location: ""},
+  dropOff : {name: "", location: ""},
+}
 
 const initialRentalSliceState: RentalState = {
   rental:
@@ -79,6 +89,9 @@ const initialRentalSliceState: RentalState = {
     
   extraServices:
     JSON.parse(localStorage.getItem("extraServices") || "[]"),
+
+  locations:
+    JSON.parse(localStorage.getItem("locations") || JSON.stringify(initialLocationsState)),
 };
 
 export const rentalSlice = createSlice({
@@ -126,6 +139,20 @@ export const rentalSlice = createSlice({
         JSON.stringify(state.extraServices)
       );
     },
+    handleRentalPickUpLocation(
+      state: RentalState,
+      action: PayloadAction<LocationModel>
+    ) {
+      state.locations.pickUp = action.payload;
+      localStorage.setItem("locations", JSON.stringify(state.locations.pickUp));
+    },
+    handleRentalDropOffLocation(
+      state: RentalState,
+      action: PayloadAction<LocationModel>
+    ) {
+      state.locations.dropOff = action.payload;
+      localStorage.setItem("locations", JSON.stringify(state.locations.dropOff));
+    },
   },
 });
 
@@ -136,6 +163,8 @@ export const {
   addRentalSelectedCar,
   addRentalSelectedInsurance,
   addRentalSelectedExtraServices,
+  handleRentalPickUpLocation,
+  handleRentalDropOffLocation,
 } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;

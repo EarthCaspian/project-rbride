@@ -8,5 +8,4 @@ export interface RentalStateModel {
 	startKilometer: number;
 	totalPrice: number;
 	car: CarModel;
-	userId: number;
 }
