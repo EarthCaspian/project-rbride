@@ -1,12 +1,18 @@
-import React from 'react';
+import { useEffect } from 'react';
+import React , {useState} from 'react'
+import { useParams } from 'react-router-dom';
+import CarService from '../../../services/CarService';
+import { AxiosResponse } from 'axios';
+import { CarModel } from '../../../models/response/CarModel';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import CarService from '../../../services/CarService';
-import "../AddForm.css";
 import { toast } from 'react-toastify';
 
 
-const AddCarSchema = Yup.object().shape({
+type Props = {}
+
+const UpdateCarSchema = Yup.object().shape({
+    id: Yup.number().required('Required'),
     kilometer: Yup.number().required('Required'),
     plate: Yup.string().required('Required'),
     modelYear: Yup.number().required('Required'),
@@ -17,32 +23,64 @@ const AddCarSchema = Yup.object().shape({
     imagePath: Yup.string().required('Required')
 });
 
-export const AddCarForm = () => (
+
+export interface UpdateCarFormValues {
+    id: number;
+    kilometer: number;
+    plate: string;
+    modelYear: number;
+    dailyPrice: number;
+    modelId: number;
+    colorId: number;
+    minFindeksRate: number;
+    imagePath: string;
+  }
+
+const UpdateCarForm = (props: Props) => {
+
+    const { id } = useParams<{ id: string }>();
+    const [car, setCar] = useState<CarModel | null>(null);
+  
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      if (id) {
+        const carId = Number(id);
+        CarService.getById(carId).then((response: AxiosResponse<CarModel>) => {
+          setCar(response.data);
+          setIsLoading(false);
+        });
+      }
+    }, [id]);
+
+    if(isLoading) {
+        return <div>Loading...</div>
+    }
+
+  return (
     <div>
-        <h1>Add Car</h1>
-        <p>Enter the required car information to add a car to the database. 
-            Please refer to the valid entry requirement warnings in the form for correct data entry.</p>
         <Formik
-            initialValues={{
-                kilometer: 0,
-                plate: '',
-                modelYear: 0,
-                dailyPrice: 0,
-                modelId: 0,
-                colorId: 0,
-                minFindeksRate:0,
-                imagePath: ''
-            }}
-            validationSchema={AddCarSchema}
-            onSubmit={(values, { setSubmitting }) => {
-                CarService.add(values)
-                .then((response) => {
-                    setSubmitting(false);
-                    toast.success(response.data.message); 
-                });
-            }}
+        initialValues={{
+            id: car ? car.id : 0,
+            kilometer: car ? car.kilometer : 0,
+            plate: car ? car.plate : '',
+            modelYear: car ? car.modelYear : 0,
+            dailyPrice: car ? car.dailyPrice : 0,
+            modelId: car && car.model ? car.model.id : 0,
+            colorId: car && car.color ? car.color.id : 0,
+            minFindeksRate: car ? car.minFindeksRate : 0,
+            imagePath: car ? car.imagePath : ''
+          } as UpdateCarFormValues}
+          validationSchema={UpdateCarSchema}
+          onSubmit={(values: UpdateCarFormValues, { setSubmitting }) => {
+            CarService.update(values)
+            .then((response) => {
+              setSubmitting(false);
+              toast.success(response.data.message); 
+            });
+          }}
         >
-            {({ isSubmitting }) => (
+         {({ isSubmitting }) => (
                 <Form>
                     <div className="form-field form-control">
                         <label htmlFor="kilometer">Kilometer</label>
@@ -93,4 +131,7 @@ export const AddCarForm = () => (
             )}
         </Formik>
     </div>
-);
+  )
+}
+
+export default UpdateCarForm

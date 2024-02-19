@@ -75,7 +75,11 @@ const Navbar = (props: Props) => {
                 Book Now
               </Link>
             </li>
-
+            <li className="nav-item">
+              <Link className="nav-link" to={"/contactpage"}>
+                Contact
+              </Link>
+            </li>
 
             
             {/* <li className="nav-item dropdown">
