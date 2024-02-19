@@ -39,9 +39,9 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
 
   return (
     <div className="home_fleet">
-      <div className="container">
+      <div className="cars_slider_container">
         <div className="component_header">
-          <h2 className="title">ROBORIDE CARS</h2>
+          <h2 className="cars_slider_title">ROBORIDE CARS</h2>
         </div>
       </div>
       <div className="home_fleet-slider" ref={sliderRef}>
@@ -50,12 +50,12 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
             {slides.map((slide, index) => (
               <li key={index} className="swiper-slide" style={{ width: '470px', marginRight: '20px' }}>
                 <div className="fleet-item">
-                  <div className="image">
+                  <div className="cars_slider_image">
                     <img className="lazy" src={slide.imageUrl} alt={slide.title} />
                   </div>
                   <div className="text_wrap">
                     <h3 className="slider-title"><strong>{slide.title}</strong></h3>
-                    <p className="text">{slide.description}</p>
+                    <p className="cars_slider_text">{slide.description}</p>
                   </div>
                 </div>
               </li>
@@ -71,7 +71,7 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
         </div>
       </div>
       <div className="slider-button">
-        <button className="btn btn-brand btn-success" onClick={handleViewAllCars}><span><strong>VIEW ALL CARS</strong></span></button>
+        <button className="cars_slider_btn btn-brand btn-success" onClick={handleViewAllCars}><span><strong>VIEW ALL CARS</strong></span></button>
       </div>
     </div>
   );

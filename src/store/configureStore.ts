@@ -10,7 +10,7 @@ import { invoiceReducer } from "./invoiceSlice";
 import { bookingReducer } from "./bookingSlice";
 import { referringPageReducer } from "./referringPageSlice";
 import { stepsReducer } from "./stepsSlice";
-import { userReducer } from "./userSlice";
+
 
 
 const rootReducer = combineReducers({
@@ -20,7 +20,6 @@ const rootReducer = combineReducers({
   login: loginReducer,
   user : userReducer,
   filter: filterReducer,
-  user: userReducer,
   customer: customerReducer,
   invoice: invoiceReducer,
   booking: bookingReducer,
