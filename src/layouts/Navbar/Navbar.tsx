@@ -34,14 +34,14 @@ const Navbar = (props: Props) => {
     >
       <div className="container">
         <Link to={"/"} className="navbar-brand">
-          <img
+          {/* <img
             src="/images/roboride.jpeg"
             alt="Bootstrap"
             width="30"
             height="30"
             className="d-inline-block align-text-top me-2"
-          />
-          RoboRide Rental Services
+          /> */}
+          <h4 className="mb-0">ROBORIDE</h4>
         </Link>
         <button
           className="navbar-toggler"
@@ -60,24 +60,24 @@ const Navbar = (props: Props) => {
             
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to={"/"}>
-                Home
+                HOME
               </Link>
             </li>
 
             <li className="nav-item">
               <Link className="nav-link" to={"/cars"}>
-                Cars
+                CARS
               </Link>
             </li>
 
             <li className="nav-item">
               <Link className="nav-link" to={"/booknow"}>
-                Book Now
+                BOOK NOW
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to={"/contactpage"}>
-                Contact
+                CONTACT
               </Link>
             </li>
 
