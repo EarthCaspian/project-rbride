@@ -25,10 +25,17 @@ const BookingDetailsCard = (props: Props) => {
 
   // Calculation of tax value and total amount implemented tax rate
   useEffect(() => {
-    setTax((rentalState.totalPrice + additionalServiceTotalPrice) * 0.18);
-    setTotalAmount(
-      (rentalState.totalPrice + additionalServiceTotalPrice) * 1.18
-    );
+    let tax = (rentalState.totalPrice + additionalServiceTotalPrice) * 0.18;
+    let totalAmount = (rentalState.totalPrice + additionalServiceTotalPrice) * 1.18;
+
+    // Parse floating numbers to fixed
+    setTax(parseFloat(tax.toFixed(2)));
+    setTotalAmount(parseFloat(totalAmount.toFixed(2)));
+
+    // setTax((rentalState.totalPrice + additionalServiceTotalPrice) * 0.18);
+    // setTotalAmount(
+    //   (rentalState.totalPrice + additionalServiceTotalPrice) * 1.18
+    // );
   }, []);
 
   // Formatting dates
