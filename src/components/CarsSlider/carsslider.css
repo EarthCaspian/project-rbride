@@ -19,6 +19,8 @@
   .cars_slider_title {
     font-size: 2rem;
     font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   
   .cars_slider_text {
@@ -52,11 +54,14 @@
   .cars_slider_image {
     position: relative;
     overflow: hidden;
+    margin-bottom: 50px;
+
   }
   
   .cars_slider_image img {
     width: 100%;
     height: auto;
+    
   }
   
   .text_wrap {
@@ -73,7 +78,7 @@
     padding: 10px 40px;
     border-radius: 5px;
     text-decoration: none;
-
+    
   }
   
   .cars_slider_btn:hover {

@@ -99,7 +99,7 @@ const Login = (props: Props) => {
             <div className="invalid-feedback">{formik.errors.loginPassword}</div>
           )}
         </div>
-        <button className="btn btn-lg btn-primary" type="submit">
+        <button className="submit-btn btn btn-lg btn-primary" type="submit">
           Login
         </button>
         <p className="mt-3">

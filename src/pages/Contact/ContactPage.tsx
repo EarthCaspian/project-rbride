@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import "./Contact.css";
+import "./contact.css";
 import { sendEmail } from '../../services/ContactService';
 import { ContactModel } from '../../models/requests/ContactModel';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -129,7 +129,7 @@ const ContactForm: React.FC = () => {
                         </div>
                         <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY || ''} onChange={(val) => setCapVal(val)}/>
                         <div className="d-flex justify-content-end">
-                            <button type="submit" className="btn btn-primary" disabled={!capVal || submitting}>
+                            <button type="submit" className="submit-btn btn btn-primary" disabled={!capVal || submitting}>
                                 {submitting ? 'Sending...' : 'Submit'}</button>
                         </div>
                         {submitSuccess && <div className="alert alert-success mt-3">Form submitted successfully.</div>}

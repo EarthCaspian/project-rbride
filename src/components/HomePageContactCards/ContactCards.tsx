@@ -23,18 +23,18 @@ function ContactCards() {
             <div className="row justify-content-between">
                 <div className="col-lg-4 col-md-6 col-sm-12">
                     <div className="card h-100 card-hover">
-                        <motion.img className="card-img-top"
+                        <motion.img className="contact_card-img-top"
                             src={process.env.PUBLIC_URL + '/images/rented.jpeg'}
                             alt="Contact"
                             whileHover={{ scale: 1.1 }}
                             onClick={handleContactClick}
                         />
-                        <div className="card-body">
-                            <h2 className="card-title">Contact Us</h2>
-                            <p className="card-text">Your satisfaction is our priority. Feel free to contact us through the form with any questions, suggestions, or complaints.</p>
+                        <div className="contact_card-body">
+                            <h2 className="contact_card-title">Contact Us</h2>
+                            <p className="contact_card-text">Your satisfaction is our priority. Feel free to contact us through the form with any questions, suggestions, or complaints.</p>
                         </div>
-                        <div className="card-footer">
-                            <motion.a className="btn btn-brand btn-success"
+                        <div className="contact_card-footer">
+                            <motion.a className="contact_card-btn btn btn-brand btn-success"
                                 whileHover={{ scale: 1.1 }}
                                 onClick={handleContactClick}
                             ><span><strong>CONTACT US</strong></span></motion.a>
@@ -51,12 +51,12 @@ function ContactCards() {
                             onClick={handleJoinUsClick}
                             
                         />
-                        <div className="card-body">
-                            <h2 className="card-title">Join Us</h2>
-                            <p className="card-text">Roboride is committed to recruiting qualified individuals to create an effective and productive workforce, fostering a happy work environment.</p>
+                        <div className="contact_card-body">
+                            <h2 className="contact_card-title">Join Us</h2>
+                            <p className="contact_card-text">Roboride is committed to recruiting qualified individuals to create an effective and productive workforce, fostering a happy work environment.</p>
                         </div>
-                        <div className="card-footer">
-                            <motion.a className="btn btn-brand btn-success"
+                        <div className="contact_card-footer">
+                            <motion.a className="contact_card-btn btn btn-brand btn-success"
                                 whileHover={{ scale: 1.1 }}
                                 onClick={handleJoinUsClick}
 
@@ -67,18 +67,18 @@ function ContactCards() {
 
                 <div className="col-lg-4 col-md-6 col-sm-12">
                     <div className="card h-100 card-hover">
-                        <motion.img className="card-img-top"
+                        <motion.img className="contact_card-img-top"
                             src={process.env.PUBLIC_URL + '/images/welcome2.jpeg'}
                             alt="Frequently Asked Questions"
                             whileHover={{ scale: 1.1 }}
                             onClick={handleFaqsClick}
                         />
-                        <div className="card-body">
-                            <h2 className="card-title">Frequently Asked Questions</h2>
-                            <p className="card-text">Renting a car with Enterprise is easy, but if you have any questions, you can find answers in this section.</p>
+                        <div className="contact_card-body">
+                            <h2 className="contact_card-title">Frequently Asked Questions</h2>
+                            <p className="contact_card-text">Renting a car with Enterprise is easy, but if you have any questions, you can find answers in this section.</p>
                         </div>
-                        <div className="card-footer">
-                            <motion.a className="btn btn-brand btn-success"
+                        <div className="contact_card-footer">
+                            <motion.a className="contact_card-btn btn btn-brand btn-success"
                                 whileHover={{ scale: 1.1 }}
                                 onClick={handleFaqsClick}
                             ><span><strong>FAQs</strong></span></motion.a>
