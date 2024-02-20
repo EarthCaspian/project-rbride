@@ -5,6 +5,8 @@ import { ColorModel } from "../models/response/ColorModel";
 import { RootState } from "./configureStore";
 
 export interface FilterState {
+    startDate: string;
+    endDate: string;
     brands: BrandModel[];
     models: ModelModel[];
     colors: ColorModel[];
@@ -12,7 +14,11 @@ export interface FilterState {
     maxDailyPrice: number;
 }
 
+const currentDate: Date = new Date();
+
 const initialFilterSliceState : FilterState = {
+    startDate: JSON.parse(localStorage.getItem("startDate") || JSON.stringify(currentDate.toJSON())),
+    endDate: JSON.parse(localStorage.getItem("endDate") || JSON.stringify(currentDate.toJSON())),
     brands : JSON.parse(localStorage.getItem("brands") || JSON.stringify([])),
     models:  JSON.parse(localStorage.getItem("models") || JSON.stringify([])),
     colors:  JSON.parse(localStorage.getItem("colors") || JSON.stringify([])),
@@ -24,6 +30,14 @@ export const filterSlice = createSlice({
     name: 'filter',
     initialState: initialFilterSliceState,
     reducers: {
+        handleFilterStartDate(state: FilterState, action: PayloadAction<string>) {
+          state.startDate = action.payload;
+          localStorage.setItem("startDate", JSON.stringify(state.startDate));
+        },
+        handleFilterEndDate(state: FilterState, action: PayloadAction<string>) {
+          state.endDate = action.payload;
+          localStorage.setItem("endDate", JSON.stringify(state.endDate));
+        },
         handleBrandSelection(state: FilterState, action: PayloadAction<BrandModel[]>) {
             state.brands = action.payload;
             localStorage.setItem("brands", JSON.stringify(state.brands));
@@ -47,11 +61,15 @@ export const filterSlice = createSlice({
             localStorage.setItem("maxDailyPrice", JSON.stringify(state.maxDailyPrice));
         },
         clearAllFilters(state: FilterState) {
+            state.startDate = currentDate.toJSON();
+            state.endDate = currentDate.toJSON();
             state.brands = [];
             state.models = [];
             state.colors = [];
             state.minDailyPrice = 0;
             state.maxDailyPrice = 2000;
+            localStorage.setItem("startDate", JSON.stringify(state.startDate));
+            localStorage.setItem("endDate", JSON.stringify(state.endDate));
             localStorage.setItem("brand", JSON.stringify(state.brands));
             localStorage.setItem("model", JSON.stringify(state.models));
             localStorage.setItem("color", JSON.stringify(state.colors));
@@ -61,7 +79,15 @@ export const filterSlice = createSlice({
     }
 })
 
-export const {handleBrandSelection, handleModelSelection, handleColorSelection, handleMinDailyPrice, handleMaxDailyPrice, clearAllFilters} = filterSlice.actions;
+export const {handleBrandSelection, 
+    handleFilterStartDate, 
+    handleFilterEndDate,
+    handleModelSelection, 
+    handleColorSelection, 
+    handleMinDailyPrice, 
+    handleMaxDailyPrice, 
+    clearAllFilters, 
+    } = filterSlice.actions;
 
 export const filterReducer = filterSlice.reducer;
 export const selectFilter = (state: RootState) => state.filter;

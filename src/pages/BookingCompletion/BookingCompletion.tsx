@@ -8,9 +8,12 @@ import { InvoiceModel } from "../../models/response/Invoice.Model";
 import { RentalIdRequestModel } from "../../models/requests/RentalIdRequestModel";
 import { handleRentalIdForInvoice } from "../../store/invoiceSlice";
 import { formatStringDate } from "../../utils/formatDate";
-import { IconComponent, icons } from "../../utils/icons";
+import { IconComponent } from "../../utils/icons";
 import GoogleMapLocations from "../../utils/GoogleMapLocations";
 import InvoicePDFDocument from "../../components/InvoicePDFDocument/InvoicePDFDocument";
+import { clearAllStatesForRental } from "../../store/rentalSlice";
+import { clearAllFilters } from "../../store/filterSlice";
+import { setStepLevel } from "../../store/stepsSlice";
 
 type Props = {};
 
@@ -26,6 +29,11 @@ const BookingCompletion: React.FC = (props: Props) => {
 
   useEffect(() => {
     FetchRentalId();
+    dispatch(setStepLevel(0));
+    dispatch(clearAllFilters());
+     return () => {
+      dispatch(clearAllStatesForRental());
+    }
   }, []);
 
   //  Fetching rentalId

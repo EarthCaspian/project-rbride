@@ -40,3 +40,8 @@
       align-items: stretch;
       margin-bottom: 1rem;
   }
+
+  .custom-reservation-form {
+    display: flex;
+    justify-content: center;
+  }
