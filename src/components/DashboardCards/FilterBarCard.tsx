@@ -3,11 +3,10 @@ import "./style.css";
 import { Form, Field, Formik } from "formik";
 import DateChooser from "../DateChooser/DateChooser";
 import { useDispatch } from "react-redux";
-import { handleRentalEndDate, handleRentalStartDate } from "../../store/rentalSlice";
 import { useNavigate } from "react-router-dom";
 import BrandService from "../../services/BrandService";
 import { BrandModel } from "../../models/response/BrandModel";
-import { clearAllFilters, handleBrandSelection, handleMaxDailyPrice, handleMinDailyPrice } from "../../store/filterSlice";
+import { clearAllFilters, handleBrandSelection, handleFilterEndDate, handleFilterStartDate, handleMaxDailyPrice, handleMinDailyPrice } from "../../store/filterSlice";
 import { calculateDatesDifference } from "../../utils/formatDate";
 import CustomSelect, { OptionType } from "../CustomSelect/CustomSelect";
 
@@ -85,15 +84,13 @@ export  const FilterBarCard = () => {
   };
 
   // ON SUBMIT EVENT
-  // Function that updates the rental state and filter state with selections.
+  // Function that updates the filter state with selections.
   // Then navigates to the carList page.
   const handleSelections =  (values : ValuesType) => {
-    //Received day selections are sent to the rental state.   
+    //Received day selections are sent to the filter state.   
     //Both dates have been serialized to string format to comply with JSON standards.  
-    //dispatch(handleRentalStartDate(selectedStartDate.toLocaleDateString()));
-    //dispatch(handleRentalEndDate(selectedEndDate.toLocaleDateString()));
-    dispatch(handleRentalStartDate(selectedStartDate.toJSON()));
-    dispatch(handleRentalEndDate(selectedEndDate.toJSON()));
+    dispatch(handleFilterStartDate(selectedStartDate.toJSON()));
+    dispatch(handleFilterEndDate(selectedEndDate.toJSON()));
     //Received brand selection is sent to the filter state.
     if (values.brandOption)
         dispatch(handleBrandSelection(brands.filter((brand : BrandModel) => values.brandOption.value === brand.id)));

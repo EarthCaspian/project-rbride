@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./SubmitBookingPopUp.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import {
   handleDiscountRateForInvoice,
   handleInvoiceNoForInvoice,
@@ -58,13 +58,12 @@ const SubmitBookingPopUp: React.FC<Props> = ({ onClose }) => {
           Kindly proceed to view your reservation details and invoice. We're
           delighted to have you as our valued customer.
         </p>
-        <Link
-          to={"/completion"}
+        <Button
           className="btn btn-primary "
           onClick={handleClose}
         >
           View Reservation Details
-        </Link>
+        </Button>
       </div>
     </div>
   );

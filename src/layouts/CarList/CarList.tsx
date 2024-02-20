@@ -50,7 +50,7 @@ const CarList = () => {
     filteredCarsList = filterCarByModel(filteredCarsList, filterState);
     filteredCarsList = filterCarByColor(filteredCarsList, filterState);
     filteredCarsList = filterCarByPrice(filteredCarsList, filterState);
-    filteredCarsList = filterCarByDates(filteredCarsList, rentalsResponse, rentalState);
+    filteredCarsList = filterCarByDates(filteredCarsList, rentalsResponse, filterState);
     // Set the new filtered list of cars
     setCars(filteredCarsList);
   };

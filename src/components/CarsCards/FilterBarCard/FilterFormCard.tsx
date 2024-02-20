@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateDatesDifference } from '../../../utils/formatDate';
 import { RootState } from '../../../store/configureStore';
-import { handleRentalEndDate, handleRentalStartDate } from '../../../store/rentalSlice';
-import { handleBrandSelection, handleColorSelection, handleMaxDailyPrice, handleMinDailyPrice, handleModelSelection } from '../../../store/filterSlice';
+import { handleBrandSelection, handleColorSelection, handleFilterEndDate, handleFilterStartDate, handleMaxDailyPrice, handleMinDailyPrice, handleModelSelection } from '../../../store/filterSlice';
 import { BrandModel } from '../../../models/response/BrandModel';
 import { ColorModel } from '../../../models/response/ColorModel';
 import { ModelModel } from '../../../models/response/ModelModel';
@@ -39,11 +38,11 @@ type Props = {
 
 const FilterFormCard = (props: Props) => {
 
-    const rentalState = useSelector((state: RootState) => state.rental.rental);
+    const filterState = useSelector((state: RootState) => state.filter);
     const dispatch = useDispatch();
 
-    const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(rentalState.startDate));
-    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(rentalState.endDate));
+    const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(filterState.startDate));
+    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(filterState.endDate));
 
     const initialValues : ValuesType = {
       brandOptions : [],
@@ -69,12 +68,12 @@ const FilterFormCard = (props: Props) => {
     };
 
     // ON SUBMIT EVENT
-    // Function that updates the rental state and filter state with selections.
+    // Function that updates the filter state with selections.
     const handleSelections = (values : ValuesType) => {
-        //Received day selections are sent to the rental state.   
+        //Received day selections are sent to the filter state.   
         //Both dates have been serialized to JSON format to comply with JSON standards.
-        dispatch(handleRentalStartDate(selectedStartDate.toJSON()));
-        dispatch(handleRentalEndDate(selectedEndDate.toJSON()));
+        dispatch(handleFilterStartDate(selectedStartDate.toJSON()));
+        dispatch(handleFilterEndDate(selectedEndDate.toJSON()));
         //Received brand selections are sent to the filter state.
         if (values.brandOptions)
             dispatch(handleBrandSelection(props.brands.filter((brand) => values.brandOptions.find(option => option.value === brand.id))));

@@ -3,7 +3,6 @@ import "./style.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
-import { setStepLevel } from "../../store/stepsSlice";
 
 type ImageProps = {
   stepPage: string;
@@ -17,24 +16,23 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
   const dispatch = useDispatch();
 
   const chooseCarStep = () => {
-    rentalState.car && rentalState.car.id !== 0 ?
+   (stepsLevelState > 0 && rentalState.car && rentalState.car.id !== 0) ?
     navigate("/car-details/" + `${rentalState.car.id}`) : navigate("/cars");
   };
 
   const additionalserviceStep = () => {
-    if (stepsLevelState >= 1)
+    if (stepsLevelState >= 1 && stepsLevelState != 3)
       navigate("/additionalservices");
   };
 
   const bookNowStep = () => {
-    if (stepsLevelState >= 2)
+    if (stepsLevelState == 2)
       navigate("/booknow");
   };
 
   const completionStep = () => {
     if (stepsLevelState == 3)
       navigate("/completion");
-    dispatch(setStepLevel(0));
   };
 
   return (

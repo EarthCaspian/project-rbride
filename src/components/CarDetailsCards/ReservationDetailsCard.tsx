@@ -20,6 +20,7 @@ import { setStepLevel } from "../../store/stepsSlice";
 import { Field, Form, Formik } from "formik";
 import CustomSelect, { OptionType } from "../CustomSelect/CustomSelect";
 import { locations } from "../../utils/locations";
+import { handleFilterEndDate, handleFilterStartDate } from "../../store/filterSlice";
 
 type Props = {
   car: CarModel;
@@ -29,7 +30,7 @@ type Props = {
 export const ReservationDetailsCard = (props: Props) => {
 
   const screenWidth = props.screenWidth;
-  const rentalState = useSelector((state: RootState) => state.rental.rental);
+  const filterState = useSelector((state: RootState) => state.filter);
   const rentalLocationState = useSelector((state: RootState) => state.rental.locations);
   const loginState = useSelector((state:RootState) => state.login);
   const dispatch = useDispatch();
@@ -39,8 +40,8 @@ export const ReservationDetailsCard = (props: Props) => {
   const car = props.car;
 
   // Date
-  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(rentalState.startDate));
-  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(rentalState.endDate));
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(filterState.startDate));
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(filterState.endDate));
    //  Converting dates to JSON string format to send them Redux store as a seriliazed value
   const serializedStartDate = selectedStartDate.toJSON();
   const serializedEndDate = selectedEndDate.toJSON();
@@ -145,13 +146,15 @@ export const ReservationDetailsCard = (props: Props) => {
 
   // BUTTON CLICK EVENT
   //  Function that updates the rental state.
-  //  Rental State is changed only on the button click event.
+  //  Rental and filter states are changed only on the button click event.
   const addReceivedDatasToRentalState = (values : ValuesType) => {
     if (car && isAvailable) {
       if (loginState.isLoggedIn)
         dispatch(setStepLevel(1));
       else
         dispatch(setStepLevel(0));
+      dispatch(handleFilterStartDate(serializedStartDate));
+      dispatch(handleFilterEndDate(serializedEndDate));
       dispatch(handleRentalStartDate(serializedStartDate));
       dispatch(handleRentalEndDate(serializedEndDate));
       dispatch(addRentalSelectedCar(car));
@@ -180,135 +183,135 @@ export const ReservationDetailsCard = (props: Props) => {
       >
         {({ errors }) => (
         <Form id="locations-form">
+          <div className="custom-reservation-form">
+          {/* RESERVATION DETAIL TABLE */}
+          <table
+            id="payment-table"
+            className="table table-borderless w-75 justify-content-center"
+            style={{ height: 0.2 }}
+          >
+            {/* HEADER */}
+            <thead>
+              <tr>
+                <td colSpan={2}>
+                  <p className="display-6"> Reservation Details </p>
+                </td>
+              </tr>
+            </thead>
 
-        {/* RESERVATION DETAIL TABLE */}
-        <table
-          id="payment-table"
-          className="table table-borderless w-75 "
-          style={{ height: 0.2 }}
-        >
-          {/* HEADER */}
-          <thead>
-            <tr>
-              <td colSpan={2}>
-                <p className="display-6"> Reservation Details </p>
-              </td>
-            </tr>
-          </thead>
-
-          {/* BODY */}
-          <tbody>
-            {/* Pick Up row */}
-            <tr >
-              <td className="col-4 text-start align-middle">
-                <h6 style={{ color: "rgb(38, 214, 117)" }}> Pick Up location</h6>
-              </td>
-              <td className="col-8">
-                <div className="custom-select-location">
-                  <Field
-                    name="pickupOption"
-                    options={locationOptions}
-                    component={CustomSelect}
-                    selectedValues={selectedLocations().pickupOption}
-                    isMulti={false}
-                    placeholder="Select location..."
-                    validate={validateLocations}
-                  />
-                </div>
-                {errors.pickupOption && (<div className="text-danger">Please select location.</div>)}
-              </td>
-            </tr>
-            {/* Drop Off row */}
-            <tr >
-              <td className="col-4 text-start align-middle">
-                <h6 style={{ color: "rgb(38, 214, 117)" }}> Drop Off Location</h6>
-              </td>
-              <td className="col-8">
-                <div className="custom-select-location">
-                  <Field
-                    name="dropoffOption"
-                    options={locationOptions}
-                    component={CustomSelect}
-                    selectedValues={selectedLocations().dropoffOption}
-                    isMulti={false}
-                    placeholder="Select location..."
-                    validate={validateLocations}
-                  />
-                </div>
-                {errors.dropoffOption && (<div className="text-danger">Please select location.</div>)}
-              </td>
-            </tr>
-
-
-            {/* Start Date row */}
-            <tr id="days" className="table-group-divider">
-              <td className="col-4 text-start align-middle">
-                <h6 style={{ color: "rgb(38, 214, 117)" }}> Start Date:</h6>
-              </td>
-              <td className="col-8 text-center">
-                {/* Choose - Start Date row */}
-                <div className="custom-dateChooser">
-                  <DateChooser
-                    selectedDate={selectedStartDate}
-                    onDateChange={handleStartDateChange}
-                    minDate={new Date()}
-                    closeWin={true}
-                  />
-                </div>
-              </td>
-            </tr>
-            {/* End Date row */}
-            <tr id="days" className="">
-              <td className="col-4 text-start align-middle">
-                <h6 style={{ color: "rgb(38, 214, 117)" }}> End Date:</h6>
-              </td>
-              <td className="col-8 text-center">
-                {/* Choose - End Date row */}
-                <div className="custom-dateChooser">
-                  <DateChooser
-                    selectedDate={selectedEndDate}
-                    onDateChange={handleEndDateChange}
-                    minDate={selectedStartDate}
-                    closeWin={true}
-                  />
-                </div>
-              </td>
-            </tr>
-            {/* Days row */}
-            <tr id="days" >
-              <td className="col-4 text-start align-middle">
-                <h6 style={{ color: "rgb(38, 214, 117)" }}> Days:</h6>
-              </td>
-              <td className="col-8 text-center">
-                <div className="d-flex justify-content-center">
-                  <div className="col-2 d-flex align-items-center justify-content-center">
-                    <h5 style={{ color: "rgb(38, 214, 117)" }}>{days}</h5>
+            {/* BODY */}
+            <tbody>
+              {/* Pick Up row */}
+              <tr >
+                <td className="col-4 text-start align-middle">
+                  <h6 style={{ color: "rgb(38, 214, 117)" }}> Pick Up location</h6>
+                </td>
+                <td className="col-8">
+                  <div className="custom-select-location">
+                    <Field
+                      name="pickupOption"
+                      options={locationOptions}
+                      component={CustomSelect}
+                      selectedValues={selectedLocations().pickupOption}
+                      isMulti={false}
+                      placeholder="Select location..."
+                      validate={validateLocations}
+                    />
                   </div>
-                </div>
-              </td>
-            </tr>
+                  {errors.pickupOption && (<div className="text-danger">Please select location.</div>)}
+                </td>
+              </tr>
+              {/* Drop Off row */}
+              <tr >
+                <td className="col-4 text-start align-middle">
+                  <h6 style={{ color: "rgb(38, 214, 117)" }}> Drop Off Location</h6>
+                </td>
+                <td className="col-8">
+                  <div className="custom-select-location">
+                    <Field
+                      name="dropoffOption"
+                      options={locationOptions}
+                      component={CustomSelect}
+                      selectedValues={selectedLocations().dropoffOption}
+                      isMulti={false}
+                      placeholder="Select location..."
+                      validate={validateLocations}
+                    />
+                  </div>
+                  {errors.dropoffOption && (<div className="text-danger">Please select location.</div>)}
+                </td>
+              </tr>
 
-            {/* Daily price row */}
-            <tr id="daily-price" className="table-group-divider">
-              <td className="col-4">
-                <h6> Daily Price: </h6>
-              </td>
-              <td className="col-8 text-center">
-                <h5>₺{car.dailyPrice}</h5>
-              </td>
-            </tr>
-            {/* Total price row */}
-            <tr id="total-price">
-              <td className="col-4">
-                <h6> Total Price: </h6>
-              </td>
-              <td className="col-8 text-center">
-                <h5>₺{totalPrice}</h5>
-              </td>
-            </tr>
-          </tbody>
-        </table>
 
+              {/* Start Date row */}
+              <tr id="days" className="table-group-divider">
+                <td className="col-4 text-start align-middle">
+                  <h6 style={{ color: "rgb(38, 214, 117)" }}> Start Date:</h6>
+                </td>
+                <td className="col-8 text-center">
+                  {/* Choose - Start Date row */}
+                  <div className="custom-dateChooser">
+                    <DateChooser
+                      selectedDate={selectedStartDate}
+                      onDateChange={handleStartDateChange}
+                      minDate={new Date()}
+                      closeWin={true}
+                    />
+                  </div>
+                </td>
+              </tr>
+              {/* End Date row */}
+              <tr id="days" className="">
+                <td className="col-4 text-start align-middle">
+                  <h6 style={{ color: "rgb(38, 214, 117)" }}> End Date:</h6>
+                </td>
+                <td className="col-8 text-center">
+                  {/* Choose - End Date row */}
+                  <div className="custom-dateChooser">
+                    <DateChooser
+                      selectedDate={selectedEndDate}
+                      onDateChange={handleEndDateChange}
+                      minDate={selectedStartDate}
+                      closeWin={true}
+                    />
+                  </div>
+                </td>
+              </tr>
+              {/* Days row */}
+              <tr id="days" >
+                <td className="col-4 text-start align-middle">
+                  <h6 style={{ color: "rgb(38, 214, 117)" }}> Days:</h6>
+                </td>
+                <td className="col-8 text-center">
+                  <div className="d-flex justify-content-center">
+                    <div className="col-2 d-flex align-items-center justify-content-center">
+                      <h5 style={{ color: "rgb(38, 214, 117)" }}>{days}</h5>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {/* Daily price row */}
+              <tr id="daily-price" className="table-group-divider">
+                <td className="col-4 text-start align-middle">
+                  <h6> Daily Price: </h6>
+                </td>
+                <td className="col-8 text-center">
+                  <h5>₺{car.dailyPrice}</h5>
+                </td>
+              </tr>
+              {/* Total price row */}
+              <tr id="total-price">
+                <td className="col-4 text-start align-middle">
+                  <h6> Total Price: </h6>
+                </td>
+                <td className="col-8 text-center">
+                  <h5>₺{totalPrice}</h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
         </Form>
         )}
       </Formik>
@@ -316,21 +319,22 @@ export const ReservationDetailsCard = (props: Props) => {
         {/* BOOK NOW BUTTON */}
         <div
           id="book-now-button"
-          className="buton row d-flex justify-content-center"
+          className="button row d-flex justify-content-center"
         >
           <Button
             className="custom-btn w-75 shadow p-3 mb-2 rounded"
             type="submit"
             form="locations-form"
-            // onClick={addReceivedDatasToRentalState}
           >
             <b>Book Now</b>
           </Button>
-            <p id="warning-message"
-              className="row d-flex justify-content-center"
-              style={{color: "red"}}>
-                {errorMessage}
-            </p>
+          
+          {/* Warning Message */}
+          <p id="warning-message"
+            className="row d-flex justify-content-center"
+            style={{color: "red"}}>
+              {errorMessage}
+          </p>
         </div>
       </div>
     </div>

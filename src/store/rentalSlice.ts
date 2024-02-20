@@ -59,7 +59,6 @@ const initialCarState: CarModel = {
 const currentDate: Date = new Date();
 
 const initialRentalState: RentalStateModel = {
-  id: 0,
   startDate: currentDate.toJSON(),
   endDate: currentDate.toJSON(),
   returnDate: null,
@@ -153,6 +152,16 @@ export const rentalSlice = createSlice({
       state.locations.dropOff = action.payload;
       localStorage.setItem("locations", JSON.stringify(state.locations.dropOff));
     },
+    clearAllStatesForRental(state: RentalState) {
+      state.rental = initialRentalState;
+      state.insurance = initialInsuranceState;
+      state.extraServices = []
+      state.locations = initialLocationsState;
+      localStorage.setItem("rental", JSON.stringify(state.rental));
+      localStorage.setItem("insurance", JSON.stringify(state.insurance));
+      localStorage.setItem("extraServices", JSON.stringify(state.extraServices));
+      localStorage.setItem("locations", JSON.stringify(state.locations));
+    }
   },
 });
 
@@ -165,6 +174,7 @@ export const {
   addRentalSelectedExtraServices,
   handleRentalPickUpLocation,
   handleRentalDropOffLocation,
+  clearAllStatesForRental,
 } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
