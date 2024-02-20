@@ -53,7 +53,7 @@ const CarCard = (car: Props) => {
           </div>
           {/* See more */}
           <div className="col-6 card-body text-center">
-            <Link to={"/car-details/" + car.car.id} className="btn btn-primary me-3 w-75">
+            <Link to={"/car-details/" + car.car.id} className="submit-btn btn btn-primary me-3 w-75">
               See More
             </Link>
           </div>

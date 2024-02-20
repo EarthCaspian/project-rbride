@@ -74,7 +74,7 @@ const BookNow = (props: Props) => {
       {/* BOOKING STEPS CARD */}
       <div className="container-fluid text-center border-bottom py-4">
         <BookingStepsCard stepPage="BookNow"></BookingStepsCard>
-        <h1>Check & Complete Booking</h1>
+        <h1 className="book-now-title">Check & Complete Booking</h1>
       </div>
 
       <div className="container mt-5">
@@ -93,7 +93,7 @@ const BookNow = (props: Props) => {
             {/* COMPLETE BOOKING BUTTON */}
             <div className="col-12 fw-bold mb-2">
               <button id="complete-booking" 
-                  className="btn btn-success" 
+                  className="booknow-btn btn btn-success" 
                   form="customer-form" 
                   type="submit"
                   onClick={CompleteBooking}

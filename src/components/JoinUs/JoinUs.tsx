@@ -110,7 +110,7 @@ const JoinUs: React.FC = () => {
                         </div>
                         <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY || ''} onChange={(val) => setCapVal(val)}/>
                         <div className="d-flex justify-content-end">
-                            <button type="submit" className="btn btn-primary" disabled={!capVal || submitting}>
+                            <button type="submit" className="submit-btn btn btn-primary" disabled={!capVal || submitting}>
                                 {submitting ? 'Sending...' : 'Submit'}</button>
                         </div>
                         {submitSuccess && <div className="alert alert-success mt-3">Form submitted successfully.</div>}

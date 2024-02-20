@@ -93,7 +93,7 @@ const Profile = () => {
                         onChange={e => updateInputValue(e, 'password')}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Update</button>
+                <button type="submit" className="submit-btn btn btn-primary">Update</button>
             </form>
         </div>
     );

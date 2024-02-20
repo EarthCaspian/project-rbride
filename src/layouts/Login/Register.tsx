@@ -131,7 +131,7 @@ const Register = (props: Props) => {
         </div>
         {/* Roles Selection Box */}
 
-        <button className="btn btn-lg btn-primary" type="submit">
+        <button className="submit-btn btn btn-lg btn-primary" type="submit">
           Register
         </button>
         <p className="mt-3">
