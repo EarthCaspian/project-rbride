@@ -28,12 +28,6 @@
     margin-right: 50px;
   }
 
-  .custom-fixed {
-    position: fixed;
-    top: 27%;
-    z-index: 2;
-  }
-
   .custom-select-location {
       display: flex;
       flex-direction: column;
@@ -44,4 +38,36 @@
   .custom-reservation-form {
     display: flex;
     justify-content: center;
+  }
+
+
+  .reservation-details {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width:75%;
+    left:53%;
+    transform: translateX(-50%); 
+  }
+
+  @media only screen and (min-width: 1660px) and (min-height: 860px) {
+    .reservation-details {
+      position: fixed;
+      width:25%;
+      top:20%;
+      left:80%;
+      transform: translateX(-50%); 
+      z-index: 999;
+    }
+  }
+
+  @media only screen and (min-width: 1345px) and (max-width: 1659px) and (min-height: 860px) {
+    .reservation-details {
+      position: fixed;
+      width:30%;
+      top:20%;
+      left:80%;
+      transform: translateX(-50%); 
+      z-index: 999;
+    }
   }
