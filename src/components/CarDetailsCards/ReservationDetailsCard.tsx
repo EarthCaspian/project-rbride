@@ -24,12 +24,10 @@ import { handleFilterEndDate, handleFilterStartDate } from "../../store/filterSl
 
 type Props = {
   car: CarModel;
-  screenWidth: boolean;
 };
 
 export const ReservationDetailsCard = (props: Props) => {
 
-  const screenWidth = props.screenWidth;
   const filterState = useSelector((state: RootState) => state.filter);
   const rentalLocationState = useSelector((state: RootState) => state.rental.locations);
   const loginState = useSelector((state:RootState) => state.login);
@@ -173,9 +171,7 @@ export const ReservationDetailsCard = (props: Props) => {
   return (
     <div className="container-fluid mt-5" style={{ marginRight: 15 }}>
       <div
-        className={`row d-flex justify-content-center ${
-          screenWidth ? "custom-fixed" : ""
-        }`}
+        className="row reservation-details d-flex justify-content-center"
       >
       <Formik
         initialValues={initialLocations}
@@ -187,7 +183,7 @@ export const ReservationDetailsCard = (props: Props) => {
           {/* RESERVATION DETAIL TABLE */}
           <table
             id="payment-table"
-            className="table table-borderless w-75 justify-content-center"
+            className="table table-borderless justify-content-center"
             style={{ height: 0.2 }}
           >
             {/* HEADER */}

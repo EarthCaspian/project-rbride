@@ -17,7 +17,6 @@ export const CarDetails = (props: Props) => {
 
     const [car, setCar] = useState<CarModel>();
     const params = useParams<{id:string}>();
-    const [screenWidth, setScreenWidth] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -25,15 +24,6 @@ export const CarDetails = (props: Props) => {
 
     useEffect(() => {
       fetchCar();
-
-      setScreenWidth(window.innerWidth >= 992)
-
-      const handleResize = () => {
-          setScreenWidth(window.innerWidth >= 992)
-      }
-
-      window.addEventListener('resize', handleResize);
-
     }, []);
   
     const fetchCar = () => {
@@ -62,8 +52,8 @@ export const CarDetails = (props: Props) => {
                 {car !== undefined && <CarDetailsCard car={car} />}
             </div>
             {/* PAYMENT DETAILS */}
-            <div id='payment-details' className='col-lg-4 col-md-12 d-flex align-items-center'>
-                {car !== undefined && <ReservationDetailsCard car={car} screenWidth={screenWidth} />}
+            <div id='payment-details' className='col-lg-4 col-md-12 col-12 d-flex align-items-center'>
+                {car !== undefined && <ReservationDetailsCard car={car} />}
             </div>
         </div >
         {/* FOOTER */}
