@@ -5,7 +5,7 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <div style={{ marginTop: 150 }}>
+    <div style={{ marginTop: 100 }}>
       {/* Footer - Starts */}
       <footer className="footer text-center fixed-bottom bg-light">
         <p className="mt-2 mb-0 fs-6">

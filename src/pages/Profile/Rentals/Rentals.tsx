@@ -22,7 +22,7 @@ const Rentals = () => {
     return (
         <div className="rentals">
             <Sidebar />
-            <h2>My Rentals</h2>
+            <h2 className="my-rentals-title">My Rentals</h2>
             
             <table className="table">
                 <thead>

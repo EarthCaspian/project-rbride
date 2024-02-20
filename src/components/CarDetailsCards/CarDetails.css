@@ -1,7 +1,7 @@
 .custom-btn {
-    background-color: orange;
-    color: rgb(7, 83, 41);
-    display: inline-block;
+  background-color: #09272d;
+  color: white;
+  display: inline-block;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -12,12 +12,13 @@
   line-height: 1.5;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-radius: 0.5rem;
-    width: 2rem;
+  width: 2rem;
+
   }
   
   .custom-btn:hover {
-    background-color: rgb(5, 94, 74);
-    color:orange;
+    background-color: rgba(212, 96, 24, 0.685) !important;
+    
   }
 
   .custom-brdr {
@@ -29,7 +30,7 @@
   }
 
   .custom-fixed {
-    position: fixed;
+    position: relative;
     top: 27%;
     z-index: 2;
   }
@@ -44,4 +45,5 @@
   .custom-reservation-form {
     display: flex;
     justify-content: center;
+
   }
