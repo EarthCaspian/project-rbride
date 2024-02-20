@@ -20,7 +20,13 @@
     font-size: 2rem;
     font-weight: bold;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
+    width: 100%; 
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: rgba(255, 150, 84, 0.8);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   }
   
   .cars_slider_text {

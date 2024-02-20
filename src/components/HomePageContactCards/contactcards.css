@@ -29,13 +29,12 @@
 .contact_card {
     width: 500px; 
     height: 400px;
-
-
 }
 
 .contact_card-img-top {
     max-width: 100%; 
     height: auto;
+
 }
 
 .contact_card-footer{

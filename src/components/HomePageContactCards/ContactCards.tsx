@@ -22,7 +22,7 @@ function ContactCards() {
         <div className="home_featured d-flex justify-content-center">
             <div className="row justify-content-between">
                 <div className="col-lg-4 col-md-6 col-sm-12">
-                    <div className="card h-100 card-hover">
+                    <div className="contact_card h-100 card-hover">
                         <motion.img className="contact_card-img-top"
                             src={process.env.PUBLIC_URL + '/images/rented.jpeg'}
                             alt="Contact"
@@ -43,8 +43,8 @@ function ContactCards() {
                 </div>
 
                 <div className="col-lg-4 col-md-6 col-sm-12">
-                    <div className="card h-100 card-hover">
-                        <motion.img className="card-img-top"
+                    <div className="contact_card h-100 card-hover">
+                        <motion.img className="contact_card-img-top"
                             src={process.env.PUBLIC_URL + '/images/browse.jpeg'}
                             alt="Join Us"
                             whileHover={{ scale: 1.1 }}
@@ -66,7 +66,7 @@ function ContactCards() {
                 </div>
 
                 <div className="col-lg-4 col-md-6 col-sm-12">
-                    <div className="card h-100 card-hover">
+                    <div className="contact_card h-100 card-hover">
                         <motion.img className="contact_card-img-top"
                             src={process.env.PUBLIC_URL + '/images/welcome2.jpeg'}
                             alt="Frequently Asked Questions"
