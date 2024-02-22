@@ -54,12 +54,12 @@ const Dashboard = () => {
       <div  id="hero">
         <div className="hero-image">
           <div className="hero-text">
-            {/* <h2>Welcome to RoboRide</h2>
-            <p>Rental Services with Precision</p> */}
+            <h2>Welcome to RoboRide</h2>
+            <p className="fs-5">Rental Services with Precision</p>
           </div>
         </div>
       </div>
-      <div id="form" className="custom-form">
+      <div id="form" className="custom-form mt-5">
         <FilterBarCard />
       </div>
       <div className="cars-slider">
