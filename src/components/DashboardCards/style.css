@@ -13,12 +13,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-135%);
     color: white;
 }
+
 .hero-text h2 {
-    font-size: 5vw; 
+    font-size: 4vw; 
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .custom-form {
