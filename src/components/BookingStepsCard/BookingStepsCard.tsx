@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 
 type ImageProps = {
@@ -13,7 +13,6 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
   const rentalState = useSelector((state: RootState) => state.rental.rental);
   const stepsLevelState = useSelector((state: RootState) => state.steps.stepLevel);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const chooseCarStep = () => {
    (stepsLevelState > 0 && rentalState.car && rentalState.car.id !== 0) ?
@@ -21,17 +20,17 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
   };
 
   const additionalserviceStep = () => {
-    if (stepsLevelState >= 1 && stepsLevelState != 3)
+    if (stepsLevelState >= 1 && stepsLevelState !== 3)
       navigate("/additionalservices");
   };
 
   const bookNowStep = () => {
-    if (stepsLevelState == 2)
+    if (stepsLevelState === 2)
       navigate("/booknow");
   };
 
   const completionStep = () => {
-    if (stepsLevelState == 3)
+    if (stepsLevelState === 3)
       navigate("/completion");
   };
 
