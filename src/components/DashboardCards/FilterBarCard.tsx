@@ -4,75 +4,35 @@ import { Form, Field, Formik } from "formik";
 import DateChooser from "../DateChooser/DateChooser";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import BrandService from "../../services/BrandService";
 import { BrandModel } from "../../models/response/BrandModel";
-import { clearAllFilters, handleBrandSelection, handleFilterEndDate, handleFilterStartDate, handleMaxDailyPrice, handleMinDailyPrice } from "../../store/filterSlice";
+import { clearAllFilters } from "../../store/filterSlice";
 import { calculateDatesDifference } from "../../utils/formatDate";
-import CustomSelect, { OptionType } from "../CustomSelect/CustomSelect";
+import CustomSelect from "../CustomSelect/CustomSelect";
+import { FilterOptionsType, ValuesType, fetchBrands, initialValues, mapBrandsToFilterOptions, updateFilterState } from "./helpers";
 
-//format of options in the form
-//OptionType is defined in the CustomSelect.tsx file. ({label:string(option name), value:number(id)})
-interface FilterOptionsType {
-    brandOptions : OptionType[] ,
-    dailyPriceOptions : OptionType[],
-}
-
-//format of the "values" received after pressing the submit button in the form
-interface ValuesType {
-  brandOption : OptionType;
-  dailyPriceOption : OptionType;
-}
-
-const initialValues : ValuesType = {
-  brandOption : {label: "", value: 0},
-  dailyPriceOption : {label: "", value: 0},
-};
-
-//variable for determining the daily price range options
-export const dailyPriceRange = [{minPrice: 0, maxPrice: 200}, {minPrice: 200, maxPrice:400},{ minPrice:400, maxPrice:600}, {minPrice:600, maxPrice:800}, {minPrice:800, maxPrice:2000}];
 
 export  const FilterBarCard = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [options, setOptions] = useState<FilterOptionsType>({brandOptions: [], dailyPriceOptions: []});
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(selectedStartDate);
+  const [options, setOptions] = useState<FilterOptionsType>({brandOptions:[], dailyPriceOptions:[]});
   const [brands, setBrands] = useState<BrandModel[]>([]);
-  let brandsResponse : BrandModel[];
-
+  
   useEffect(() => {
-    fetchAndMap();
+    fetchBrandsAndMapThemToFilterOptions();
     dispatch(clearAllFilters());
   }, []);
-
-  const fetchAndMap = async () => {
-    brandsResponse = await fetchBrands();
-    mapDatasToFilterForm();
-  }
-
-  const fetchBrands = () : Promise<BrandModel[]> => {
-    return (
-      BrandService.getAll().then((response) => {
-        setBrands(response.data);
-        return (response.data);
-      })
-    )
+  
+  //Fetch all brands then converts them from brandResponse and all ranges in dailyPriceRange to FilterOptionType to reflect in the form
+  const fetchBrandsAndMapThemToFilterOptions = async () => {
+    const brandsResponse = await fetchBrands();
+    setBrands(brandsResponse);
+    setOptions(mapBrandsToFilterOptions(brandsResponse));
   };
-
-  //Converts all brands from brandResponse and all ranges in dailyPriceRange to FilterOptionType to reflect in the form
-  const mapDatasToFilterForm = () => {
-    const brandOptions = brandsResponse.map((brand) => {
-        return {label: brand.name, value: brand.id}
-    })
-    const dailyPriceOptions = dailyPriceRange.map((price, i) => {
-      return {label: String(price.minPrice) + "-" + String(price.maxPrice), value: i}
-    })
-    const options = {brandOptions: brandOptions, dailyPriceOptions : dailyPriceOptions};
-    setOptions(options);
-}
-
+    
   const handleStartDateChange = (date: Date) => {
     setSelectedStartDate(date);
     if (calculateDatesDifference(date, selectedEndDate) < 0)
@@ -87,25 +47,13 @@ export  const FilterBarCard = () => {
   // Function that updates the filter state with selections.
   // Then navigates to the carList page.
   const handleSelections =  (values : ValuesType) => {
-    //Received day selections are sent to the filter state.   
-    //Both dates have been serialized to string format to comply with JSON standards.  
-    dispatch(handleFilterStartDate(selectedStartDate.toJSON()));
-    dispatch(handleFilterEndDate(selectedEndDate.toJSON()));
-    //Received brand selection is sent to the filter state.
-    if (values.brandOption)
-        dispatch(handleBrandSelection(brands.filter((brand : BrandModel) => values.brandOption.value === brand.id)));
-    //Received price range selection is sent to the filter state.
-    if (values.dailyPriceOption) {
-      const index = values.dailyPriceOption.value;
-      dispatch(handleMinDailyPrice(dailyPriceRange[index].minPrice));
-      dispatch(handleMaxDailyPrice(dailyPriceRange[index].maxPrice));
-    }
+    updateFilterState(values, dispatch, selectedStartDate, selectedEndDate, brands);
     navigate("/cars");
   }
 
   return (
     <div>
-      <Formik initialValues={initialValues} onSubmit={values => handleSelections(values)}>
+      <Formik initialValues={initialValues} onSubmit={(values : ValuesType )=> handleSelections(values)}>
           <Form className="row m-3">
 
             {/* PICKING UP DATE - DATE PICKER*/}
