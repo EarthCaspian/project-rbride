@@ -1,31 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { BrandModel } from '../../models/response/BrandModel';
 import { ColorModel } from '../../models/response/ColorModel';
 import { ModelModel } from '../../models/response/ModelModel';
-import BrandService from '../../services/BrandService';
-import ModelService from '../../services/ModelService';
-import ColorService from '../../services/ColorService';
 import FilterFormCard from '../../components/CarsCards/FilterBarCard/FilterFormCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/configureStore';
-import { OptionType } from '../../components/CustomSelect/CustomSelect';
-
-//format of options in the form
-//OptionType is defined in the CustomSelect.tsx file. ({label:string(option name), value:number(id)})
-interface FormOptionsType {
-    brandOptions: OptionType[] ;
-    colorOptions: OptionType[] ;
-    modelOptions: OptionType[] ;
-}
-
-//format of the "values" received after pressing the submit button in the form
-interface ValuesType {
-    brandOptions: OptionType[] ;
-    colorOptions: OptionType[] ;
-    modelOptions: OptionType[] ;
-    minDailyPrice: number;
-    maxDailyPrice: number;
-}
+import { FormOptionsType, fetchBrands, fetchColors, fetchModels, getPreSelectedOptions, mapDatasToFormOptionsType } from './helpers';
 
 const FilterBar = () => {
     const filterState = useSelector((state: RootState) => state.filter);
@@ -37,71 +17,19 @@ const FilterBar = () => {
     let modelsResponse : ModelModel[];
     let colorsResponse : ColorModel[];
     
-    useEffect(() => {
-            fetchThemAllAndMap();
-      }, []);
 
     const fetchThemAllAndMap = async () => {
         brandsResponse = await fetchBrands();
         modelsResponse = await fetchModels();
         colorsResponse = await fetchColors();
-        mapDatasToFormOptionsType();
-    }
-
-    const fetchBrands = () : Promise<BrandModel[]> => {
-        return (
-            BrandService.getAll().then((response) => {
-                setBrands(response.data);
-                return (response.data);
-            })
-        )
-    }
-
-    const fetchModels = () : Promise<ModelModel[]> => {
-        return (
-            ModelService.getAll().then((response) => {
-                setModels(response.data);
-                return(response.data);
-            })
-        )
-    }
-
-    const fetchColors = () : Promise<ColorModel[]> => {
-        return (
-            ColorService.getAll().then((response) => {
-                setColors(response.data);
-                return(response.data);
-            })
-        )
-    }
-
-    //Converts all responses to OptionType, then combines them all into FormOptionsType type.    
-    const mapDatasToFormOptionsType = () => {
-        const brandOptions = brandsResponse.map((brand) => {
-            return {label: brand.name, value: brand.id}
-        })
-        const modelOptions = modelsResponse.map((model) => {
-            return {label: model.name, value: model.id}
-        })
-        const colorOptions = colorsResponse.map((color) => {
-            return {label: color.name, value:color.id}
-        })
-        const allOptions = {brandOptions: brandOptions, colorOptions: colorOptions, modelOptions: modelOptions};
+        setBrands(brandsResponse);
+        setModels(modelsResponse);
+        setColors(colorsResponse);
+        const allOptions = mapDatasToFormOptionsType(brandsResponse, modelsResponse, colorsResponse);
         setOptions(allOptions);
     }
 
-    //Function that makes the old selected options visible when the user refreshes the page
-    //Previously selected options are sent to the CustomSelect component through the prop, and these options are set as selected. 
-    const fetchOldSelectedOptions = () : ValuesType => {
-        const oldSelectedOptions : ValuesType = {
-           brandOptions : filterState.brands?.map((brand) => {return ({label : brand.name,  value : brand.id})}),
-           colorOptions : filterState.colors?.map((color) => {return ( {label : color.name,  value : color.id})}),
-           modelOptions : filterState.models?.map((model, i) => {return ( {label : model.name,  value : i})}),
-           minDailyPrice : filterState.minDailyPrice,
-           maxDailyPrice : filterState.maxDailyPrice,
-        }
-        return oldSelectedOptions;
-    }
+    fetchThemAllAndMap();
 
   return (
     <div>
@@ -122,7 +50,7 @@ const FilterBar = () => {
                                 colors={colors}
                                 models={models}
                                 options={options}
-                                selectedOptions={fetchOldSelectedOptions()}
+                                selectedOptions={getPreSelectedOptions(filterState)}
                             />
                         </div>
                         </div>
