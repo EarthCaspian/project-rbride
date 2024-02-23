@@ -161,7 +161,7 @@ const InvoicePDFDocument: React.FC<InvoicePdf> = (props: InvoicePdf) => {
                   </View>
 
                   {/* Total Price and Tax */}
-                  <Text>Tax: {invoice.taxRate}tl</Text>
+                  <Text>Tax: {invoice.taxRate} TL</Text>
                   <Text
                     style={{
                       fontSize: 20,
@@ -170,7 +170,7 @@ const InvoicePDFDocument: React.FC<InvoicePdf> = (props: InvoicePdf) => {
                       color: "",
                     }}
                   >
-                    Total Price: {invoice.totalPrice}tl
+                    Total Price: {parseFloat(invoice.totalPrice.toFixed(2))} TL
                   </Text>
 
                   {/* Terms and Conditions */}
