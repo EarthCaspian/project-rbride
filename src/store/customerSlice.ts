@@ -35,35 +35,30 @@ export const customerSlice = createSlice({
       action: PayloadAction<string>
     ) {
       state.customer.firstName = action.payload;
-      localStorage.setItem("customer", JSON.stringify(state.customer));
     },
     handleCustomerLastName(
       state: CustomerState,
       action: PayloadAction<string>
     ) {
       state.customer.lastName = action.payload;
-      localStorage.setItem("customer", JSON.stringify(state.customer));
     },
     handleCustomerInternationalId(
       state: CustomerState,
       action: PayloadAction<string>
     ) {
       state.customer.internationalId = action.payload;
-      localStorage.setItem("customer", JSON.stringify(state.customer));
     },
     handleCustomerBirthdate(
       state: CustomerState,
       action: PayloadAction<string>
     ) {
       state.customer.birthdate = action.payload;
-      localStorage.setItem("customer", JSON.stringify(state.customer));
     },
     handleCustomerLicenceIssueDate(
       state: CustomerState,
       action: PayloadAction<string>
     ) {
       state.customer.licenceIssueDate = action.payload;
-      localStorage.setItem("customer", JSON.stringify(state.customer));
     },
     setCustomerIsValid(state: CustomerState, action : PayloadAction<boolean>) {
       state.isValid = action.payload;
