@@ -4,7 +4,7 @@ import CarService from '../../services/CarService';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../components/CarDetailsCards/CarDetails.css'
 import { CarDetailsCard } from '../../components/CarDetailsCards/CarDetailsCard';
-import { ReservationDetailsCard } from '../../components/CarDetailsCards/ReservationDetailsCard';
+import { ReservationDetailsCard } from '../../components/CarDetailsCards/ReservationDetailsCard/ReservationDetailsCard';
 import { FooterCard } from '../../components/CarDetailsCards/FooterCard';
 import BookingStepsCard from '../../components/BookingStepsCard/BookingStepsCard';
 import { useDispatch } from "react-redux";
