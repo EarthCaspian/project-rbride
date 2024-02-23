@@ -21,7 +21,7 @@ export interface RentalExtrasModel {
   price: number;
 }
 
-interface LocationsStateModel {
+export interface LocationsStateModel {
   pickUp : LocationModel;
   dropOff : LocationModel;
 }
