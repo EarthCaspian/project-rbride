@@ -1,14 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./SubmitBookingPopUp.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { Button } from "react-bootstrap";
-import {
-  handleDiscountRateForInvoice,
-  handleInvoiceNoForInvoice,
-  handleTaxRateForInvoice,
-  handleTotalPriceForInvoice,
-} from "../../store/invoiceSlice";
+import { updateInvoiceState } from "./helpers";
 
 interface Props {
   onClose: () => void;
@@ -16,35 +11,9 @@ interface Props {
 
 const SubmitBookingPopUp: React.FC<Props> = ({ onClose }) => {
   const dispatch = useDispatch();
-  const rentalState = useSelector((state: RootState) => state.rental.rental);
-  const rentalExtraState = useSelector((state: RootState) => state.rental);
-  const taxRate = 0.18;
+  const rentalState = useSelector((state: RootState) => state.rental);
 
-  const totalExtraPrice = () => {
-    return rentalExtraState.extraServices.reduce(
-      (total, service) => total + service.price,
-      0
-    );
-  };
-  const finalPrice =
-    (rentalState.totalPrice +
-      rentalExtraState.insurance.price +
-      totalExtraPrice()) *
-    (1 + taxRate);
-
-  useEffect(() => {
-    dispatch(handleTaxRateForInvoice(taxRate));
-    dispatch(handleDiscountRateForInvoice(0));
-    dispatch(handleTotalPriceForInvoice(finalPrice));
-    dispatch(handleInvoiceNoForInvoice(generateInvoiceNumber()));
-  }, []);
-
-  function generateInvoiceNumber(): string {
-    const currentYear = new Date().getFullYear() % 100; // Get the last two digits of the current year
-    const randomDigits = Math.floor(10000 + Math.random() * 90000); // Generate a random 5-digit number
-    const invoiceNumber = `RbRide${currentYear}${randomDigits}`;
-    return invoiceNumber;
-  }
+  updateInvoiceState(dispatch, rentalState);
 
   const handleClose = () => {
     onClose(); // Close the popup
