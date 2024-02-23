@@ -4,10 +4,15 @@
     align-items: stretch;
     margin-top: 120px;
     margin-bottom: 40px;
+    margin-left: 30px;
     
 }
 
 .contact-item h4,
 .contact-item p {
     margin-bottom: 30px;
+}
+
+.submit-btn{
+    background-color: #09272d !important;
 }

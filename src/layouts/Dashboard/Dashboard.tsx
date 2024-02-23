@@ -13,39 +13,39 @@ const Dashboard = () => {
   const slides = [
       {
           index:1,
-          imageUrl: 'https://www.enterprise.com.tr/upload/vehicles/imagew/950/hyundaii20dizelotomatik1280x720copy6374441175630565315.png',
-          title: 'Hyundai',
-          description: 'i20',
+          imageUrl: process.env.PUBLIC_URL + '/assets/a3.png',
+          title: 'Audi',
+          description: 'a3',
       },
       {
         index:2,
-        imageUrl: 'https://www.enterprise.com.tr/upload/vehicles/imagew/950/hybridsongorsel_637511609023466148.png',
-        title: 'Toyota',
-        description: 'Corolla Hybrid',
+        imageUrl: process.env.PUBLIC_URL + '/assets/q8.png',
+        title: 'Audi',
+        description: 'q8',
     },
     {
       index:3,
-      imageUrl: 'https://www.enterprise.com.tr/upload/vehicles/imagew/950/slider_637828528256829182.png',
+      imageUrl: process.env.PUBLIC_URL + '/assets/corolla.png',
       title: 'Toyota',
-      description: 'C-HR',
+      description: 'Corolla',
     },
     {
       index:4,
-      imageUrl: 'https://www.enterprise.com.tr/upload/vehicles/imagew/950/mercedesvitodizelotomatik1280x720copy_637444127797506898.png',
+      imageUrl: process.env.PUBLIC_URL + '/assets/mercedesCLA200D.png',
       title: 'Mercedes',
-      description: 'Vito',
+      description: 'CLA200',
     },
     {
       index:5,
-      imageUrl: 'https://www.enterprise.com.tr/upload/vehicles/imagew/950/bmwx1dizelotomatik1280x720slider_637459052554892031.png',
-      title: 'BMW',
-      description: 'X1',
+      imageUrl: process.env.PUBLIC_URL + '/assets/polo.png',
+      title: 'Volkswagen',
+      description: 'Polo',
     },
     {
       index:6,
-      imageUrl: 'https://www.enterprise.com.tr/upload/vehicles/imagew/950/bmwx1dizelotomatik1280x720slider_637459052554892031.png',
-      title: 'Lexus',
-      description: 'RX 300',
+      imageUrl: process.env.PUBLIC_URL + '/assets/m3.png',
+      title: 'BMW',
+      description: 'm3',
     }
   ];
 
@@ -54,12 +54,12 @@ const Dashboard = () => {
       <div  id="hero">
         <div className="hero-image">
           <div className="hero-text">
-            {/* <h2>Welcome to RoboRide</h2>
-            <p>Rental Services with Precision</p> */}
+            <h2>Welcome to RoboRide</h2>
+            <p className="fs-5">Rental Services with Precision</p>
           </div>
         </div>
       </div>
-      <div id="form" className="custom-form">
+      <div id="form" className="custom-form mt-5">
         <FilterBarCard />
       </div>
       <div className="cars-slider">

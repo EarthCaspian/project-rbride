@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/configureStore";
 import { Button } from "react-bootstrap";
 import { setStepLevel } from "../../store/stepsSlice";
+import "./style.css";
 
 
 type Props = {};
@@ -78,7 +79,7 @@ const AdditionalService = (props: Props) => {
   return (
     <div>
       <BookingStepsCard stepPage="AdditionalService"></BookingStepsCard>
-      <h4 className="text-center">Are you interested in incorporating our extra services?</h4>
+      <h4 className="additional-service-title text-center">Are you interested in incorporating our extra services?</h4>
       <div className="container col-6">
         
         {/* Insurance Type Section */}

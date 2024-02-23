@@ -35,7 +35,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
   };
 
   return (
-    <div className="container-fluid col-lg-8 col-md-12" style={{marginTop:100}}>
+    <div className="booking-icon container-fluid col-lg-8 col-md-12" style={{marginTop:100}}>
       <div className="row">
         <div className="col-1"></div>
         <div className="col-2">

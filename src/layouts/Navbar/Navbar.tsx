@@ -70,11 +70,11 @@ const Navbar = (props: Props) => {
               </Link>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to={"/booknow"}>
                 BOOK NOW
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to={"/contactpage"}>
                 CONTACT
@@ -135,8 +135,8 @@ const Navbar = (props: Props) => {
             </ul>
           )}
           
-          {/* Search box */}
-          {location.pathname === '/cars' && <form className="d-flex" role="search">
+          {/* Search box is disabled until functionality*/}
+          {/* {location.pathname === '/cars' && <form className="d-flex" role="search">
             <input
               className="form-control me-2"
               type="search"
@@ -146,8 +146,8 @@ const Navbar = (props: Props) => {
             <button className="btn btn-outline-success" type="submit">
               Search
             </button>
-          </form>}
-          {/* Search box */}        
+          </form>} */}
+          {/* Search box Search box is disabled until functionality */}        
 
         </div>
       </div>

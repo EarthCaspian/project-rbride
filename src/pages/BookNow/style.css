@@ -1,3 +1,13 @@
 #bookNow {
-    margin-top: 60px;
+    margin-top: 50px;
+    
+}
+
+.booknow-btn{
+    background-color: #09272d !important;
+}
+
+.book-now-title{
+    margin-top: 70px;
+    margin-bottom: 20px;
 }
