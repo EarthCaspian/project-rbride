@@ -38,7 +38,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
     <div className="booking-icon container-fluid col-lg-8 col-md-12" style={{marginTop:100}}>
       <div className="row">
         <div className="col-1"></div>
-        <div className="col-2">
+        {/* <div className="col-2">
           <Link to="/">
             <img
               className={
@@ -51,8 +51,8 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
               alt="login">
             </img>
           </Link>
-        </div>
-        <div className="col-2">
+        </div> */}
+        <div className="col-3">
         <button onClick={chooseCarStep} className="step-button">
             <img
               className={
@@ -66,7 +66,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
             </img>
         </button>
         </div>
-        <div className="col-2">
+        <div className="col-3">
           <button onClick={additionalserviceStep} className="step-button">
             <img
               className={
@@ -80,7 +80,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
             </img>
           </button>
         </div>
-        <div className="col-2">
+        <div className="col-3">
           <button onClick={bookNowStep} className="step-button">
             <img
               className={

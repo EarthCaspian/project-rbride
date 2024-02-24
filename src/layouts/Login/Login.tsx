@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoggedIn } from "../../store/loginSlice";
 import { setUser } from "../../store/userSlice";
 import { selectReferringPage } from "../../store/referringPageSlice";
+import { toast } from 'react-toastify';
 
 type Props = {};
 
@@ -57,6 +58,7 @@ const Login = (props: Props) => {
           dispatch(setLoggedIn());
           dispatch(setUser({ userId }));
           navigate(referringPageState);
+          toast.success(response.data.message); 
         } else {
           console.error('Invalid response structure:', response);
         }

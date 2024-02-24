@@ -9,6 +9,7 @@ import RoleService from '../../services/RoleService';
 import { useEffect } from 'react';
 import { RoleModel } from '../../models/response/RoleModel';
 import { RegisterModel } from '../../models/requests/RegisterModel';
+import { toast } from 'react-toastify';
 
 type Props = {};
 
@@ -32,15 +33,22 @@ const Register = (props: Props) => {
         password: values.registerPassword,
         roles: [values.roles],
       };
-      
-      try {
-        RegisterService.register(registerData);
+
+      RegisterService.register(registerData)
+        .then(response => {
+        console.log(response);
+        toast.success(response.data.message)
         // Redirect to login page after successful registration
-        navigate('/login');
-      } catch (error) {
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+        
+        })
+        .catch(error => {
         console.error('Registration failed:', error);
         // Handle error if registration fails
-      }
+        toast.error(error.data.message);
+      });;
     },
   });
 
