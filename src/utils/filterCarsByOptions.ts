@@ -1,7 +1,6 @@
 import { FilterState } from '../store/filterSlice';
 import { CarModel } from "../models/response/CarModel";
 import { calculateDatesDifference } from './formatDate';
-import { RentalStateModel } from '../models/response/RentalStateModel';
 import { RentalResponseModel } from '../models/response/RentalResponseModel';
 
 //filter cars by selected brands
@@ -31,19 +30,31 @@ export const filterCarByPrice = (cars : CarModel[],  filterState : FilterState) 
 export const filterCarByDates = (cars: CarModel[], rentalsResponse : RentalResponseModel[], filterState : FilterState) => {
     const selectedStartDate = filterState.startDate;
     const selectedEndDate = filterState.endDate;
-    let filteredCarsList = cars.filter((car) => {
-        //check if there is any rental record for this car in the rentalsResponse
-        const rentals : RentalResponseModel[] | undefined = rentalsResponse.filter((rentals) => rentals.car.id === car.id);   
-        let bool = true;
-        //If the record exists, check if it the car already rented on the selected dates
-        //if rented, return false, they will not be added to the filter.
-        rentals?.some((rental) => {
-            if (calculateDatesDifference(new Date(rental.endDate), new Date(selectedStartDate)) <= 0 && calculateDatesDifference(new Date(selectedEndDate), new Date(rental.startDate)) <= 0)
-                bool = false;
-        })
-        return bool;
+    const filteredCarsList : CarModel[] | undefined = cars.filter((car) => {
+        const rentals = getActiveRentalsByCar(rentalsResponse, car);
+        return CarsAvailabilityCheckByDates(rentals, new Date(selectedStartDate), new Date(selectedEndDate));
     })
     return filteredCarsList;
+}
+
+//get if there is any rental record for the sending car in the rentalsResponse
+export const getActiveRentalsByCar = (rentalsResponse : RentalResponseModel[], car : CarModel) => {
+    const activeRentals : RentalResponseModel[] | undefined = 
+      rentalsResponse.filter((rental) => rental.car.id === car.id && calculateDatesDifference(new Date(), new Date(rental.endDate)) >= 0);
+    return activeRentals;
+}
+
+//Check if rental record exists, if does not exist, return true.
+//Else, check if it the car already rented on the selected dates
+//if rented, return false, else return true.
+export const CarsAvailabilityCheckByDates = (rentals : RentalResponseModel[] | undefined, selectedStartDate : Date, selectedEndDate : Date) => {
+    let isCarAvailable : boolean = true;
+    if (rentals) {
+        isCarAvailable = !rentals.some(rental =>
+            calculateDatesDifference(new Date(rental.endDate), selectedStartDate) <= 0 &&
+            calculateDatesDifference(selectedEndDate, new Date(rental.startDate)) <= 0)
+    }
+    return isCarAvailable;
 }
 
 //filter cars by selected models

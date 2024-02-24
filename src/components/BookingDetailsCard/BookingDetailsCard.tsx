@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
-import { formatStringDate } from "../../utils/formatDate";
 import { IconComponent } from "../../utils/icons";
+import { additionalServicePriceCalculation, bookingDateInfo, taxCalculation, totalAmountCalculation } from "./helpers";
 
 type Props = {};
 
 const BookingDetailsCard = (props: Props) => {
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [tax, setTax] = useState(0);
 
   //  Reaching redux store
   const rentalAllState = useSelector((state: RootState) => state.rental);
@@ -16,38 +14,15 @@ const BookingDetailsCard = (props: Props) => {
   const rentalInsuranceState = rentalAllState.insurance;
   const rentalExtraServicesState = rentalAllState.extraServices;
   const rentalLocations = rentalAllState.locations;
-
-  //  Additional Service Total Price Calculation (Insurance + Extra Services)
-  let additionalServiceTotalPrice: number = rentalInsuranceState.price;
-  rentalExtraServicesState.forEach(
-    (extra) => (additionalServiceTotalPrice += extra.price)
-  );
-
-  // Calculation of tax value and total amount implemented tax rate
-  useEffect(() => {
-    let tax = (rentalState.totalPrice + additionalServiceTotalPrice) * 0.18;
-    let totalAmount = (rentalState.totalPrice + additionalServiceTotalPrice) * 1.18;
-
-    // Parse floating numbers to fixed
-    setTax(parseFloat(tax.toFixed(2)));
-    setTotalAmount(parseFloat(totalAmount.toFixed(2)));
-
-    // setTax((rentalState.totalPrice + additionalServiceTotalPrice) * 0.18);
-    // setTotalAmount(
-    //   (rentalState.totalPrice + additionalServiceTotalPrice) * 1.18
-    // );
-  }, []);
-
-  // Formatting dates
-  const bookingDateInfo = () => {
-    const startDateFormatted = formatStringDate(rentalState.startDate);
-    const endDateFormatted = formatStringDate(rentalState.endDate);
-    return { startDateFormatted, endDateFormatted };
-  };
-  const { startDateFormatted, endDateFormatted } = bookingDateInfo();
-
   //  Reaching choosen insurance information
   const insuranceHeader = rentalInsuranceState.header;
+
+
+  const additionalServiceTotalPrice = additionalServicePriceCalculation(rentalAllState);
+  const tax = taxCalculation(rentalState.totalPrice, additionalServiceTotalPrice);
+  const totalAmount = totalAmountCalculation(rentalState.totalPrice, additionalServiceTotalPrice);
+  const { startDateFormatted, endDateFormatted } = bookingDateInfo(rentalState);
+
 
   return (
     <div>

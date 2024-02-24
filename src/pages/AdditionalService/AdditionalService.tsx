@@ -63,12 +63,12 @@ const AdditionalService = (props: Props) => {
   // Then navigates to the booknow page
   const addExtrasToRent = (values:any) => {
 
-    const insurance : RentalExtrasModel | undefined = rentalInsuranceOptions.find((extra, i) => selectedInsurance[i] == true);
+    const insurance : RentalExtrasModel | undefined = rentalInsuranceOptions.find((extra, i) => selectedInsurance[i] === true);
     insurance ?
       dispatch(addRentalSelectedInsurance(insurance)) :
       dispatch(addRentalSelectedInsurance({id: 0, header:'', description:'', price:0}));
 
-    const extras : RentalExtrasModel[] = rentalExtraServices.filter((extra, i) => selectedExtras[i] == true)
+    const extras : RentalExtrasModel[] = rentalExtraServices.filter((extra, i) => selectedExtras[i] === true)
     dispatch(addRentalSelectedExtraServices(extras));
 
     dispatch(setStepLevel(2));

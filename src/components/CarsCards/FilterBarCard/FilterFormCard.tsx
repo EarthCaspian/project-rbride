@@ -2,33 +2,15 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateDatesDifference } from '../../../utils/formatDate';
 import { RootState } from '../../../store/configureStore';
-import { handleBrandSelection, handleColorSelection, handleFilterEndDate, handleFilterStartDate, handleMaxDailyPrice, handleMinDailyPrice, handleModelSelection } from '../../../store/filterSlice';
 import { BrandModel } from '../../../models/response/BrandModel';
 import { ColorModel } from '../../../models/response/ColorModel';
 import { ModelModel } from '../../../models/response/ModelModel';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
 import DateChooser from '../../DateChooser/DateChooser';
-import CustomSelect, { OptionType } from '../../CustomSelect/CustomSelect';
+import CustomSelect from '../../CustomSelect/CustomSelect';
+import { FormOptionsType, ValidationSchema, ValuesType, getInitialValues, updateFilterState } from './helpers';
 
-//format of options in the form
-//OptionType is defined in the CustomSelect.tsx file. ({label:string(option name), value:number(id)})
-interface FormOptionsType {
-  brandOptions: OptionType[] ;
-  colorOptions: OptionType[] ;
-  modelOptions: OptionType[] ;
-}
-
-//format of the "values" received after pressing the submit button in the form
-interface ValuesType {
-  brandOptions: OptionType[] ;
-  colorOptions: OptionType[] ;
-  modelOptions: OptionType[] ;
-  minDailyPrice: number;
-  maxDailyPrice: number;
-}
-
-type Props = {
+export type Props = {
     brands: BrandModel[];
     colors: ColorModel[];
     models: ModelModel[];
@@ -44,18 +26,7 @@ const FilterFormCard = (props: Props) => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date(filterState.startDate));
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date(filterState.endDate));
 
-    const initialValues : ValuesType = {
-      brandOptions : [],
-      colorOptions: [],
-      modelOptions: [],
-      minDailyPrice : props.selectedOptions?.minDailyPrice || 0,
-      maxDailyPrice: props.selectedOptions?.maxDailyPrice || 2000,
-    };
-
-    const ValidationSchema = Yup.object().shape({
-      minDailyPrice : Yup.number().max(Yup.ref('maxDailyPrice'), "Minimum price cannot exceed maximum price.")
-      .min(0, "price cannot be less than 0."),
-    });
+    const initialValues = getInitialValues(props);
 
     const handleStartDateChange = (date: Date) => {
         setSelectedStartDate(date);
@@ -70,24 +41,7 @@ const FilterFormCard = (props: Props) => {
     // ON SUBMIT EVENT
     // Function that updates the filter state with selections.
     const handleSelections = (values : ValuesType) => {
-        //Received day selections are sent to the filter state.   
-        //Both dates have been serialized to JSON format to comply with JSON standards.
-        dispatch(handleFilterStartDate(selectedStartDate.toJSON()));
-        dispatch(handleFilterEndDate(selectedEndDate.toJSON()));
-        //Received brand selections are sent to the filter state.
-        if (values.brandOptions)
-            dispatch(handleBrandSelection(props.brands.filter((brand) => values.brandOptions.find(option => option.value === brand.id))));
-        //Received model selections are sent to the filter state.
-        if (values.modelOptions)
-            dispatch(handleModelSelection(props.models.filter((model) => values.modelOptions.find(option => option.value === model.id))));
-        //Received color selections are sent to the filter state.
-        if (values.colorOptions)
-            dispatch(handleColorSelection(props.colors.filter((color) => values.colorOptions.find(option => option.value === color.id))));
-        //Received price selections are sent to the filter state.
-        if (values.minDailyPrice)
-            dispatch(handleMinDailyPrice(values.minDailyPrice));
-        if (values.maxDailyPrice)
-            dispatch(handleMaxDailyPrice(values.maxDailyPrice));
+      updateFilterState(values, dispatch, selectedStartDate, selectedEndDate, props);
     }
 
     return (
