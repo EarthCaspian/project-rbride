@@ -4,7 +4,7 @@ import {
 	decreaseRequestCount,
 	increaseRequestCount,
 } from "../../store/loadingSlice";
-import store from "../../store/configureStore";
+import {store} from "../../store/configureStore";
 
 
 
