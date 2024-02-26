@@ -6,15 +6,22 @@ import { RentalIdRequestModel } from "../models/requests/RentalIdRequestModel";
 
 const API_URL = "http://localhost:8080/api/rentals";
 
+interface AddRentalResponseModel {
+  id : number,
+  result : {success : boolean, message : string},
+};
+
 class RentalService {
     //Function to send a request to the backend for adding a rental entry to the database.
-    add(request : AddRentalRequestModel) {
-        axios.post(`${API_URL}/add`, request)
-        .then(response => {
-            console.log(response + ": The rental has been successfully added to the database.");
+    add(request : AddRentalRequestModel): Promise<number> {
+        return axios.post(`${API_URL}/add`, request)
+        .then((response : AxiosResponse<AddRentalResponseModel> ) => {
+            console.log(response.data.result.message + ": The rental has been successfully added to the database.");
+            return response.data.id;
         })
         .catch(error => {
             console.log(error + ": Invalid parameters or malformed data.");
+            return 0;
         })
     }
 
