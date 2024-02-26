@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import { Form, Field, Formik } from "formik";
-import DateChooser from "../DateChooser/DateChooser";
+import DateChooser from "../../DateChooser/DateChooser";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { BrandModel } from "../../models/response/BrandModel";
-import { clearAllFilters } from "../../store/filterSlice";
-import { calculateDatesDifference } from "../../utils/formatDate";
-import CustomSelect from "../CustomSelect/CustomSelect";
+import { BrandModel } from "../../../models/response/BrandModel";
+import { clearAllFilters } from "../../../store/filterSlice";
+import { calculateDatesDifference } from "../../../utils/formatDate";
+import CustomSelect from "../../CustomSelect/CustomSelect";
 import { FilterOptionsType, ValuesType, fetchBrands, initialValues, mapBrandsToFilterOptions, updateFilterState } from "./helpers";
 
 

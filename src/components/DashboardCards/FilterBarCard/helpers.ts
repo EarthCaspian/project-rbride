@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { BrandModel } from "../../models/response/BrandModel";
-import BrandService from "../../services/BrandService";
-import { OptionType } from "../CustomSelect/CustomSelect";
-import { handleBrandSelection, handleFilterEndDate, handleFilterStartDate, handleMaxDailyPrice, handleMinDailyPrice } from "../../store/filterSlice";
+import { BrandModel } from "../../../models/response/BrandModel";
+import BrandService from "../../../services/BrandService";
+import { OptionType } from "../../CustomSelect/CustomSelect";
+import { handleBrandSelection, handleFilterEndDate, handleFilterStartDate, handleMaxDailyPrice, handleMinDailyPrice } from "../../../store/filterSlice";
 
 //format of options in the form
 //OptionType is defined in the CustomSelect.tsx file. ({label:string(option name), value:number(id)})
