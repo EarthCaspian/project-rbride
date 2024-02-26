@@ -12,6 +12,7 @@ import { setLoggedIn } from "../../store/loginSlice";
 import { setUser } from "../../store/userSlice";
 import { selectReferringPage } from "../../store/referringPageSlice";
 import { toast } from 'react-toastify';
+import ProfileService from "../../services/ProfileService";
 
 type Props = {};
 
@@ -53,14 +54,17 @@ const Login = (props: Props) => {
       LoginService.login(loginData)
       .then((response:ServerResponse) => {
         if (response && response.data && response.data.loginResponse) {
-          const { token, userId } = response.data.loginResponse;
+          const { token } = response.data.loginResponse;
           TokenService.setToken(token);
           dispatch(setLoggedIn());
-          dispatch(setUser({ userId }));
+          ProfileService.getProfile(token).then((response) => {
+            dispatch(setUser({userId: response.id}));
+          });
           navigate(referringPageState);
           toast.success(response.data.message); 
         } else {
           console.error('Invalid response structure:', response);
+          toast.error("Invalid username or password.");
         }
       })
       .catch(error => {
