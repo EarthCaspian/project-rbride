@@ -1,6 +1,6 @@
-import { RentalStateModel } from "../../models/response/RentalStateModel";
-import { RentalState } from "../../store/rentalSlice";
-import { formatStringDate } from "../../utils/formatDate";
+import { RentalStateModel } from "../../../models/response/RentalStateModel";
+import { RentalState } from "../../../store/rentalSlice";
+import { formatStringDate } from "../../../utils/formatDate";
 
   //  Additional Service Total Price Calculation (Insurance + Extra Services)
   const additionalServicePriceCalculation = (rentalState : RentalState) : number => {
