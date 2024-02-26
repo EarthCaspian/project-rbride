@@ -9,7 +9,7 @@ import Cars from "./pages/Cars/Cars";
 import Login from "./layouts/Login/Login";
 import Register from "./layouts/Login/Register";
 import { Provider } from "react-redux";
-import store from "./store/configureStore";
+import {store,persistor} from "./store/configureStore";
 import { CarDetails } from "./pages/CarDetails/CarDetails";
 import BookNow from "./pages/BookNow/BookNow";
 import AdditionalService from "./pages/AdditionalService/AdditionalService";
@@ -39,11 +39,13 @@ import UpdateModelForm from "./components/AdminPanelCards/ModelAdmin/UpdateModel
 import FAQs from "./components/FAQ/Faq";
 import JoinUs from "./components/JoinUs/JoinUs";
 
+import { PersistGate } from 'redux-persist/integration/react';
 
 function App() {
   return (
     <>
       <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <Navbar />
         <LoadingOverlay/>
         <ToastContainer/>
@@ -85,6 +87,7 @@ function App() {
           <Route path="*" element={<FourOhFour />} />
         </Routes>
         <Footer />
+        </PersistGate>
       </Provider>
     </>
   );
