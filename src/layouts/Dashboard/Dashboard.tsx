@@ -1,5 +1,5 @@
-import "../../components/DashboardCards/style.css";
-import { FilterBarCard } from "../../components/DashboardCards/FilterBarCard";
+import "../../components/DashboardCards/FilterBarCard/style.css";
+import { FilterBarCard } from "../../components/DashboardCards/FilterBarCard/FilterBarCard";
 import { useDispatch } from "react-redux";
 import { setReferringPage } from "../../store/referringPageSlice";
 import ContactCards from "../../components/HomePageContactCards/ContactCards";
