@@ -1,18 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Field, Formik, Form, ErrorMessage } from "formik";
-import { CustomerStateModel } from "../../store/customerSlice";
-import DateChooserField from "../DateChooserByYear/DateChooserByYear";
-import { initialValues, maxAllowedBirthdate, maxAllowedLicenceDate, minAllowedBirthdate, minAllowedLicenceDate, updateCustomerState, validationSchema } from "./helpers";
+import { CustomerStateModel } from "../../../store/customerSlice";
+import DateChooserField from "../../DateChooserByYear/DateChooserByYear";
+import { initialValues, maxAllowedBirthdate, maxAllowedLicenceDate, minAllowedBirthdate, minAllowedLicenceDate, updateCustomerState, updateInvoiceState, validationSchema } from "./helpers";
+import { RootState } from "../../../store/configureStore";
 
 type Props = {};
 
 const CustomerFormCard = (props: Props) => {
   const dispatch = useDispatch();
+  const rentalState = useSelector((state: RootState) => state.rental);
+
 
   // Handle form submission
   const handleSubmit = (values : CustomerStateModel) => {
     updateCustomerState(values, dispatch);
+    updateInvoiceState(dispatch, rentalState);
   };
 
   return (

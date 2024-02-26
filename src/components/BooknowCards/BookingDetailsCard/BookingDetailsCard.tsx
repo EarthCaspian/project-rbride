@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/configureStore";
-import { IconComponent } from "../../utils/icons";
+import { RootState } from "../../../store/configureStore";
+import { IconComponent } from "../../../utils/icons";
 import { additionalServicePriceCalculation, bookingDateInfo, taxCalculation, totalAmountCalculation } from "./helpers";
 
 type Props = {};
