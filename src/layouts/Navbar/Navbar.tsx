@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectIsLoggedIn, setLoggedOut } from "../../store/loginSlice";
 import { setStepLevel } from "../../store/stepsSlice";
+import RoleService from "../../services/RoleService";
 
 type Props = {};
 
@@ -14,6 +15,7 @@ const Navbar = (props: Props) => {
   const handleLogout = () => {
     dispatch(setLoggedOut());
     dispatch(setStepLevel(0));
+    RoleService.clearRole();
   };
 
   //  Google Custom Search Engine (CSE)
