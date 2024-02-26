@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "./layouts/Navbar/Navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Dashboard from "./layouts/Dashboard/Dashboard";
 import FourOhFour from "./layouts/404/FourOhFour";
 import Cars from "./pages/Cars/Cars";
@@ -40,8 +40,12 @@ import FAQs from "./components/FAQ/Faq";
 import JoinUs from "./components/JoinUs/JoinUs";
 
 import { PersistGate } from 'redux-persist/integration/react';
+import RoleService from "./services/RoleService";
 
 function App() {
+
+  const role = RoleService.getRole();
+
   return (
     <>
       <Provider store={store}>
@@ -58,7 +62,7 @@ function App() {
               </>
             }
           />
-          <Route path="/admin" element={<AdminPanel/>}>
+          <Route path="/admin" element={role === 'admin' ? <AdminPanel/> : <Navigate to="*" />}>
             <Route path="/admin/addCar" element={<AddCarForm/>}/>
             <Route path="/admin/getAllCars" element={<GetAllCars/>}/>
             <Route path="/admin/getAllCars/update/:id" element={<UpdateCarForm/>}/>
