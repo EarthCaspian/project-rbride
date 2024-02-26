@@ -12,6 +12,8 @@ import { setLoggedIn } from "../../store/loginSlice";
 import { setUser } from "../../store/userSlice";
 import { selectReferringPage } from "../../store/referringPageSlice";
 import { toast } from 'react-toastify';
+import UserService from "../../services/UserService";
+import RoleService from "../../services/RoleService";
 
 type Props = {};
 
@@ -57,8 +59,19 @@ const Login = (props: Props) => {
           TokenService.setToken(token);
           dispatch(setLoggedIn());
           dispatch(setUser({ userId }));
-          navigate(referringPageState);
-          toast.success(response.data.message); 
+           // Fetch the roles for the logged in user
+          UserService.getRolesByUserId(userId)
+          .then(response => {
+            //console.log(response);
+            const roleName = response.data[0].name;
+            const isAdmin = roleName === 'admin';
+            RoleService.setRole(isAdmin ? 'admin' : 'user');
+            navigate(referringPageState);
+            toast.success(response.data.message); 
+          })
+          .catch(error => {
+            console.log(error);
+          });
         } else {
           console.error('Invalid response structure:', response);
         }

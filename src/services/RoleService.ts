@@ -7,6 +7,15 @@ class RoleService {
     getAllRoles():Promise<RoleModel[]> {
         return axios.get(`${API_URL}/getAll`).then(response => response.data);
     }
+    getRole() {
+        return localStorage.getItem("role");
+    }
+    setRole(role: string){
+        localStorage.setItem("role", role)
+    }
+    clearRole() {
+        localStorage.removeItem('role');
+    }
 }
 
 export default new RoleService();
