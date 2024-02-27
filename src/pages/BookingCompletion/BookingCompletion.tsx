@@ -45,7 +45,7 @@ const BookingCompletion: React.FC = (props: Props) => {
 
   const handleBackButton = (event : PopStateEvent) => {
     //Intercept the popstate event, preventing the default behavior.
-    event.preventDefault(); // Prevent the default behavior of the back button
+    event.preventDefault();
 
     // Prompt the user with a confirmation dialog, to inform them.
     const confirmation = window.confirm("Rental successfully processed, you cannot return to the rental steps. Navigating back will redirect you to the homepage.");
