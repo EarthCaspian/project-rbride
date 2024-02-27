@@ -12,7 +12,12 @@ import { setLoggedIn } from "../../store/loginSlice";
 import { setUser } from "../../store/userSlice";
 import { selectReferringPage } from "../../store/referringPageSlice";
 import { toast } from 'react-toastify';
+
 import ProfileService from "../../services/ProfileService";
+
+import UserService from "../../services/UserService";
+import RoleService from "../../services/RoleService";
+
 
 type Props = {};
 
@@ -57,11 +62,28 @@ const Login = (props: Props) => {
           const { token } = response.data.loginResponse;
           TokenService.setToken(token);
           dispatch(setLoggedIn());
+
           ProfileService.getProfile(token).then((response) => {
             dispatch(setUser({userId: response.id}));
           });
           navigate(referringPageState);
           toast.success(response.data.message); 
+
+          dispatch(setUser({ userId }));
+           // Fetch the roles for the logged in user
+          UserService.getRolesByUserId(userId)
+          .then(response => {
+            //console.log(response);
+            const roleName = response.data[0].name;
+            const isAdmin = roleName === 'admin';
+            RoleService.setRole(isAdmin ? 'admin' : 'user');
+            navigate(referringPageState);
+            toast.success(response.data.message); 
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
         } else {
           console.error('Invalid response structure:', response);
           toast.error("Invalid username or password.");

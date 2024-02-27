@@ -7,6 +7,8 @@ import { setUser } from "../../store/userSlice";
 import { clearAllStatesForRental } from "../../store/rentalSlice";
 import { Button } from "react-bootstrap";
 import { RootState } from "../../store/configureStore";
+import RoleService from "../../services/RoleService";
+
 
 type Props = {};
 
@@ -31,6 +33,7 @@ const Navbar = (props: Props) => {
     {
       dispatch(setLoggedOut());
       dispatch(setUser({userId: 0}));
+      RoleService.clearRole();
     }
   };
 
