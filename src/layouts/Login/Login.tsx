@@ -23,7 +23,6 @@ type Props = {};
 
 interface LoginResponse {
   token: string;
-  userId: number;
 }
 
 interface AuthCResult {
@@ -65,26 +64,14 @@ const Login = (props: Props) => {
 
           ProfileService.getProfile(token).then((response) => {
             dispatch(setUser({userId: response.id}));
+             // Fetch the roles for the logged in user
+              UserService.getRolesByUserId(response.id)
           });
           navigate(referringPageState);
           toast.success(response.data.message); 
-
-          dispatch(setUser({ userId }));
-           // Fetch the roles for the logged in user
-          UserService.getRolesByUserId(userId)
-          .then(response => {
-            //console.log(response);
-            const roleName = response.data[0].name;
-            const isAdmin = roleName === 'admin';
-            RoleService.setRole(isAdmin ? 'admin' : 'user');
-            navigate(referringPageState);
-            toast.success(response.data.message); 
-          })
-          .catch(error => {
-            console.log(error);
-          });
-
-        } else {
+        } 
+        else 
+        {
           console.error('Invalid response structure:', response);
           toast.error("Invalid username or password.");
         }
