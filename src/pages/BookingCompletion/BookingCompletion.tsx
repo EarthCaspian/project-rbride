@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BookingStepsCard from "../../components/BookingStepsCard/BookingStepsCard";
 import { useDispatch, useSelector } from "react-redux";
 import { IconComponent } from "../../utils/icons";
