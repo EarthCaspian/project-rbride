@@ -11,6 +11,7 @@ class InvoiceService {
         })
         .catch(error => {
             console.log(error + ": Invalid parameters or malformed data.");
+            //Since invoices can be generated retroactively, a successful rental operation is considered even if there is an error in adding the invoice. "Therefore, no error is thrown."
         })
     }
 }

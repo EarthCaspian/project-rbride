@@ -5,18 +5,25 @@ import { CustomerStateModel } from "../../../store/customerSlice";
 import DateChooserField from "../../DateChooserByYear/DateChooserByYear";
 import { initialValues, maxAllowedBirthdate, maxAllowedLicenceDate, minAllowedBirthdate, minAllowedLicenceDate, updateCustomerState, updateInvoiceState, validationSchema } from "./helpers";
 import { RootState } from "../../../store/configureStore";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const CustomerFormCard = (props: Props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const rentalState = useSelector((state: RootState) => state.rental);
+  const isLoggedIn = useSelector((state : RootState) => state.login.isLoggedIn);
 
 
   // Handle form submission
   const handleSubmit = (values : CustomerStateModel) => {
-    updateCustomerState(values, dispatch);
-    updateInvoiceState(dispatch, rentalState);
+    if (isLoggedIn) {
+      updateCustomerState(values, dispatch);
+      updateInvoiceState(dispatch, rentalState);
+    }
+    else
+      navigate("/login");
   };
 
   return (

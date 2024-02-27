@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { setCustomerIsValid } from "../../store/customerSlice";
 import InvoiceService from "../../services/InvoiceService";
 import { customerInfos, invoiceInfos, rentalInfos } from './helpers';
+import { toast } from 'react-toastify';
+import { setReferringPage } from '../../store/referringPageSlice';
+import { availabilityCheck } from '../../components/CarDetailsCards/ReservationDetailsCard/helpers';
 
 
 type Props = {}
@@ -23,6 +26,10 @@ const CompleteBook = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect (() => {
+    dispatch(setReferringPage(window.location.pathname));
+  }, []);
+
   useEffect(() => {
     CompleteBooking();
     return () => {
@@ -30,17 +37,32 @@ const CompleteBook = (props: Props) => {
     }
   }, [customerState.isValid]);
 
+  const isCarAvailable = async () => {
+   return RentalService.getAll().then((response) => {
+      const isExist = availabilityCheck(response.data, rentalState.car, new Date(rentalState.startDate), new Date (rentalState.endDate));
+      if (isExist) {
+        return isExist;
+      }
+      else {
+        throw new Error("We're sorry, the car you selected is already rented out. Please choose another car and try again.");
+      }
+    });
+  }
+
   const CompleteBooking = async () => {
     if (customerState.isValid) {
 
-     try {
-       const rentalId = await RentalService.add(rentalInfos(rentalState, userState));
-       await CustomerService.add(customerInfos(customerState, userState));
-       await InvoiceService.add(invoiceInfos(invoiceState, rentalId));
-       navigate("/completion");
-       dispatch(setStepLevel(3));
+      try {
+        await isCarAvailable();
+        const rentalId = await RentalService.add(rentalInfos(rentalState, userState));
+        await CustomerService.add(customerInfos(customerState, userState));
+        await InvoiceService.add(invoiceInfos(invoiceState, rentalId));
+        navigate("/completion");
+        dispatch(setStepLevel(3));
+        toast.success("Booking successfully completed.");
       } catch (error) {
          console.error("Error while adding rental, customer or invoice", error);
+         toast.error("Something went wrong. Please try again later." + error);
       }
     }
    };

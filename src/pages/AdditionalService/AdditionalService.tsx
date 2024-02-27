@@ -8,6 +8,7 @@ import { RootState } from "../../store/configureStore";
 import { Button } from "react-bootstrap";
 import { setStepLevel } from "../../store/stepsSlice";
 import "./style.css";
+import { setReferringPage } from "../../store/referringPageSlice";
 
 
 type Props = {};
@@ -18,6 +19,8 @@ const AdditionalService = (props: Props) => {
   const rentalState = useSelector((state: RootState) => state.rental);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector((state : RootState) => state.login.isLoggedIn);
 
   const lastIndex:number = rentalExtraServices.length;
 
@@ -31,6 +34,7 @@ const AdditionalService = (props: Props) => {
 
   //Switch the previously selected options during rendering
   useEffect(() => {
+    dispatch(setReferringPage(window.location.pathname));
     //Switch the insurance option
     if (rentalState.insurance.id !== 0)
       switchTheInsuranceOption(rentalState.insurance.id - 1);
@@ -62,18 +66,21 @@ const AdditionalService = (props: Props) => {
   // Function that updates the rental state with new selections
   // Then navigates to the booknow page
   const addExtrasToRent = (values:any) => {
-
     const insurance : RentalExtrasModel | undefined = rentalInsuranceOptions.find((extra, i) => selectedInsurance[i] === true);
     insurance ?
-      dispatch(addRentalSelectedInsurance(insurance)) :
-      dispatch(addRentalSelectedInsurance({id: 0, header:'', description:'', price:0}));
-
+    dispatch(addRentalSelectedInsurance(insurance)) :
+    dispatch(addRentalSelectedInsurance({id: 0, header:'', description:'', price:0}));
+    
     const extras : RentalExtrasModel[] = rentalExtraServices.filter((extra, i) => selectedExtras[i] === true)
     dispatch(addRentalSelectedExtraServices(extras));
-
-    dispatch(setStepLevel(2));
     
-    navigate('/booknow');
+    if (isLoggedIn) { 
+      dispatch(setStepLevel(2));  
+      navigate('/booknow');
+    }
+    else {
+      navigate("/login");
+    }
   }
 
   return (

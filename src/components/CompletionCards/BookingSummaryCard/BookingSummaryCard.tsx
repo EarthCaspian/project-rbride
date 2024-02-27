@@ -1,13 +1,14 @@
 import React from 'react'
 import { IconComponent } from '../../../utils/icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/configureStore';
+import { RentalStateModel } from '../../../models/response/RentalStateModel';
 
-type Props = {}
+type Props = {
+  rentalState : RentalStateModel;
+}
 
 const BookingSummaryCard = (props: Props) => {
 
-    const rentalState = useSelector((state: RootState) => state.rental.rental);
+    const rentalState = props.rentalState;
 
   return (
     <div className="row g-0">

@@ -21,7 +21,7 @@ class RentalService {
         })
         .catch(error => {
             console.log(error + ": Invalid parameters or malformed data.");
-            return 0;
+            throw error;
         })
     }
 
@@ -42,6 +42,16 @@ class RentalService {
         userId: requestModel.userId,
       },
     });
+  }
+
+  delete(id : number) {
+    return axios.delete(`${API_URL}/delete/${id}`)
+    .then((response) => {
+      console.log(response.data + ": The rental has been successfully removed from the database.");
+    })
+    .catch((error) => {
+      console.log(error + ": Invalid parameter or malformed data.");
+    })
   }
 }
 

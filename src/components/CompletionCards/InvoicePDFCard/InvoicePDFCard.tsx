@@ -2,21 +2,23 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/configureStore';
 import InvoicePDFDocument from '../../InvoicePDFDocument/InvoicePDFDocument';
+import { RentalState } from '../../../store/rentalSlice';
 
-type Props = {}
+type Props = {
+  rentalState : RentalState,
+}
 
 const InvoicePDFCard = (props: Props) => {
-    const rentalState = useSelector((state: RootState) => state.rental.rental);
+    const rentalState = props.rentalState;
     const invoiceState = useSelector((state: RootState) => state.invoice.invoice);
-    const rentalExtraState = useSelector((state: RootState) => state.rental);
     const customer = useSelector((state: RootState) => state.customer.customer);
   return (
     <div>
         <InvoicePDFDocument
             customer={customer}
             invoice={invoiceState}
-            rental={rentalState}
-            rentalExtras={rentalExtraState}
+            rental={rentalState.rental}
+            rentalExtras={rentalState}
         />
     </div>
   )

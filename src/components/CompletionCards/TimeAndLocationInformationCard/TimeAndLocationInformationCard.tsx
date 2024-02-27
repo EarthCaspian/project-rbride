@@ -2,15 +2,16 @@ import React from 'react'
 import { IconComponent } from '../../../utils/icons';
 import GoogleMapLocations from '../../../utils/GoogleMapLocations';
 import { formatStringDate } from '../../../utils/formatDate';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/configureStore';
+import { RentalState } from '../../../store/rentalSlice';
 
-type Props = {}
+type Props = {
+  rentalState: RentalState,
+}
 
 const TimeAndLocationInformationCard = (props: Props) => {
 
-  const rentalState = useSelector((state: RootState) => state.rental.rental);
-  const rentalLocationsState = useSelector((state: RootState) => state.rental.locations);
+  const rentalState = props.rentalState.rental;
+  const rentalLocationsState = props.rentalState.locations;
   
   return (
     <div>

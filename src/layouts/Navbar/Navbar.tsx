@@ -1,21 +1,40 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { selectIsLoggedIn, setLoggedOut } from "../../store/loginSlice";
 import { setStepLevel } from "../../store/stepsSlice";
+import { setUser } from "../../store/userSlice";
+import { clearAllStatesForRental } from "../../store/rentalSlice";
+import { Button } from "react-bootstrap";
+import { RootState } from "../../store/configureStore";
 import RoleService from "../../services/RoleService";
+
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const carSelection = useSelector((state : RootState) => state.rental.rental.car);
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleLogout = () => {
-    dispatch(setLoggedOut());
-    dispatch(setStepLevel(0));
-    RoleService.clearRole();
+    if (carSelection.id != 0) {
+      const confirmation = window.confirm("Login is required to proceed with your transaction. Are you sure you want to logout?"
+      );
+      if (confirmation == true) {
+        dispatch(setLoggedOut());
+        dispatch(setUser({userId: 0}));
+        dispatch(setStepLevel(0));
+      }
+    }
+    else
+    {
+      dispatch(setLoggedOut());
+      dispatch(setUser({userId: 0}));
+      RoleService.clearRole();
+    }
   };
 
   //  Google Custom Search Engine (CSE)
@@ -81,14 +100,13 @@ const Navbar = (props: Props) => {
                 </Link>
               </li>
               <li>
-                <Link
+                <Button
                   className="btn btn-warning me-2"
-                  to={"/"}
                   type="button"
                   onClick={handleLogout}
                 >
                   Logout
-                </Link>
+                </Button>
               </li>
             </ul>
           ) : (
