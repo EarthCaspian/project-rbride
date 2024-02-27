@@ -4,11 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { selectIsLoggedIn, setLoggedOut } from "../../store/loginSlice";
 import { setStepLevel } from "../../store/stepsSlice";
 import { setUser } from "../../store/userSlice";
-import { clearAllStatesForRental } from "../../store/rentalSlice";
 import { Button } from "react-bootstrap";
 import { RootState } from "../../store/configureStore";
 import RoleService from "../../services/RoleService";
-
 
 type Props = {};
 
@@ -50,7 +48,7 @@ const Navbar = (props: Props) => {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+    <nav id="Navbar" className="navbar navbar-expand-lg bg-body-tertiary fixed-top mb-5">
       <div className="container">
         <Link to={"/"} className="navbar-brand">
           <h4 className="mb-0">ROBORIDE</h4>
@@ -131,8 +129,8 @@ const Navbar = (props: Props) => {
               </li>
             </ul>
           )}
-          <div style={{ width: 350 }}>
-            <div className="gcse-search"></div>
+          <div className="search-container"  style={{ width: 350 }}>
+            <div className="gcse-searchbox-only"></div>
           </div>
         </div>
       </div>
