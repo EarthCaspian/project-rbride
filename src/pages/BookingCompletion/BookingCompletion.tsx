@@ -17,8 +17,6 @@ const BookingCompletion: React.FC = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [currentPage, setCurrentPage] = useState("");
-  
   const rentalState = useSelector((state: RootState) => state.rental);
 
   // The rentalState variable is cleared when the component mounts. 
@@ -33,27 +31,28 @@ const BookingCompletion: React.FC = (props: Props) => {
     dispatch(clearAllStatesForRental());
   }, []);
 
+
   useEffect (() => {
-    setCurrentPage(location.pathname);
-    // Call handleBackButton function when the back button is pressed
+    // The page's path is set in the window's history, preventing users from returning to the rental process steps. 
+    window.history.pushState(null, "", location.pathname);
+     // The handleBackButton function is triggered when the user attempts to navigate back using the browser's back button. 
     window.addEventListener('popstate', handleBackButton);
+    // Remove the event listener for back button navigation upon component unmount.
     return () => {
-      // window.removeEventListener('popstate', handleBackButton);
+      window.removeEventListener('popstate', handleBackButton);
     }
   }, []);
 
   const handleBackButton = (event : PopStateEvent) => {
+    //Intercept the popstate event, preventing the default behavior.
     event.preventDefault(); // Prevent the default behavior of the back button
-    // Show a confirmation message to keep the user on the page
-    // alert("Rental successfully processed. Navigating back will redirect you to the homepage.");
-    const confirmation = window.confirm("Rental successfully processed. Navigating back will redirect you to the homepage. Are you sure?");
+
+    // Prompt the user with a confirmation dialog, to inform them.
+    const confirmation = window.confirm("Rental successfully processed, you cannot return to the rental steps. Navigating back will redirect you to the homepage.");
+     //If the user confirms, they are redirected to the homepage; otherwise, they remain on the "/completion" page.
     if (confirmation) {
       navigate('/');
     }
-    else if (!confirmation){
-       navigate(currentPage);
-    }
-    window.removeEventListener('popstate', handleBackButton);
 };
 
   return (
