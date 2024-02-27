@@ -21,7 +21,7 @@ For further insights, we invite you to explore the [backend repository](https://
 
 - User authentication and authorization
 - Browse available vehicles
-- Search for vehicles based on various criteria (e.g., brand, model, price, color)
+- Filter vehicles based on various criteria (e.g., brand, model, price, color)
 - Reserve vehicles for specific dates
 - View rental history
 - Admin dashboard for managing vehicles, brands, and models
@@ -31,21 +31,19 @@ For further insights, we invite you to explore the [backend repository](https://
 - Providing the option for customers to select pick-up and drop-off locations
 - Allowing customers to add additional services related to car rental, such as insurance and extra amenities
 - Generating a PDF invoice at the conclusion of the rental process for customer records
-- Enabling site visitors to directly contact or inquire by sending an email through the platform.
+- Enabling site visitors to directly contact or inquire by sending an email through the platform
+- Integrating Google Search Engine for enhanced browsing experience
+
+Our project prioritizes user experience (UX) convenience, ensuring that interactions with our application are intuitive and error-free. With meticulous attention to detail, our app is designed to guide customers seamlessly through the rental process, minimizing the possibility of errors and enhancing overall usability.
 
 
 ## Technologies Used
-
-### Development Tools
-- TypeScript
-- HTML & CSS
 
 ### UI Frameworks/Libraries
 - Bootstrap
 - Boostrap React
 
 ### State Management
-- Redux
 - Redux Toolkit
 
 ### Form Handling and Validation
