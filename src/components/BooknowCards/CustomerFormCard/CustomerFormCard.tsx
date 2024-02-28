@@ -41,7 +41,7 @@ const CustomerFormCard = (props: Props) => {
         >
           <div className="container text-body-secondary">
             <div className="row">
-              <div className="col-6 fw-bold mb-2">
+              <div className="col col-lg-6 fw-bold mb-2">
                 <label htmlFor="firstName">Name*</label>
                 <div>
                   <Field
@@ -61,7 +61,7 @@ const CustomerFormCard = (props: Props) => {
                 </div>
               </div>
 
-              <div className="col-6 fw-bold mb-2">
+              <div className="col col-lg-6 fw-bold mb-2">
                 <label htmlFor="lastName">Surname*</label>
                 <div>
                   <Field
@@ -79,7 +79,7 @@ const CustomerFormCard = (props: Props) => {
                   />
                 </div>
               </div>
-              <div className="col-6 fw-bold mb-2">
+              <div className="col col-lg-6 fw-bold mb-2">
                 <label htmlFor="internationalId">National Id*</label>
                 <div>
                   <Field
@@ -97,7 +97,7 @@ const CustomerFormCard = (props: Props) => {
                   />
                 </div>
               </div>
-              <div className="col-6 fw-bold mb-2">
+              <div className="col col-lg-6  fw-bold mb-2">
                 <label htmlFor="birthdate">Birthdate*</label>
                 <div>
                   <Field
@@ -113,7 +113,7 @@ const CustomerFormCard = (props: Props) => {
                   />
                 </div>
               </div>
-              <div className="col-6 fw-bold mb-2">
+              <div className="col col-lg-6 fw-bold mb-2">
                 <label htmlFor="licenceIssueDate">Licence Issue Date*</label>
                 <Field
                     name="licenceIssueDate"

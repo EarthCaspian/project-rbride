@@ -12,7 +12,6 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const carSelection = useSelector((state : RootState) => state.rental.rental.car);
 
   const isLoggedIn = useSelector(selectIsLoggedIn);

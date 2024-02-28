@@ -87,7 +87,7 @@ const AdditionalService = (props: Props) => {
     <div>
       <BookingStepsCard stepPage="AdditionalService"></BookingStepsCard>
       <h4 className="additional-service-title text-center">Are you interested in incorporating our extra services?</h4>
-      <div className="container col-6">
+      <div className="container col col-md-6">
         
         {/* Insurance Type Section */}
         <h4>Insurance Types</h4>

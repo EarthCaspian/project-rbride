@@ -73,15 +73,11 @@ const InvoicePDFDocument: React.FC<InvoicePdf> = (props: InvoicePdf) => {
     currentDate.setDate(currentDate.getDate() + 20);
     return formatDateToStringDate(currentDate);
   };
-  const dueDate = getFutureDate();  // Payment must be made within 20 days
+  const dueDate = getFutureDate();  // Payment must be made within 20 days height={700} width={630}
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-3"></div>
-
-        <div className="col-6">
-          <PDFViewer height={700} width={630}>
+        <div className="col">
+          <PDFViewer height={400} width={300}>
             <Document style={{ height: 1000, width: 600 }}>
               <Page size="A4" style={styles.page}>
                 {/* Left section */}
@@ -214,8 +210,7 @@ const InvoicePDFDocument: React.FC<InvoicePdf> = (props: InvoicePdf) => {
             </Document>
           </PDFViewer>
         </div>
-      </div>
-    </div>
+
   );
 };
 
