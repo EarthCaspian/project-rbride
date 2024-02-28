@@ -37,21 +37,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
   return (
     <div className="booking-icon container-fluid col-lg-8 col-md-12" style={{marginTop:100}}>
       <div className="row">
-        <div className="col-1"></div>
-        {/* <div className="col-2">
-          <Link to="/">
-            <img
-              className={
-                stepPage === "Login"
-                ? "opacity-100 step-image img-fluid"
-                : "opacity-25 step-image img-fluid"
-              }
-              style={{maxWidth:"3.5rem", maxHeight:"3.5rem"}}
-              src="/assets/StepCardImages/StepLogin.png"
-              alt="login">
-            </img>
-          </Link>
-        </div> */}
+
         <div className="col-3">
         <button onClick={chooseCarStep} className="step-button">
             <img
@@ -94,7 +80,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
             </img>
           </button>
         </div>
-        <div className="col-2">
+        <div className="col-3">
           <button onClick={completionStep} className="step-button">
             <img
               className={
