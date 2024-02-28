@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrandModel } from '../../models/response/BrandModel';
 import { ColorModel } from '../../models/response/ColorModel';
 import { ModelModel } from '../../models/response/ModelModel';
@@ -17,6 +17,9 @@ const FilterBar = () => {
     let modelsResponse : ModelModel[];
     let colorsResponse : ColorModel[];
     
+    useEffect(() => {
+        fetchThemAllAndMap();
+    }, []);
 
     const fetchThemAllAndMap = async () => {
         brandsResponse = await fetchBrands();
@@ -28,8 +31,7 @@ const FilterBar = () => {
         const allOptions = mapDatasToFormOptionsType(brandsResponse, modelsResponse, colorsResponse);
         setOptions(allOptions);
     }
-
-    fetchThemAllAndMap();
+    
 
   return (
     <div>
