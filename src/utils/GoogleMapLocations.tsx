@@ -17,7 +17,7 @@ const GoogleMapLocation = ({ location }: { location: LocationModel }) => {
                 <IconComponent iconName='Location' />
                 {location.name}
                 </h5>
-            <div dangerouslySetInnerHTML={{ __html: location.location }} />
+                <div dangerouslySetInnerHTML={{ __html: location.location }} />     
         </div>
     );
 };

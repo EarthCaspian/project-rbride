@@ -26,7 +26,7 @@ const PaymentDetailsCard = (props: Props) => {
         <Form>
           <div className="container text-body-secondary">
             <div className="row">
-              <div className="col-8 fw-bold mb-2">
+              <div className="col col-md-8 fw-bold mb-2">
                 <label htmlFor="firstName">Card Number*</label>
                 <div>
                   <Field
@@ -45,8 +45,8 @@ const PaymentDetailsCard = (props: Props) => {
                     placeholder=""
                   />
                 </div>
-                <div className="d-flex">
-                  <div className="col-6 me-1 pe-1">
+                <div className="">
+                  <div className="col col-md-6 me-1 pe-1">
                     <label htmlFor="firstName">Expire Date*</label>
                     <div>
                       <Field
@@ -57,7 +57,7 @@ const PaymentDetailsCard = (props: Props) => {
                       />
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div className="col col-md-6">
                     <label htmlFor="firstName">CVC Security Code*</label>
                     <div>
                       <Field

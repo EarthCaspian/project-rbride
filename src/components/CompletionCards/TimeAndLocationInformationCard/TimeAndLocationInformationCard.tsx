@@ -16,25 +16,25 @@ const TimeAndLocationInformationCard = (props: Props) => {
   return (
     <div>
         <div className="row">
-          <div className="col-4 mx-auto">
-            <div className="">
+          <div className="col col-md-6 mx-auto">            
               <h4>Pick-up Information</h4>
               <p>
                 <IconComponent iconName="Clock" />
                 {formatStringDate(rentalState.startDate)}
               </p>
-              <GoogleMapLocations locationName={rentalLocationsState.pickUp?.name} />
-            </div>
+              
+                <GoogleMapLocations locationName={rentalLocationsState.pickUp?.name} /> 
+              
+                         
           </div>
-          <div className="col-4 mx-auto">
-            <div className="">
+          <div className="col col-md-6 mx-auto">          
               <h4>Drop-off Information</h4>
               <p>
                 <IconComponent iconName="Clock" />
                 {formatStringDate(rentalState.endDate)}
               </p>
-              <GoogleMapLocations locationName={rentalLocationsState.dropOff?.name} />
-            </div>
+              
+                <GoogleMapLocations locationName={rentalLocationsState.dropOff?.name} />               
           </div>
         </div>
     </div>

@@ -56,10 +56,10 @@ const BookingCompletion: React.FC = (props: Props) => {
 };
 
   return (
-    <div>
+    <div className="container-md">
       <BookingStepsCard stepPage="StepCompletion"></BookingStepsCard>
 
-      <div className="container text-center mt-5">
+      <div className="text-center mt-5">
         <h2 className="">Thank you for selecting our services!</h2>
         <p>
           <IconComponent iconName="Mailbox" />
@@ -73,11 +73,14 @@ const BookingCompletion: React.FC = (props: Props) => {
         </div>
       </div>
 
-      <div className="container mb-4">
+      <div className="mb-4">
         {storedRentalData.rental && <TimeAndLocationInformationCard rentalState={storedRentalData}/>}
       </div>
 
-      {storedRentalData.rental && <InvoicePDFCard rentalState={storedRentalData}/>}
+      <div className="mb-4">
+        {storedRentalData.rental && <InvoicePDFCard rentalState={storedRentalData}/>}
+      </div>
+      
     </div>
   );
 };

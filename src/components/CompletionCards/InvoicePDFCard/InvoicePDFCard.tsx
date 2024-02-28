@@ -13,7 +13,7 @@ const InvoicePDFCard = (props: Props) => {
     const invoiceState = useSelector((state: RootState) => state.invoice.invoice);
     const customer = useSelector((state: RootState) => state.customer.customer);
   return (
-    <div>
+    <div >
         <InvoicePDFDocument
             customer={customer}
             invoice={invoiceState}
