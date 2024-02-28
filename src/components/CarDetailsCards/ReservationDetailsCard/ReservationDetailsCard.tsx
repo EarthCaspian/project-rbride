@@ -51,7 +51,7 @@ export const ReservationDetailsCard = (props: Props) => {
   // Total Price
   const totalPrice = useMemo(() => calculateTotalPrice(car, days), [days]);
   // The variable indicating whether a valid date is chosen.
-  const isAvailable = useMemo(() => availabilityCheck(rentalsResponse, car, selectedStartDate, selectedEndDate), [selectedStartDate, selectedEndDate]);
+  const isAvailable = useMemo(() => availabilityCheck(rentalsResponse, car, selectedStartDate, selectedEndDate), [selectedStartDate, selectedEndDate, rentalsResponse]);
   // The variable holding the error message to be displayed via the JSX element with id "warning-message".
   const errorMessage = useMemo(() => isAvailable ? "" : "The vehicle is not available on the selected dates.", [isAvailable]);
 

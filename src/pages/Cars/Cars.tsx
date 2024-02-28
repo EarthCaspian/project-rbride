@@ -6,7 +6,7 @@ import { setReferringPage } from '../../store/referringPageSlice';
 
 
 
-
+//When the page is loaded, existing brand, color, model, cars and rentals datas are fetched. However, newly added brands, models, colors, cars, or rentals in the database can only be accessed after the page is reloaded.
 const Cars = () => {
   const dispatch = useDispatch();
   dispatch(setReferringPage("/cars"));

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { selectIsLoggedIn, setLoggedOut } from "../../store/loginSlice";
-import { setStepLevel } from "../../store/stepsSlice";
 import { setUser } from "../../store/userSlice";
 import { Button } from "react-bootstrap";
 import { RootState } from "../../store/configureStore";
@@ -12,27 +11,29 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const carSelection = useSelector((state : RootState) => state.rental.rental.car);
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const handleLogout = () => {
-    if (carSelection.id != 0) {
-      const confirmation = window.confirm("Login is required to proceed with your transaction. Are you sure you want to logout?"
-      );
-      if (confirmation == true) {
-        dispatch(setLoggedOut());
-        dispatch(setUser({userId: 0}));
-        dispatch(setStepLevel(0));
-      }
-    }
-    else
-    {
+  // This function logs out the user and clears their session, resets their state and clears any associated role information.
+  const logoutUser = () => {
       dispatch(setLoggedOut());
       dispatch(setUser({userId: 0}));
       RoleService.clearRole();
+  }
+
+  // This function handles the logout process.
+  const handleLogout = () => {
+     // When the user attempts to logout, if they have selected a car, a confirmation message is displayed. 
+    if (carSelection.id != 0) {
+      const confirmation = window.confirm("Login is required to proceed with your transaction. Are you sure you want to logout?");
+      // Upon confirmation, the user is logged out.
+      if (confirmation == true)
+        logoutUser();
     }
+    //If no car selection has been made, the user is logged out directly without confirmation.
+    else
+      logoutUser();
   };
 
   //  Google Custom Search Engine (CSE)
