@@ -18,15 +18,12 @@ const BookNow = (props: Props) => {
         <h1 className="book-now-title">Check & Complete Booking</h1>
       </div>
 
-      <div className="container mt-5">
-        
+      <div className="container container-fluid-lg mt-5">      
         <div className="row">
-
-          {/* BOOKING DETAILS CARD */}
-          <div className="col-4">
+          <div className="col col-lg-4">
             <BookingDetailsCard />
           </div>
-          <div className="col-8">
+          <div className="col col-lg-8">
             <CompleteBook />
           </div>
           

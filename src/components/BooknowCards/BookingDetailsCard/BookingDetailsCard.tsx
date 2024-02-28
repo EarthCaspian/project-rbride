@@ -2,12 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/configureStore";
 import { IconComponent } from "../../../utils/icons";
-import { additionalServicePriceCalculation, bookingDateInfo, taxCalculation, totalAmountCalculation } from "./helpers";
+import {
+  additionalServicePriceCalculation,
+  bookingDateInfo,
+  taxCalculation,
+  totalAmountCalculation,
+} from "./helpers";
 
 type Props = {};
 
 const BookingDetailsCard = (props: Props) => {
-
   //  Reaching redux store
   const rentalAllState = useSelector((state: RootState) => state.rental);
   const rentalState = rentalAllState.rental;
@@ -17,12 +21,17 @@ const BookingDetailsCard = (props: Props) => {
   //  Reaching choosen insurance information
   const insuranceHeader = rentalInsuranceState.header;
 
-
-  const additionalServiceTotalPrice = additionalServicePriceCalculation(rentalAllState);
-  const tax = taxCalculation(rentalState.totalPrice, additionalServiceTotalPrice);
-  const totalAmount = totalAmountCalculation(rentalState.totalPrice, additionalServiceTotalPrice);
+  const additionalServiceTotalPrice =
+    additionalServicePriceCalculation(rentalAllState);
+  const tax = taxCalculation(
+    rentalState.totalPrice,
+    additionalServiceTotalPrice
+  );
+  const totalAmount = totalAmountCalculation(
+    rentalState.totalPrice,
+    additionalServiceTotalPrice
+  );
   const { startDateFormatted, endDateFormatted } = bookingDateInfo(rentalState);
-
 
   return (
     <div>
@@ -88,42 +97,44 @@ const BookingDetailsCard = (props: Props) => {
       <div className="card bg-light mb-4 border-light">
         {/* Car */}
         <div className="card-body pb-0">
-          <h3 className="card-title">
+          <h4 className="card-title">
             {rentalState.car.model.brand.name +
               " " +
               rentalState.car.model.name}
-          </h3>
-          <div className="d-flex">
-            <div className="col-6 my-auto">
-              <div className="d-flex my-2">
-                {/* Gear Type */}
-                <div className="d-flex me-5">
-                  <IconComponent iconName="CarFromFront" />
-                  <h6 className="card-subtitle pt-2 text-body-secondary ms-1">
-                    Manuel
-                  </h6>
-                </div>
-                {/* Fuel Type */}
+          </h4>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col col-md-6 my-auto">
                 <div className="d-flex">
-                  <IconComponent iconName="FuelPump" />
-                  <h6 className="card-subtitle pt-2 text-body-secondary ms-1">
-                    Benzin
-                  </h6>
+                  {/* Gear Type */}
+                  <div className="d-flex me-1">
+                    <IconComponent iconName="CarFromFront" />
+                    <h6 className="card-subtitle pt-2 text-body-secondary ms-1">
+                      Manuel
+                    </h6>
+                  </div>
+                  {/* Fuel Type */}
+                  <div className="d-flex">
+                    <IconComponent iconName="FuelPump" />
+                    <h6 className="card-subtitle pt-2 text-body-secondary ms-1">
+                      Benzin
+                    </h6>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="col-6 my-auto">
-              <img
-                className="mx-auto d-block"
-                src={rentalState.car.imagePath}
-                style={{
-                  position: "relative",
-                  objectFit: "contain",
-                  width: "70%",
-                  height: "70%",
-                }}
-              ></img>
+              <div className="col col-md-6 my-auto">
+                <img
+                  className="d-block image-fluid float-end"
+                  src={rentalState.car.imagePath}
+                  style={{
+                    position: "relative",
+                    objectFit: "contain",
+                    width: "70%",
+                    height: "70%",
+                  }}
+                ></img>
+              </div>
             </div>
           </div>
         </div>
