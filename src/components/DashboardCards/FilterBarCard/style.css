@@ -1,43 +1,7 @@
-.hero-image {
-    background-image: linear-gradient(rgb(0, 0, 0, 0.6), rgb(0, 0, 0, 0.6)), url(/public/images/welcome2.jpeg);
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    object-fit: cover;
-    position: relative;
-    /* //overflow-hidden */
-}
-.hero-text {
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-135%);
-    color: white;
-}
-
-.hero-text h2 {
-    font-size: 4vw; 
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.custom-form {
-    background-color: rgba(255, 150, 84, 0.8);
-    padding: 1rem;
-    border-radius: 1rem;
-    position: absolute;
-    top: 350px;
-    left: 50%;
-    transform: translateX(-50%); 
-    z-index: 999;
-}
-
 .custom-label {
     /* color: rgb(8, 20, 28); */
     color: #09272d;
-    font-size: 18px;
+    font-size:1em;
     font-family: 'Anta', sans-serif !important;
     font-weight: bold;
 }
@@ -56,24 +20,4 @@
     flex-direction: column;
     align-items: stretch;
     margin-bottom: 1rem;
-}
-
-@media only screen and (max-width: 768px) {
-    .custom-form {
-        width: 90%;
-        /* width: 100%; */
-        /* position: relative; */
-        /* margin-top: 20px;   */
-        transform: translate(-50%, -50%);
-        padding: 1rem;
-        /* border-radius: %; */
-    }
-
-    .hero-text {
-        top:55%;
-    }
-
-    .hero-image {
-        height: 100vh;
-    }
 }

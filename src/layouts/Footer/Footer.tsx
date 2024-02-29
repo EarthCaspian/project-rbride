@@ -7,10 +7,10 @@ const Footer = (props: Props) => {
   return (
     <div style={{ marginTop: 100 }}>
       {/* Footer - Starts */}
-      <footer className="footer text-center fixed-bottom bg-light">
+      <footer className="footer text-center fixed-bottom bg-light"  style={{fontSize:"11pt"}}>
         <p className="mt-2 mb-0 fs-6">
           Copyright ©{" "}
-          <strong className="text-secondary">RoboRide Rental Services</strong>
+          <strong className="text-secondary" style={{fontSize:"11pt"}}>RoboRide Rental Services</strong>
         </p>
         <p className="my-0 mb-1">
           <Link

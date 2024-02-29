@@ -27,14 +27,15 @@
 }
 
 .contact_card {
-    width: 500px; 
-    height: 400px;
+    width: 95%;
+    height: 100%;
+    margin-bottom: 30px;
 }
 
 .contact_card-img-top {
     max-width: 100%; 
     height: auto;
-
+    
 }
 
 .contact_card-footer{

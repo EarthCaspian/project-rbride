@@ -50,7 +50,7 @@ const CarsSlider: React.FC<CarsSliderProps> = ({ slides }) => {
             {slides.map((slide, index) => (
               <li key={index} className="swiper-slide" style={{ width: '470px', marginRight: '20px' }}>
                 <div className="fleet-item">
-                  <div className="cars_slider_image">
+                  <div className="cars_slider_image d-flex justify-content-center">
                     <img className="lazy" src={slide.imageUrl} alt={slide.title} />
                   </div>
                   <div className="text_wrap">

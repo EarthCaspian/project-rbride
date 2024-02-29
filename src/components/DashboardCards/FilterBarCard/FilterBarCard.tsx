@@ -58,7 +58,7 @@ export  const FilterBarCard = () => {
 
             {/* PICKING UP DATE - DATE PICKER*/}
             <div className="col-6 ">
-              <label id="startDate" className="custom-label"> Picking Up Date </label>
+              <label id="startDate" className="custom-label"> Pick Up Date </label>
               <div className="custom-dateChooser">
                   <DateChooser
                     onDateChange={handleStartDateChange}
@@ -71,7 +71,7 @@ export  const FilterBarCard = () => {
 
             {/* RETURNING DATE - DATE PICKER*/}
             <div className="col-6 ">
-              <label id="endDate" className="custom-label"> Returning Date </label>
+              <label id="endDate" className="custom-label"> Return Date </label>
               <div className="custom-dateChooser">
                   <DateChooser
                     onDateChange={handleEndDateChange}
