@@ -1,4 +1,4 @@
-import "../../components/DashboardCards/FilterBarCard/style.css";
+import "./dashboard.css"
 import { FilterBarCard } from "../../components/DashboardCards/FilterBarCard/FilterBarCard";
 import { useDispatch } from "react-redux";
 import { setReferringPage } from "../../store/referringPageSlice";
@@ -54,8 +54,8 @@ const Dashboard = () => {
       <div  id="hero">
         <div className="hero-image">
           <div className="hero-text">
-            <h2>Welcome to RoboRide</h2>
-            <p className="fs-5">Rental Services with Precision</p>
+            <h2 className="fs-1">Welcome to RoboRide</h2>
+            <p className="fs-4">Rental Services with Precision</p>
           </div>
         </div>
       </div>
