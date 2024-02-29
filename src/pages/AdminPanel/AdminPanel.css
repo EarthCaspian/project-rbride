@@ -20,7 +20,36 @@
     color: #007bff;
 }
 
-.admin-content {
-    margin-left: 270px; 
-    padding: 20px;
-}
+
+/* For screens larger than 1024px (Laptop and above) */
+@media (min-width: 1025px) {
+    .admin-sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #F8F9FA;
+      padding: 20px;
+      box-sizing: border-box;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+  
+    .admin-content {
+      margin-left: 270px;
+      padding: 20px;
+    }
+  }
+  
+  /* For screens 1024px and below (Tablet and Mobile) */
+  @media (max-width: 1024px) {
+    .admin-sidebar {
+      width: 100%; 
+      height: auto; 
+      position: static; 
+    }
+  
+    .admin-content {
+      margin-left: 0; 
+      padding: 20px;
+    }
+  }
