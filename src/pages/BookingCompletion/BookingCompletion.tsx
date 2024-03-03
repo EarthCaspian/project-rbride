@@ -32,10 +32,12 @@ const BookingCompletion: React.FC = (props: Props) => {
   }, []);
 
 
+
+
   useEffect (() => {
     // The page's path is set in the window's history, preventing users from returning to the rental process steps. 
     window.history.pushState(null, "", location.pathname);
-     // The handleBackButton function is triggered when the user attempts to navigate back using the browser's back button. 
+    // The handleBackButton function is triggered when the user attempts to navigate back using the browser's back button. 
     window.addEventListener('popstate', handleBackButton);
     // Remove the event listener for back button navigation upon component unmount.
     return () => {
@@ -53,6 +55,8 @@ const BookingCompletion: React.FC = (props: Props) => {
     if (confirmation) {
       navigate('/');
     }
+    else 
+      navigate("/completion");
 };
 
   return (

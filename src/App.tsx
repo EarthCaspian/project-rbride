@@ -41,6 +41,9 @@ import JoinUs from "./components/JoinUs/JoinUs";
 
 import { PersistGate } from 'redux-persist/integration/react';
 import RoleService from "./services/RoleService";
+import LoginCheck from "./guards/LoginCheck";
+import CarSelectionCheck from "./guards/CarSelectionCheck";
+import CompletionCheck from "./guards/CompletionCheck";
 
 function App() {
 
@@ -79,12 +82,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cars" element={<Cars />} />
-          <Route path="/car-details/:id" element={<CarDetails />} />
-          <Route path="/additionalservices" element={<AdditionalService />} />
-          <Route path="/booknow" element={<BookNow />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/rentals" element={<Rentals />} />
-          <Route path="/completion" element={<BookingCompletion />} />
+          <Route path="/car-details/:id" element={<CarDetails />}/>
+          <Route path="/additionalservices" element={<CarSelectionCheck><AdditionalService /></CarSelectionCheck>} />
+          <Route path="/booknow" element={<CarSelectionCheck><BookNow /></CarSelectionCheck>} />
+          <Route path="/profile" element={<LoginCheck><Profile /></LoginCheck>} />
+          <Route path="/rentals" element={<LoginCheck><Rentals /></LoginCheck>} />
+          <Route path="/completion" element={<CompletionCheck><BookingCompletion /></CompletionCheck>} />
           <Route path="/contactpage" element={<ContactPage />} />
           <Route path="/faqspage" element={<FAQs />} />
           <Route path="/joinus" element={<JoinUs />} />

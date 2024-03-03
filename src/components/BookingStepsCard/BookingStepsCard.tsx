@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 
@@ -16,7 +16,7 @@ const BookingStepsCard: React.FC<ImageProps> = ({ stepPage }) => {
 
   const chooseCarStep = () => {
    (stepsLevelState > 0 && rentalState.car && rentalState.car.id !== 0) ?
-    navigate("/car-details/" + `${rentalState.car.id}`) : navigate("/cars");
+    navigate(`/car-details/${rentalState.car.id}`) : navigate("/cars");
   };
 
   const additionalserviceStep = () => {
