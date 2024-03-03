@@ -127,6 +127,7 @@ const BookingDetailsCard = (props: Props) => {
                 <img
                   className="d-block image-fluid float-end"
                   src={rentalState.car.imagePath}
+                  alt=""
                   style={{
                     position: "relative",
                     objectFit: "contain",

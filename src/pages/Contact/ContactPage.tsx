@@ -66,7 +66,7 @@ const ContactForm: React.FC = () => {
                         <p className="mail"><strong>Email: </strong>info@tobeto.com</p>
                     </div>
                     <div className="map-item">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12028.132037675927!2d29.0957136!3d41.0901254!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab65635b94473%3A0x688e9b2eaf799804!2sEnocta%20%C4%B0stanbul%20Ofisi!5e0!3m2!1str!2str!4v1707914323496!5m2!1str!2str" width="100%" height="250px" style={{ border: 0 }} aria-hidden="false" tabIndex={0}></iframe>
+                        <iframe title="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12028.132037675927!2d29.0957136!3d41.0901254!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab65635b94473%3A0x688e9b2eaf799804!2sEnocta%20%C4%B0stanbul%20Ofisi!5e0!3m2!1str!2str!4v1707914323496!5m2!1str!2str" width="100%" height="250px" style={{ border: 0 }} aria-hidden="false" tabIndex={0}></iframe>
                     </div>
                 </div>
             </div>

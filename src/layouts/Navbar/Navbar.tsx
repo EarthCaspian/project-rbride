@@ -25,10 +25,10 @@ const Navbar = (props: Props) => {
   // This function handles the logout process.
   const handleLogout = () => {
      // When the user attempts to logout, if they have selected a car, a confirmation message is displayed. 
-    if (carSelection.id != 0) {
+    if (carSelection.id !== 0) {
       const confirmation = window.confirm("Login is required to proceed with your transaction. Are you sure you want to logout?");
       // Upon confirmation, the user is logged out.
-      if (confirmation == true)
+      if (confirmation === true)
         logoutUser();
     }
     //If no car selection has been made, the user is logged out directly without confirmation.
